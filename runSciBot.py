@@ -1,3 +1,5 @@
 from src.BeeBot import *
+from src.Board import *
 
-x = BeeBot()
+board = Board()
+#x = BeeBot()
