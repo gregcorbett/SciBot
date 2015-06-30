@@ -4,6 +4,10 @@ import sys
 class Board:
 	def __init__(self,height,width,step):
 		self.step = step
+		
+		self.logicalHeight = height
+		self.logicalWidth = width
+		
 		self.height = height*step
 		self.width = width*step
 		self.background=pygame.image.load("./img/background.jpg")
