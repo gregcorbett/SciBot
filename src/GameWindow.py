@@ -5,16 +5,16 @@ from src.BeeBot import *
 from src.Board import *
 
 class GameWindow:
-	def __init__(self,height,width):
+	def __init__(self,logicalHeight,logicalWidth):
 		self.step = 150
 		
-		self.height = height*self.step
-		self.width = width*self.step
+		self.height = logicalHeight*self.step
+		self.width = logicalWidth*self.step
 		
-		self.board = Board(height,width,self.step)
+		self.board = Board(logicalHeight,logicalWidth,self.step)
 		self.size = (self.width,self.height)
 		
-		self.robot = BeeBot(1,6,height,width,self.step)
+		self.robot = BeeBot(1,6,logicalHeight,logicalWidth,self.step)
 		pygame.init()
 		self.screen = pygame.display.set_mode(self.size) 
 		
