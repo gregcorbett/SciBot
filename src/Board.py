@@ -5,7 +5,8 @@ class Board:
 	def __init__(self,height,width,step):
 		self.height = height*step
 		self.width = width*step
-		self.background=pygame.image.load("./img/background.jpg") 
+		self.background=pygame.image.load("./img/background.jpg")
+		self.borderColour = (0,0,255)
 		
 		if (self.height != self.background.get_height()):
 			print("Error 1: board height does not match image height")
@@ -20,4 +21,6 @@ class Board:
 		
 	def display(self,screen):
 		screen.blit(self.background,(0,0))
-		pygame.display.flip()
+		pygame.draw.line(screen,self.borderColour,(60,60),(120,120),4)
+		
+		pygame.display.update()
