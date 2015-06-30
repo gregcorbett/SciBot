@@ -2,7 +2,7 @@ from src.GameWindow import *
 import sys
 
 gameWindow = GameWindow(8,5)
-gameWindow.newGame()
+gameWindow.startInstance()
 #x = BeeBot()
 
 while True:

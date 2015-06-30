@@ -18,6 +18,9 @@ class GameWindow:
 		pygame.init()
 		self.screen = pygame.display.set_mode(self.size) 
 		
+	def startInstance(self):
+		self.newGame()
+	
 	def newGame(self):
 		self.board.display(self.screen)
 		self.robot.display(self.screen)
