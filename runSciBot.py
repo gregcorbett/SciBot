@@ -1,5 +1,5 @@
-from src.BeeBot import *
-from src.Board import *
+from src.GameWindow import *
 
-board = Board()
+gameWindow = GameWindow(8,5)
+gameWindow.newGame()
 #x = BeeBot()
