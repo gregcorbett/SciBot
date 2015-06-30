@@ -17,3 +17,8 @@ class BeeBot(pygame.sprite.Sprite):
 		screen.blit(self.sprite,(self.screenLocationX,self.screenLocationY))
 		pygame.display.update()
 		
+	def move(self,screen):
+		self.logicalPositionY = self.logicalPositionY - 1
+		self.screenLocationY = self.screenLocationY - self.board.step
+		self.display(screen)
+		
