@@ -1,7 +1,7 @@
 import pygame
 
 class BeeBot(pygame.sprite.Sprite):
-	def __init__(self,startLogicalPositionX,startLogicalPositionY,board):
+	def __init__(self,startLogicalPositionY,startLogicalPositionX,board):
 		
 		self.board = board
 		
