@@ -35,7 +35,7 @@ class Board:
 		
 		iterWidth = 0
 		while (iterWidth <= self.width):
-			pygame.draw.line(screen,self.borderColour,(iterWidth,0),(iterWidth,self.width),5)
+			pygame.draw.line(screen,self.borderColour,(iterWidth,0),(iterWidth,self.height),5)
 			iterWidth = iterWidth + self.step
 		
 		iterHeight = 0
