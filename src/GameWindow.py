@@ -14,7 +14,7 @@ class GameWindow:
 		self.board = Board(height,width,self.step)
 		self.size = (self.width,self.height)
 		
-		self.robot = BeeBot(0,0)
+		self.robot = BeeBot(1,6,height,width,self.step)
 		pygame.init()
 		self.screen = pygame.display.set_mode(self.size) 
 		
