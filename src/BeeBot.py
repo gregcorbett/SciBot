@@ -1,13 +1,15 @@
 import pygame
 
 class BeeBot(pygame.sprite.Sprite):
-	def __init__(self,startLogicalPositionX,startLogicalPositionY,boardHeight,boardWidth,boardStep):
+	def __init__(self,startLogicalPositionX,startLogicalPositionY,board):
+		
+		self.board = board
 		
 		self.logicalPositionX = startLogicalPositionX
 		self.logicalPositionY = startLogicalPositionY
 		
-		self.screenLocationX = startLogicalPositionX * boardStep
-		self.screenLocationY = (boardHeight - startLogicalPositionY - 1) * boardStep
+		self.screenLocationX = startLogicalPositionX * board.step
+		self.screenLocationY = (board.logicalHeight - startLogicalPositionY - 1) * board.step
 		
 		self.sprite=pygame.image.load("./img/robot.jpg")
 	
