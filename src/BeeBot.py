@@ -1,4 +1,5 @@
 import pygame
+import time
 
 class BeeBot(pygame.sprite.Sprite):
 	def __init__(self,startLogicalPositionY,startLogicalPositionX,board):
@@ -17,18 +18,19 @@ class BeeBot(pygame.sprite.Sprite):
 		screen.blit(self.sprite,(self.screenLocationX,self.screenLocationY))
 		pygame.display.update()
 		
-	def move(self,screen,board):
+	def move(self,screen):
 		##lets move forward/up first
 		
 		incrStep = 0
 		while ( incrStep < self.board.step ):
 			self.screenLocationY = self.screenLocationY - 1
 			incrStep = incrStep + 1
-			board.display(screen)
+			self.board.display(screen)
 			self.display(screen)
+			#time.sleep(0.01)
 		
 		self.logicalPositionY = self.logicalPositionY - 1
-		
+		#pygame.display.update()
 		#self.logicalPositionY = self.logicalPositionY - 1
 		#self.screenLocationY = self.screenLocationY - self.board.step
 		#self.display(screen)

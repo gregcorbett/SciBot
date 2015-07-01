@@ -47,4 +47,4 @@ class Board:
 			pygame.draw.line(screen,self.borderColour,(0,iterHeight),(self.width,iterHeight),5)
 			iterHeight = iterHeight + self.step
 		
-		pygame.display.update()
+		#pygame.display.update()

@@ -20,8 +20,8 @@ class GameWindow:
 		
 	def startInstance(self):
 		self.newGame()
-		self.board.display(self.screen)
-		self.robot.display(self.screen)
 	
 	def newGame(self):
-		self.robot.move(self.screen,self.board)
+		self.board.display(self.screen)
+		self.robot.display(self.screen)
+		self.robot.move(self.screen)
