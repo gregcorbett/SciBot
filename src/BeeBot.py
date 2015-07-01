@@ -31,9 +31,41 @@ class BeeBot(pygame.sprite.Sprite):
 		
 		incrStep = 0
 		while ( incrStep < self.board.step ):
-			self.screenLocationY = self.screenLocationY - 1
 			incrStep = incrStep + 1
+			self.screenLocationY = self.screenLocationY - 1
 			self.board.display(screen)
 			self.display(screen)
 		
 		self.logicalPositionY = self.logicalPositionY - 1
+		
+		#self.rotateSprite(45)
+		#self.board.display(screen)
+		#self.display(screen)
+		
+		incrAngle = 0
+		while ( incrAngle < 90 ):
+			incrAngle = incrAngle + 45
+			self.rotateSprite(45)
+			self.board.display(screen)
+			self.display(screen)
+			time.sleep(1)
+		
+		incrStep = 0
+		while ( incrStep < self.board.step ):
+			incrStep = incrStep + 1
+			self.screenLocationY = self.screenLocationY + 1
+			self.board.display(screen)
+			self.display(screen)
+		
+		self.logicalPositionY = self.logicalPositionY + 1
+		
+
+		
+		
+	def rotateSprite(self,angle):
+		orig_rect = self.sprite.get_rect()
+		rot_image = pygame.transform.rotate(self.sprite, angle)
+		rot_rect = orig_rect.copy()
+		rot_rect.center = rot_image.get_rect().center
+		self.sprite = rot_image.subsurface(rot_rect).copy()
+		#return rot_image
