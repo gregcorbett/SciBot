@@ -1,5 +1,12 @@
 import pygame
 import time
+from enum import Enum
+
+class Heading(Enum):
+	NORTH = 1
+	EAST = 2
+	SOUTH = 3
+	WEST = 4
 
 class BeeBot(pygame.sprite.Sprite):
 	def __init__(self,startLogicalPositionY,startLogicalPositionX,board):
@@ -13,6 +20,7 @@ class BeeBot(pygame.sprite.Sprite):
 		self.screenLocationY = (board.logicalHeight - startLogicalPositionY - 1) * board.step
 		
 		self.sprite=pygame.image.load("./img/robot.jpg")
+		self.heading = Heading.NORTH
 	
 	def display(self,screen):
 		screen.blit(self.sprite,(self.screenLocationX,self.screenLocationY))
@@ -27,11 +35,5 @@ class BeeBot(pygame.sprite.Sprite):
 			incrStep = incrStep + 1
 			self.board.display(screen)
 			self.display(screen)
-			#time.sleep(0.01)
 		
 		self.logicalPositionY = self.logicalPositionY - 1
-		#pygame.display.update()
-		#self.logicalPositionY = self.logicalPositionY - 1
-		#self.screenLocationY = self.screenLocationY - self.board.step
-		#self.display(screen)
-		
