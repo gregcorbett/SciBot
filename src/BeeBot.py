@@ -19,8 +19,10 @@ class BeeBot(pygame.sprite.Sprite):
 		self.screenLocationX = startLogicalPositionX * board.step
 		self.screenLocationY = (board.logicalHeight - startLogicalPositionY - 1) * board.step
 		
-		self.sprite=pygame.image.load("./img/robot.jpg")
+		self.sprites = {}
+		self.sprites[Heading.NORTH]=pygame.image.load("./img/robot.jpg")
 		self.heading = Heading.NORTH
+		self.sprite = self.sprites[self.heading]
 	
 	def display(self,screen):
 		screen.blit(self.sprite,(self.screenLocationX,self.screenLocationY))
