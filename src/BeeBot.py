@@ -33,10 +33,46 @@ class BeeBot(pygame.sprite.Sprite):
 	def display(self,screen):
 		screen.blit(self.sprite,(self.screenLocationX,self.screenLocationY))
 		pygame.display.update()
-		
+	
 	def move(self,screen):
-		##lets move up first
+		self.moveForward(screen)
+		self.moveBackward(screen)
+
+	def moveBackward(self,screen):
+		if (self.heading == Heading.SOUTH ):
+			incrStep = 0
+			while ( incrStep < self.board.step ):
+				incrStep = incrStep + 1
+				self.screenLocationY = self.screenLocationY - 1
+				self.board.display(screen)
+				self.display(screen)	
+				self.logicalPositionY = self.logicalPositionY - 1
+		elif (self.heading == Heading.WEST ):
+			incrStep = 0
+			while ( incrStep < self.board.step ):
+				incrStep = incrStep + 1
+				self.screenLocationX = self.screenLocationX + 1
+				self.board.display(screen)
+				self.display(screen)	
+				self.logicalPositionX = self.logicalPositionX + 1
+		elif (self.heading == Heading.NORTH ):
+			incrStep = 0
+			while ( incrStep < self.board.step ):
+				incrStep = incrStep + 1
+				self.screenLocationY = self.screenLocationY + 1
+				self.board.display(screen)
+				self.display(screen)	
+				self.logicalPositionY = self.logicalPositionY + 1
+		elif (self.heading == Heading.EAST ):
+			incrStep = 0
+			while ( incrStep < self.board.step ):
+				incrStep = incrStep + 1
+				self.screenLocationX = self.screenLocationX - 1
+				self.board.display(screen)
+				self.display(screen)	
+				self.logicalPositionX = self.logicalPositionX - 1
 		
+	def moveForward(self,screen):
 		if (self.heading == Heading.NORTH ):
 			incrStep = 0
 			while ( incrStep < self.board.step ):
@@ -54,9 +90,21 @@ class BeeBot(pygame.sprite.Sprite):
 				self.display(screen)	
 				self.logicalPositionX = self.logicalPositionX + 1
 		elif (self.heading == Heading.SOUTH ):
-			print("no")
-		elif (self.heading == Heading.SOUTH ):
-			print("no")
+			incrStep = 0
+			while ( incrStep < self.board.step ):
+				incrStep = incrStep + 1
+				self.screenLocationY = self.screenLocationY + 1
+				self.board.display(screen)
+				self.display(screen)	
+				self.logicalPositionY = self.logicalPositionY + 1
+		elif (self.heading == Heading.WEST ):
+			incrStep = 0
+			while ( incrStep < self.board.step ):
+				incrStep = incrStep + 1
+				self.screenLocationX = self.screenLocationX - 1
+				self.board.display(screen)
+				self.display(screen)	
+				self.logicalPositionX = self.logicalPositionX - 1
 
 		#if (self.heading == Heading.NORTH ):
 		#else if (self.heading == Heading.EAST ):
