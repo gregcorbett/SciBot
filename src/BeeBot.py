@@ -20,8 +20,14 @@ class BeeBot(pygame.sprite.Sprite):
 		self.screenLocationY = (board.logicalHeight - startLogicalPositionY - 1) * board.step
 		
 		self.sprites = {}
+		
 		self.sprites[Heading.NORTH]=pygame.image.load("./img/robot.jpg")
+		self.sprites[Heading.EAST]=pygame.transform.rotate(self.sprites[Heading.NORTH], 270)
+		self.sprites[Heading.SOUTH]=pygame.transform.rotate(self.sprites[Heading.NORTH], 180)
+		self.sprites[Heading.WEST]=pygame.transform.rotate(self.sprites[Heading.NORTH], 90)
+		
 		self.heading = heading
+		
 		self.sprite = self.sprites[self.heading]
 	
 	def display(self,screen):
@@ -40,7 +46,13 @@ class BeeBot(pygame.sprite.Sprite):
 				self.display(screen)	
 				self.logicalPositionY = self.logicalPositionY - 1
 		elif (self.heading == Heading.EAST ):
-			print("no")
+			incrStep = 0
+			while ( incrStep < self.board.step ):
+				incrStep = incrStep + 1
+				self.screenLocationX = self.screenLocationX + 1
+				self.board.display(screen)
+				self.display(screen)	
+				self.logicalPositionX = self.logicalPositionX + 1
 		elif (self.heading == Heading.SOUTH ):
 			print("no")
 		elif (self.heading == Heading.SOUTH ):
