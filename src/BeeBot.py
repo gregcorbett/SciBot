@@ -9,7 +9,7 @@ class Heading(Enum):
 	WEST = 4
 
 class BeeBot(pygame.sprite.Sprite):
-	def __init__(self,startLogicalPositionY,startLogicalPositionX,board):
+	def __init__(self,startLogicalPositionY,startLogicalPositionX,board,heading):
 		
 		self.board = board
 		
@@ -21,7 +21,7 @@ class BeeBot(pygame.sprite.Sprite):
 		
 		self.sprites = {}
 		self.sprites[Heading.NORTH]=pygame.image.load("./img/robot.jpg")
-		self.heading = Heading.NORTH
+		self.heading = heading
 		self.sprite = self.sprites[self.heading]
 	
 	def display(self,screen):
@@ -29,40 +29,58 @@ class BeeBot(pygame.sprite.Sprite):
 		pygame.display.update()
 		
 	def move(self,screen):
-		##lets move forward/up first
+		##lets move up first
 		
-		incrStep = 0
-		while ( incrStep < self.board.step ):
-			incrStep = incrStep + 1
-			self.screenLocationY = self.screenLocationY - 1
-			self.board.display(screen)
-			self.display(screen)
+		if (self.heading == Heading.NORTH ):
+			incrStep = 0
+			while ( incrStep < self.board.step ):
+				incrStep = incrStep + 1
+				self.screenLocationY = self.screenLocationY - 1
+				self.board.display(screen)
+				self.display(screen)	
+				self.logicalPositionY = self.logicalPositionY - 1
+		elif (self.heading == Heading.EAST ):
+			print("no")
+		elif (self.heading == Heading.SOUTH ):
+			print("no")
+		elif (self.heading == Heading.SOUTH ):
+			print("no")
+
+		#if (self.heading == Heading.NORTH ):
+		#else if (self.heading == Heading.EAST ):
+		#else if (self.heading == Heading.SOUTH ):
+		#else if (self.heading == Heading.SOUTH ):
+
+		#if (self.heading == Heading.NORTH ):
+		#else if (self.heading == Heading.EAST ):
+		#else if (self.heading == Heading.SOUTH ):
+		#else if (self.heading == Heading.SOUTH ):
 		
-		self.logicalPositionY = self.logicalPositionY - 1
+		#if (self.heading == Heading.NORTH ):
+		#else if (self.heading == Heading.EAST ):
+		#else if (self.heading == Heading.SOUTH ):
+		#else if (self.heading == Heading.SOUTH ):
 		
 		#self.rotateSprite(45)
 		#self.board.display(screen)
 		#self.display(screen)
 		
-		incrAngle = 0
-		while ( incrAngle < 90 ):
-			incrAngle = incrAngle + 45
-			self.rotateSprite(45)
-			self.board.display(screen)
-			self.display(screen)
-			time.sleep(1)
+#		incrAngle = 0
+#		while ( incrAngle < 90 ):
+#			incrAngle = incrAngle + 45
+#			self.rotateSprite(45)
+#			self.board.display(screen)
+#			self.display(screen)
+#			time.sleep(1)
+#		
+#		incrStep = 0
+#		while ( incrStep < self.board.step ):
+#			incrStep = incrStep + 1
+#			self.screenLocationY = self.screenLocationY + 1
+#			self.board.display(screen)
+#			self.display(screen)
 		
-		incrStep = 0
-		while ( incrStep < self.board.step ):
-			incrStep = incrStep + 1
-			self.screenLocationY = self.screenLocationY + 1
-			self.board.display(screen)
-			self.display(screen)
-		
-		self.logicalPositionY = self.logicalPositionY + 1
-		
-
-		
+#		self.logicalPositionY = self.logicalPositionY + 1	
 		
 	def rotateSprite(self,angle):
 		orig_rect = self.sprite.get_rect()
