@@ -1,5 +1,6 @@
 import pygame
 import sys
+import time
 
 class Board:
 	def __init__(self,height,width,step):
@@ -47,4 +48,3 @@ class Board:
 			pygame.draw.line(screen,self.borderColour,(0,iterHeight),(self.width,iterHeight),5)
 			iterHeight = iterHeight + self.step
 		
-		#pygame.display.update()
