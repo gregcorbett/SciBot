@@ -10,7 +10,6 @@ class Heading(Enum):
 
 class BeeBot(pygame.sprite.Sprite):
 	def __init__(self,startLogicalPositionY,startLogicalPositionX,board,heading):
-		
 		self.board = board
 		
 		self.logicalPositionX = startLogicalPositionX
@@ -32,7 +31,6 @@ class BeeBot(pygame.sprite.Sprite):
 	
 	def display(self,screen):
 		screen.blit(self.sprite,(self.screenLocationX,self.screenLocationY))
-		pygame.display.update()
 	
 	def move(self,screen):
 		self.moveForward(screen)
@@ -81,6 +79,7 @@ class BeeBot(pygame.sprite.Sprite):
 				self.board.display(screen)
 				self.display(screen)
 				self.logicalPositionY = self.logicalPositionY + 1
+				#pygame.display.update()
 		elif (self.heading == Heading.EAST ):
 			incrStep = 0
 			while ( incrStep < self.board.step ):
@@ -99,6 +98,7 @@ class BeeBot(pygame.sprite.Sprite):
 				self.board.display(screen)
 				self.display(screen)	
 				self.logicalPositionY = self.logicalPositionY - 1
+				#pygame.display.update()
 		elif (self.heading == Heading.EAST ):
 			incrStep = 0
 			while ( incrStep < self.board.step ):
@@ -125,6 +125,7 @@ class BeeBot(pygame.sprite.Sprite):
 				self.logicalPositionX = self.logicalPositionX - 1
 
 	def moveRight(self,screen):
+		time.sleep(1)
 		self.rotateSprite(-45)
 		self.display(screen)
 		time.sleep(1)
