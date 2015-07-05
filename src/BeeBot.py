@@ -156,6 +156,26 @@ class BeeBot(pygame.sprite.Sprite):
 			self.heading = Heading.NORTH
 			self.sprite = self.sprites[self.heading]
 
+	def moveLeft(self,screen):
+		time.sleep(1)
+		self.rotateSprite(45)
+		self.display(screen)
+		pygame.display.update()	
+		time.sleep(1)
+		
+		if (self.heading == Heading.NORTH ):
+			self.heading = Heading.WEST
+			self.sprite = self.sprites[self.heading]
+		elif (self.heading == Heading.EAST ):
+			self.heading = Heading.NORTH
+			self.sprite = self.sprites[self.heading]
+		elif (self.heading == Heading.SOUTH ):
+			self.heading = Heading.EAST
+			self.sprite = self.sprites[self.heading]
+		elif (self.heading == Heading.WEST ):
+			self.heading = Heading.SOUTH
+			self.sprite = self.sprites[self.heading]			
+			
 		#if (self.heading == Heading.NORTH ):
 		#else if (self.heading == Heading.EAST ):
 		#else if (self.heading == Heading.SOUTH ):
