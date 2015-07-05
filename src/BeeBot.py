@@ -39,6 +39,16 @@ class BeeBot(pygame.sprite.Sprite):
 		self.memory = {}
 		self.memoryCount = 0
 		
+	def move(self,event,screen):
+		if event.type == pygame.USEREVENT+Direction.UP:
+			self.moveForward(screen)
+		if event.type == pygame.USEREVENT+Direction.DOWN:
+			self.moveBackward(screen)
+		if event.type == pygame.USEREVENT+Direction.LEFT:
+			self.moveLeft(screen)
+		if event.type == pygame.USEREVENT+Direction.RIGHT:
+			self.moveRight(screen)	
+	
 	def addToMemory(self,event):
 		self.memory[self.memoryCount] = event
 		self.memoryCount = self.memoryCount + 1

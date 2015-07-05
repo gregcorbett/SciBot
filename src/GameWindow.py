@@ -52,17 +52,8 @@ class GameWindow():#threading.Thread):
 				if event.key == ord('g') or event.key == ord('G'):
 						self.robot.pushOutMemory()
 						
-			if event.type == pygame.USEREVENT+Direction.UP:
-				self.robot.moveForward(self.screen)
-		
-			if event.type == pygame.USEREVENT+Direction.DOWN:
-				self.robot.moveBackward(self.screen)
-
-			if event.type == pygame.USEREVENT+Direction.LEFT:
-				self.robot.moveLeft(self.screen)
-
-			if event.type == pygame.USEREVENT+Direction.RIGHT:
-				self.robot.moveRight(self.screen)	
+			if event.type > pygame.USEREVENT:
+				self.robot.move(event,self.screen)
 				
 			#newEvent = pygame.event.Event(Direction.LEFT)
 			#print(newEvent.type)
