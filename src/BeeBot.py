@@ -1,6 +1,7 @@
 import pygame
 import time
 from enum import Enum
+from enum import IntEnum
 
 class Heading(Enum):
 	NORTH = 1
@@ -8,6 +9,12 @@ class Heading(Enum):
 	SOUTH = 3
 	WEST = 4
 
+class Direction(IntEnum):
+	UP = 1
+	LEFT = 2
+	DOWN = 3
+	RIGHT = 4
+	
 class BeeBot(pygame.sprite.Sprite):
 	def __init__(self,startLogicalPositionY,startLogicalPositionX,board,heading):
 		self.board = board
@@ -60,7 +67,8 @@ class BeeBot(pygame.sprite.Sprite):
 				incrStep = incrStep + 1
 				self.screenLocationY = self.screenLocationY - 1
 				self.board.display(screen)
-				self.display(screen)	
+				self.display(screen)
+				pygame.display.update()		
 				self.logicalPositionY = self.logicalPositionY - 1
 		elif (self.heading == Heading.WEST ):
 			incrStep = 0
@@ -68,7 +76,8 @@ class BeeBot(pygame.sprite.Sprite):
 				incrStep = incrStep + 1
 				self.screenLocationX = self.screenLocationX + 1
 				self.board.display(screen)
-				self.display(screen)	
+				self.display(screen)
+				pygame.display.update()	
 				self.logicalPositionX = self.logicalPositionX + 1
 		elif (self.heading == Heading.NORTH ):
 			incrStep = 0
@@ -78,15 +87,16 @@ class BeeBot(pygame.sprite.Sprite):
 				self.screenLocationY = self.screenLocationY + 1
 				self.board.display(screen)
 				self.display(screen)
+				pygame.display.update()	
 				self.logicalPositionY = self.logicalPositionY + 1
-				#pygame.display.update()
 		elif (self.heading == Heading.EAST ):
 			incrStep = 0
 			while ( incrStep < self.board.step ):
 				incrStep = incrStep + 1
 				self.screenLocationX = self.screenLocationX - 1
 				self.board.display(screen)
-				self.display(screen)	
+				self.display(screen)
+				pygame.display.update()		
 				self.logicalPositionX = self.logicalPositionX - 1
 		
 	def moveForward(self,screen):
@@ -95,17 +105,18 @@ class BeeBot(pygame.sprite.Sprite):
 			while ( incrStep < self.board.step ):
 				incrStep = incrStep + 1
 				self.screenLocationY = self.screenLocationY - 1
-				#self.board.display(screen)
-				#self.display(screen)	
+				self.board.display(screen)
+				self.display(screen)
+				pygame.display.update()				
 				self.logicalPositionY = self.logicalPositionY - 1
-				#pygame.display.update()
 		elif (self.heading == Heading.EAST ):
 			incrStep = 0
 			while ( incrStep < self.board.step ):
 				incrStep = incrStep + 1
 				self.screenLocationX = self.screenLocationX + 1
 				self.board.display(screen)
-				self.display(screen)	
+				self.display(screen)
+				pygame.display.update()		
 				self.logicalPositionX = self.logicalPositionX + 1
 		elif (self.heading == Heading.SOUTH ):
 			incrStep = 0
@@ -113,7 +124,8 @@ class BeeBot(pygame.sprite.Sprite):
 				incrStep = incrStep + 1
 				self.screenLocationY = self.screenLocationY + 1
 				self.board.display(screen)
-				self.display(screen)	
+				self.display(screen)
+				pygame.display.update()		
 				self.logicalPositionY = self.logicalPositionY + 1
 		elif (self.heading == Heading.WEST ):
 			incrStep = 0
@@ -121,13 +133,15 @@ class BeeBot(pygame.sprite.Sprite):
 				incrStep = incrStep + 1
 				self.screenLocationX = self.screenLocationX - 1
 				self.board.display(screen)
-				self.display(screen)	
+				self.display(screen)
+				pygame.display.update()		
 				self.logicalPositionX = self.logicalPositionX - 1
 
 	def moveRight(self,screen):
 		time.sleep(1)
 		self.rotateSprite(-45)
 		self.display(screen)
+		pygame.display.update()	
 		time.sleep(1)
 		if (self.heading == Heading.NORTH ):
 			self.heading = Heading.EAST

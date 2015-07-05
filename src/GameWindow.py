@@ -26,7 +26,28 @@ class GameWindow():#threading.Thread):
 		self.robot.display(self.screen)
 		
 	def startInstance(self):
-		self.newGame()
+		while True:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					pygame.quit()
+					sys.exit()
+			
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_UP:
+						self.robot.moveForward(self.screen)
+					if event.key == pygame.K_DOWN:
+						self.robot.moveBackward(self.screen)
+					if event.key == pygame.K_LEFT:
+						self.robot.moveLeft(self.screen)
+					if event.key == pygame.K_RIGHT:
+						self.robot.moveRight(self.screen)
+				
+			#newEvent = pygame.event.Event(Direction.LEFT)
+			#print(newEvent.type)
+			#pygame.quit()
+			#sys.exit()
+			self.display()
+			pygame.display.update()
 	
 	def newGame(self):
 		self.robot.move(self.screen)
