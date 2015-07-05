@@ -5,10 +5,10 @@ import threading
 from src.BeeBot import *
 from src.Board import *
 
-class GameWindow(threading.Thread):
+class GameWindow():#threading.Thread):
 	def __init__(self,logicalHeight,logicalWidth):
 		pygame.init()
-		super(GameWindow,self).__init__()
+	#	super(GameWindow,self).__init__()
 		
 		self.step = 150
 		
@@ -31,11 +31,15 @@ class GameWindow(threading.Thread):
 	def newGame(self):
 		self.robot.move(self.screen)
 		
-	def run(self):
-			clock = pygame.time.Clock()
-			while True:
-				self.board.display(self.screen)
-				self.robot.display(self.screen)
-				pygame.display.update()
+	def display(self):
+		self.board.display(self.screen)
+		self.robot.display(self.screen)
+	
+	#def run(self):
+	#		clock = pygame.time.Clock()
+	#		while True:
+	#			self.board.display(self.screen)
+	#			self.robot.display(self.screen)
+	#			pygame.display.update()
 				#time.sleep(0.2)
 				#clock.tick(30)

@@ -95,8 +95,8 @@ class BeeBot(pygame.sprite.Sprite):
 			while ( incrStep < self.board.step ):
 				incrStep = incrStep + 1
 				self.screenLocationY = self.screenLocationY - 1
-				self.board.display(screen)
-				self.display(screen)	
+				#self.board.display(screen)
+				#self.display(screen)	
 				self.logicalPositionY = self.logicalPositionY - 1
 				#pygame.display.update()
 		elif (self.heading == Heading.EAST ):

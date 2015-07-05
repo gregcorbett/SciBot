@@ -10,8 +10,8 @@ gameWindow = GameWindow(8,5)
 #thr.daemon = True
 #thr.start() # will run "updateLoop forever 
 
-gameWindow.start()
-gameWindow.startInstance()
+#gameWindow.start()
+#gameWindow.startInstance()
 
 #pygame.quit()
 #sys.exit()
@@ -21,6 +21,13 @@ while True:
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			sys.exit()
+			
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_UP:
+				gameWindow.robot.moveForward(gameWindow.screen)
+				
+		gameWindow.display()
+		pygame.display.update()
 
 
 #x = BeeBot()
