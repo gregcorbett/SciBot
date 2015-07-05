@@ -33,28 +33,36 @@ class GameWindow():#threading.Thread):
 		#pygame.event.set_allowed([pygame.KEYDOWN,pygame.QUIT])
 		
 		while True:
-			pygame.event.pump()
+			#pygame.event.pump()
 			event = pygame.event.poll()
+			
 			if event.type == pygame.QUIT:
 				pygame.quit()
 				sys.exit()
 			
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_UP:
-					#self.robot.addToMemory(pygame.event.Event(pygame.USEREVENT+Direction.UP))
-					self.robot.moveForward(self.screen)
+					self.robot.addToMemory(pygame.event.Event(pygame.USEREVENT+Direction.UP))
 				if event.key == pygame.K_DOWN:
-					#self.robot.addToMemory(pygame.event.Event(Direction.DOWN))
-					self.robot.moveBackward(self.screen)
+					self.robot.addToMemory(pygame.event.Event(pygame.USEREVENT+Direction.DOWN))
 				if event.key == pygame.K_LEFT:
-					#self.robot.addToMemory(pygame.event.Event(Direction.LEFT))
-					self.robot.moveLeft(self.screen)
+					self.robot.addToMemory(pygame.event.Event(pygame.USEREVENT+Direction.LEFT))
 				if event.key == pygame.K_RIGHT:
-					#self.robot.addToMemory(pygame.event.Event(Direction.RIGHT))
-					self.robot.moveRight(self.screen)
+					self.robot.addToMemory(pygame.event.Event(pygame.USEREVENT+Direction.RIGHT))
 				if event.key == ord('g') or event.key == ord('G'):
 						self.robot.pushOutMemory()
 						
+			if event.type == pygame.USEREVENT+Direction.UP:
+				self.robot.moveForward(self.screen)
+		
+			if event.type == pygame.USEREVENT+Direction.DOWN:
+				self.robot.moveBackward(self.screen)
+
+			if event.type == pygame.USEREVENT+Direction.LEFT:
+				self.robot.moveLeft(self.screen)
+
+			if event.type == pygame.USEREVENT+Direction.RIGHT:
+				self.robot.moveRight(self.screen)	
 				
 			#newEvent = pygame.event.Event(Direction.LEFT)
 			#print(newEvent.type)
@@ -63,10 +71,7 @@ class GameWindow():#threading.Thread):
 			self.display()
 			pygame.display.update()
 			self.clock.tick(30)
-	
-	def newGame(self):
-		self.robot.move(self.screen)
-		
+			
 	def display(self):
 		self.board.display(self.screen)
 		self.robot.display(self.screen)
