@@ -4,6 +4,7 @@ import threading
 
 from src.BeeBot import *
 from src.Board import *
+from src.CustomEvent import *
 
 class GameWindow():#threading.Thread):
 	def __init__(self,logicalHeight,logicalWidth):
@@ -41,13 +42,13 @@ class GameWindow():#threading.Thread):
 			
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_UP:
-					self.robot.addToMemory(pygame.event.Event(pygame.USEREVENT+Direction.UP))
+					self.robot.addToMemory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP))
 				if event.key == pygame.K_DOWN:
-					self.robot.addToMemory(pygame.event.Event(pygame.USEREVENT+Direction.DOWN))
+					self.robot.addToMemory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_DOWN))
 				if event.key == pygame.K_LEFT:
-					self.robot.addToMemory(pygame.event.Event(pygame.USEREVENT+Direction.LEFT))
+					self.robot.addToMemory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT))
 				if event.key == pygame.K_RIGHT:
-					self.robot.addToMemory(pygame.event.Event(pygame.USEREVENT+Direction.RIGHT))
+					self.robot.addToMemory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_RIGHT))
 				if event.key == ord('g') or event.key == ord('G'):
 						self.robot.pushOutMemory()
 						

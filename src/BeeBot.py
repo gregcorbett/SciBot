@@ -1,8 +1,9 @@
 import pygame
 import time
 from enum import Enum
-from enum import IntEnum
 import sys
+
+from src.CustomEvent import *
 
 class Heading(Enum):
 	NORTH = 1
@@ -10,11 +11,11 @@ class Heading(Enum):
 	SOUTH = 3
 	WEST = 4
 
-class Direction(IntEnum):
-	UP = 1
-	LEFT = 2
-	DOWN = 3
-	RIGHT = 4
+#class Direction(IntEnum):
+#	UP = 1
+#	LEFT = 2
+#	DOWN = 3
+#	RIGHT = 4
 	
 class BeeBot(pygame.sprite.Sprite):
 	def __init__(self,startLogicalPositionY,startLogicalPositionX,board,heading):
@@ -41,14 +42,21 @@ class BeeBot(pygame.sprite.Sprite):
 		self.memoryCount = 0
 		
 	def move(self,event,screen):
-		if event.type == pygame.USEREVENT+Direction.UP:
+		if event.type == CustomEvent.MOVE_BEEBOT_UP:
 			self.moveForward(screen)
-		if event.type == pygame.USEREVENT+Direction.DOWN:
+		if event.type == CustomEvent.MOVE_BEEBOT_DOWN:
 			self.moveBackward(screen)
-		if event.type == pygame.USEREVENT+Direction.LEFT:
+		if event.type == CustomEvent.MOVE_BEEBOT_LEFT:
 			self.moveLeft(screen)
-		if event.type == pygame.USEREVENT+Direction.RIGHT:
-			self.moveRight(screen)	
+		if event.type == CustomEvent.MOVE_BEEBOT_RIGHT:
+			self.moveRight(screen)
+		self.checkForObstacleCollisions()
+	
+	def checkForObstacleCollisions(self):
+		if self.logicalPositionX == self.board.obstacle.logicalPositionX and self.logicalPositionY == self.board.obstacle.logicalPositionY:
+			pygame.event.clear()
+			
+			sys.exit()
 	
 	def addToMemory(self,event):
 		self.memory[self.memoryCount] = event
