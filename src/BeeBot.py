@@ -11,12 +11,6 @@ class Heading(Enum):
 	SOUTH = 3
 	WEST = 4
 
-#class Direction(IntEnum):
-#	UP = 1
-#	LEFT = 2
-#	DOWN = 3
-#	RIGHT = 4
-	
 class BeeBot(pygame.sprite.Sprite):
 	def __init__(self,startLogicalPositionY,startLogicalPositionX,board,heading):
 		self.board = board
@@ -55,8 +49,7 @@ class BeeBot(pygame.sprite.Sprite):
 	def checkForObstacleCollisions(self):
 		if self.logicalPositionX == self.board.obstacle.logicalPositionX and self.logicalPositionY == self.board.obstacle.logicalPositionY:
 			pygame.event.clear()
-			
-			sys.exit()
+			pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
 	
 	def addToMemory(self,event):
 		self.memory[self.memoryCount] = event

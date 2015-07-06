@@ -40,6 +40,10 @@ class GameWindow():#threading.Thread):
 				pygame.quit()
 				sys.exit()
 			
+			if event.type == CustomEvent.RUN_FAIL:
+				pygame.quit()
+				sys.exit()
+			
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_UP:
 					self.robot.addToMemory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP))
