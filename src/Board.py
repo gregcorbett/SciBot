@@ -1,6 +1,8 @@
 import pygame
 import sys
-import time
+#import time
+
+from src.Obstacle import *
 
 class Board:
 	def __init__(self,height,width,step):
@@ -14,6 +16,8 @@ class Board:
 		self.background=pygame.image.load("./img/background.jpg")
 		self.borderColour = (0,0,255)
 		
+		self.obstacle = Obstacle("./img/obstacle1.jpg",4,2,self)
+
 		if (self.height != self.background.get_height()):
 			print("Error 1: board height does not match image height")
 			print("Board Height = ",self.height)
@@ -37,6 +41,7 @@ class Board:
 		
 	def display(self,screen):
 		screen.blit(self.background,(0,0))
+		self.obstacle.display(screen)
 		
 		iterWidth = 0
 		while (iterWidth <= self.width):

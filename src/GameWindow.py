@@ -22,8 +22,7 @@ class GameWindow():#threading.Thread):
 		
 		self.screen = pygame.display.set_mode(self.size) 
 		
-		self.board.display(self.screen)
-		self.robot.display(self.screen)
+		self.display()
 		
 		self.clock = pygame.time.Clock()
 		
