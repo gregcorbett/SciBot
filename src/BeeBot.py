@@ -47,9 +47,13 @@ class BeeBot(pygame.sprite.Sprite):
 		self.checkForObstacleCollisions()
 	
 	def checkForObstacleCollisions(self):
-		if self.logicalPositionX == self.board.obstacle.logicalPositionX and self.logicalPositionY == self.board.obstacle.logicalPositionY:
-			pygame.event.clear()
-			pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
+		obsPtr = 0
+		while obsPtr < self.board.obstacleGroup.obstacleCount:
+			obs = self.board.obstacleGroup.obstacles[obsPtr]
+			if self.logicalPositionX == obs.logicalPositionX and self.logicalPositionY == obs.logicalPositionY:
+				pygame.event.clear()
+				pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
+			obsPtr = obsPtr + 1
 	
 	def addToMemory(self,event):
 		self.memory[self.memoryCount] = event
