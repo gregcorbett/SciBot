@@ -51,6 +51,7 @@ class BeeBot(pygame.sprite.Sprite):
 		while obsPtr < self.board.obstacleGroup.obstacleCount:
 			obs = self.board.obstacleGroup.obstacles[obsPtr]
 			if self.logicalPositionX == obs.logicalPositionX and self.logicalPositionY == obs.logicalPositionY:
+				self.sprite=pygame.image.load("./img/robotx.jpg")
 				pygame.event.clear()
 				pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
 			obsPtr = obsPtr + 1
