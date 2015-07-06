@@ -45,6 +45,12 @@ class BeeBot(pygame.sprite.Sprite):
 		if event.type == CustomEvent.MOVE_BEEBOT_RIGHT:
 			self.moveRight(screen)
 		self.checkForObstacleCollisions()
+		self.checkForGoalCollisions()
+	
+	def checkForGoalCollisions(self):
+		if self.logicalPositionX == self.board.goal.logicalPositionX and self.logicalPositionY == self.board.goal.logicalPositionY:
+			pygame.event.clear()
+			pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
 	
 	def checkForObstacleCollisions(self):
 		obsPtr = 0

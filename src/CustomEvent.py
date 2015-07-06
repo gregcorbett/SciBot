@@ -8,5 +8,6 @@ class CustomEvent(IntEnum):
 	MOVE_BEEBOT_RIGHT = pygame.USEREVENT+4
 	
 	RUN_FAIL = pygame.USEREVENT+5
+	RUN_WIN = pygame.USEREVENT+6
 	
 	

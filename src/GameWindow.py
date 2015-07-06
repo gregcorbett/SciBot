@@ -43,7 +43,11 @@ class GameWindow():#threading.Thread):
 			if event.type == CustomEvent.RUN_FAIL:
 				pygame.quit()
 				sys.exit()
-			
+
+			if event.type == CustomEvent.RUN_WIN:
+				pygame.quit()
+				sys.exit()
+				
 			if event.type == pygame.KEYDOWN:
 				if event.key == pygame.K_UP:
 					self.robot.addToMemory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP))
@@ -56,7 +60,7 @@ class GameWindow():#threading.Thread):
 				if event.key == ord('g') or event.key == ord('G'):
 						self.robot.pushOutMemory()
 						
-			if event.type > pygame.USEREVENT:
+			if event.type >= CustomEvent.MOVE_BEEBOT_UP and event.type <= CustomEvent.MOVE_BEEBOT_RIGHT:
 				self.robot.move(event,self.screen)
 				
 			#newEvent = pygame.event.Event(Direction.LEFT)
