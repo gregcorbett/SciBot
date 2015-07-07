@@ -45,6 +45,7 @@ class GameWindow():#threading.Thread):
 				sys.exit()
 
 			if event.type == CustomEvent.RUN_WIN:
+				print("YOU WIN!!!")
 				pygame.quit()
 				sys.exit()
 				

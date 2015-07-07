@@ -48,9 +48,15 @@ class BeeBot(pygame.sprite.Sprite):
 		self.checkForGoalCollisions()
 	
 	def checkForGoalCollisions(self):
-		if self.logicalPositionX == self.board.goal.logicalPositionX and self.logicalPositionY == self.board.goal.logicalPositionY:
-			pygame.event.clear()
-			pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
+		currentGoal = self.board.goalGroup.goals[self.board.goalGroup.goalPtr]
+		if self.logicalPositionX == currentGoal.logicalPositionX and self.logicalPositionY == currentGoal.logicalPositionY:
+			self.board.goalGroup.goalPtr = self.board.goalGroup.goalPtr + 1
+			if self.board.goalGroup.goalPtr == self.board.goalGroup.goalCount:
+				#final goal
+				pygame.event.clear()
+				pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
+				
+				
 	
 	def checkForObstacleCollisions(self):
 		obsPtr = 0

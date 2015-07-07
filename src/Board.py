@@ -5,6 +5,8 @@ import sys
 from src.Obstacle import *
 from src.ObstacleGroup import *
 from src.Goal import *
+from src.GoalGroup import *
+
 
 class Board:
 	def __init__(self,height,width,step):
@@ -25,7 +27,16 @@ class Board:
 		self.obstacleGroup.add(o1)
 		self.obstacleGroup.add(o2)
 		
-		self.goal = Goal("./img/goal1.jpg",5,1,self)
+		self.goalGroup = GoalGroup()
+		g1 = Goal("./img/goal1.jpg",5,1,self)
+		#g2 = Goal("./img/goal1.jpg",2,4,self)
+		g3 = Goal("./img/goal1.jpg",7,2,self)
+		#g4 = Goal("./img/goal1.jpg",6,1,self)
+		
+		self.goalGroup.add(g1)
+		#self.goalGroup.add(g2)
+		self.goalGroup.add(g3)
+		#self.goalGroup.add(g4)
 		
 		if (self.height != self.background.get_height()):
 			print("Error 1: board height does not match image height")
@@ -55,7 +66,7 @@ class Board:
 			obs = self.obstacleGroup.obstacles[obsPtr]
 			obs.display(screen)
 			obsPtr = obsPtr + 1
-		self.goal.display(screen)
+		self.goalGroup.display(screen)
 		
 		iterWidth = 0
 		while (iterWidth <= self.width):
