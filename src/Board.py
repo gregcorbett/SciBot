@@ -9,7 +9,7 @@ from src.GoalGroup import *
 
 
 class Board:
-	def __init__(self,height,width,step):
+	def __init__(self,height,width,step,scenario):
 		self.step = step
 		
 		self.logicalHeight = height
@@ -17,7 +17,7 @@ class Board:
 		
 		self.height = height*step
 		self.width = width*step
-		self.background=pygame.image.load("./img/background.jpg")
+		self.background=scenario.getBackground()
 		self.borderColour = (0,0,255)
 		
 		self.obstacleGroup = ObstacleGroup()

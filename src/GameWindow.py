@@ -1,14 +1,16 @@
 import pygame
 import time
 import threading
+import pickle
 
 from src.BeeBot import *
 from src.Board import *
 from src.CustomEvent import *
 
 class GameWindow():#threading.Thread):
-	def __init__(self,logicalHeight,logicalWidth):
+	def __init__(self,logicalHeight,logicalWidth,scenarioName):
 		pygame.init()
+		self.scenario = pickle.load( open( "./scenarios/" + scenarioName + ".scibot", "rb" ) )
 	#	super(GameWindow,self).__init__()
 		
 		self.step = 150
@@ -16,7 +18,7 @@ class GameWindow():#threading.Thread):
 		self.height = logicalHeight*self.step
 		self.width = logicalWidth*self.step
 		
-		self.board = Board(logicalHeight,logicalWidth,self.step)
+		self.board = Board(logicalHeight,logicalWidth,self.step,self.scenario)
 		self.size = (self.width,self.height)
 		
 		self.robot = BeeBot(6,3,self.board,Heading.NORTH)
@@ -26,7 +28,7 @@ class GameWindow():#threading.Thread):
 		self.display()
 		
 		self.clock = pygame.time.Clock()
-		
+			
 	def startInstance(self):
 		
 		#pygame.event.set_allowed([])
