@@ -17,8 +17,10 @@ class Board:
 		
 		self.height = height*step
 		self.width = width*step
+		
 		self.background=scenario.getBackground()
-		self.borderColour = (0,0,255)
+		
+		self.borderColour = scenario.getBorderColour()
 		
 		self.obstacleGroup = ObstacleGroup()
 		o1 = Obstacle("./img/obstacle1.jpg",4,2,self)
