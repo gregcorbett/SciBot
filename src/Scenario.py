@@ -6,12 +6,14 @@ class Scenario:
 		self.name = name
 		self.background = None
 		self.borderColour = None
+		self.obstacles = None
 		
-	def formatImageForPickle(self,input):
+	def formatSurfaceForPickle(self,input):
 		return {'image': pygame.image.tostring(input,"RGBA"), 'size': input.get_size(), 'format': "RGBA"};
 		
-	def setBackground(self,input):
-		self.background = self.formatImageForPickle(input)
+	def setBackground(self,inputString):
+		input = pygame.image.load(inputString)
+		self.background = self.formatSurfaceForPickle(input)
 		
 	def getBackground(self):
 		return pygame.image.fromstring(self.background['image'],self.background['size'],self.background['format'])
