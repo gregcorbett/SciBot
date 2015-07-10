@@ -8,17 +8,26 @@ from src.Board import *
 from src.CustomEvent import *
 
 class GameWindow():#threading.Thread):
-	def __init__(self,logicalHeight,logicalWidth,scenarioName):
+	def __init__(self):
 		pygame.init()
-		self.scenario = pickle.load( open( "./scenarios/" + scenarioName + ".scibot", "rb" ) )
-	#	super(GameWindow,self).__init__()
 		
-		self.step = 150
+	def chooseScenario(self):
+		self.scenario = None
+		#Somehow choose a scenario
 		
-		self.height = logicalHeight*self.step
-		self.width = logicalWidth*self.step
+		if self.scenario == None:
+			self.scenario = "Default"
 		
-		self.board = Board(logicalHeight,logicalWidth,self.step,self.scenario)
+		self.scenario = pickle.load( open( "./scenarios/" + self.scenario + ".scibot", "rb" ) )
+	
+	def loadScenario(self):
+		#	super(GameWindow,self).__init__()
+		
+		self.step = self.scenario.getBoardStep()
+		self.height = self.scenario.getLogicalHeight()*self.step
+		self.width = self.scenario.getLogicalWidth()*self.step
+		
+		self.board = Board(self.scenario.getLogicalWidth(),self.scenario.getLogicalHeight(),self.step,self.scenario)
 		self.size = (self.width,self.height)
 		
 		self.robot = BeeBot(6,3,self.board,Heading.NORTH)
@@ -29,7 +38,7 @@ class GameWindow():#threading.Thread):
 		
 		self.clock = pygame.time.Clock()
 			
-	def startInstance(self):
+	def startScenario(self):
 		
 		#pygame.event.set_allowed([])
 		#pygame.event.set_allowed([pygame.KEYDOWN,pygame.QUIT])

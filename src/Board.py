@@ -9,7 +9,7 @@ from src.GoalGroup import *
 
 
 class Board:
-	def __init__(self,height,width,step,scenario):
+	def __init__(self,width,height,step,scenario):
 		self.step = step
 		
 		self.logicalHeight = height
