@@ -18,7 +18,7 @@ class BeeBot(pygame.sprite.Sprite):
 		startLogicalPositionX, startLogicalPositionY = scenario.getBeeBotStartPosition()
 		
 		self.screenLocationX = startLogicalPositionX * self.board.step
-		self.screenLocationY = (self.board.logicalHeight - startLogicalPositionY - 1) * self.board.step
+		self.screenLocationY = startLogicalPositionY * self.board.step
 
 		self.logicalPositionX = startLogicalPositionX
 		self.logicalPositionY = startLogicalPositionY
@@ -73,7 +73,7 @@ class BeeBot(pygame.sprite.Sprite):
 				self.board.display(screen)
 				self.display(screen)
 				pygame.display.update()		
-			self.logicalPositionY = self.logicalPositionY + 1
+			self.logicalPositionY = self.logicalPositionY - 1
 		elif (self.heading == Heading.WEST ):
 			incrStep = 0
 			while ( incrStep < self.board.step ):
@@ -91,7 +91,7 @@ class BeeBot(pygame.sprite.Sprite):
 				self.board.display(screen)
 				self.display(screen)
 				pygame.display.update()	
-			self.logicalPositionY = self.logicalPositionY - 1
+			self.logicalPositionY = self.logicalPositionY + 1
 		elif (self.heading == Heading.EAST ):
 			incrStep = 0
 			while ( incrStep < self.board.step ):
@@ -113,7 +113,7 @@ class BeeBot(pygame.sprite.Sprite):
 				self.board.display(screen)
 				self.display(screen)
 				pygame.display.update()				
-			self.logicalPositionY = self.logicalPositionY + 1
+			self.logicalPositionY = self.logicalPositionY - 1
 		elif (self.heading == Heading.EAST ):
 			incrStep = 0
 			while ( incrStep < self.board.step ):
@@ -131,7 +131,7 @@ class BeeBot(pygame.sprite.Sprite):
 				self.board.display(screen)
 				self.display(screen)
 				pygame.display.update()		
-			self.logicalPositionY = self.logicalPositionY - 1
+			self.logicalPositionY = self.logicalPositionY + 1
 		elif (self.heading == Heading.WEST ):
 			incrStep = 0
 			while ( incrStep < self.board.step ):
@@ -196,7 +196,7 @@ class BeeBot(pygame.sprite.Sprite):
 			print("screenLocationX = ",self.screenLocationX)
 			print("logicalPositionX = ",self.logicalPositionX)
 			sys.exit()
-		if ( ( self.board.logicalHeight - ( self.screenLocationY / self.board.step ) - 1 ) != self.logicalPositionY ): 
+		if ( self.screenLocationY != self.logicalPositionY * self.board.step):
 			print("Error 6: self.screenLocationY / self.board.step + self.board.logicalHeight - 1 != self.logicalPositionY")
 			print("screenLocationY = ",self.screenLocationY)
 			print("logicalPositionY",self.logicalPositionY)
