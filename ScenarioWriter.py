@@ -1,6 +1,7 @@
 import pygame
 from src.Scenario import *
 from src.BeeBot import Heading
+from src.Obstacle import *
 
 s = Scenario("Default")
 
@@ -24,5 +25,7 @@ s.setBorderColour(borderColour)
 		
 #obstacleGroup.add(o1)
 #obstacleGroup.add(o2)
+
+#s.setObstacleGroup(obstacleGroup)
 
 s.writeToFile()

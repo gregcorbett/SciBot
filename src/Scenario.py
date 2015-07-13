@@ -16,8 +16,18 @@ class Scenario:
 		self.beeBotSprite = None
 		self.beeBotHeading = None
 		
-		self.obstacles = None
+		self.obstacleGroup = None
 
+	def setObstacleGroup(self,obstacleGroup):
+		self.obstacleGroup = obstacleGroup
+		for obs in self.obstacleGroup:
+			obs.sprite = formatSurfaceForPickle(obs.sprite)
+		
+	def getObstacleGroup(self):
+		for obs in self.obstacleGroup:
+			obs.sprite = formatPickleToSurface(obs.sprite)
+		return self.obstacleGroup
+		
 	def setBeeBotHeading(self,input):
 		self.beeBotHeading = input
 

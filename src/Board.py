@@ -22,6 +22,7 @@ class Board:
 		
 		self.borderColour = scenario.getBorderColour()
 		
+		#self.obstacleGroup = scenario.getObstacleGroup()
 		self.obstacleGroup = ObstacleGroup()
 		o1 = Obstacle("./img/obstacle1.jpg",4,2,self)
 		o2 = Obstacle("./img/obstacle1.jpg",6,2,self)
