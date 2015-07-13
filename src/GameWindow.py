@@ -30,7 +30,7 @@ class GameWindow():#threading.Thread):
 		self.board = Board(self.scenario.getLogicalWidth(),self.scenario.getLogicalHeight(),self.step,self.scenario)
 		self.size = (self.width,self.height)
 		
-		self.robot = BeeBot(6,3,self.board,Heading.NORTH)
+		self.robot = BeeBot(self.board,self.scenario)
 		
 		self.screen = pygame.display.set_mode(self.size) 
 		
@@ -79,6 +79,7 @@ class GameWindow():#threading.Thread):
 			#print(newEvent.type)
 			#pygame.quit()
 			#sys.exit()
+			
 			self.display()
 			pygame.display.update()
 			self.clock.tick(30)

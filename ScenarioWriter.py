@@ -1,5 +1,6 @@
 import pygame
 from src.Scenario import *
+from src.BeeBot import Heading
 
 s = Scenario("Default")
 
@@ -7,10 +8,13 @@ s.setBoardStep(150)
 s.setLogicalWidth(5)
 s.setLogicalHeight(8)
 
-background = "./img/background.jpg"
+s.setBeeBotStartPosition((3,6))
+s.setBeeBotSprite("./img/robot.jpg")
+s.setBeeBotHeading(Heading.NORTH)
+
 borderColour = (0,0,255)
 
-s.setBackground(background)
+s.setBackground("./img/background.jpg")
 s.setBorderColour(borderColour)
 
 #obstacleGroup = {}

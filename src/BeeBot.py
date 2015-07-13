@@ -12,26 +12,29 @@ class Heading(Enum):
 	WEST = 4
 
 class BeeBot(pygame.sprite.Sprite):
-	def __init__(self,startLogicalPositionY,startLogicalPositionX,board,heading):
+	def __init__(self,board,scenario):
 		self.board = board
 		
+		startLogicalPositionX, startLogicalPositionY = scenario.getBeeBotStartPosition()
+		
+		self.screenLocationX = startLogicalPositionX * self.board.step
+		self.screenLocationY = (self.board.logicalHeight - startLogicalPositionY - 1) * self.board.step
+
 		self.logicalPositionX = startLogicalPositionX
 		self.logicalPositionY = startLogicalPositionY
 		
-		self.screenLocationX = startLogicalPositionX * self.board.step
-		self.screenLocationY = (board.logicalHeight - startLogicalPositionY - 1) * self.board.step
-		
 		self.sprites = {}
 		
-		self.sprites[Heading.NORTH]=pygame.image.load("./img/robot.jpg")
+		self.sprites[Heading.NORTH]=scenario.getBeeBotSprite()
+		
 		self.sprites[Heading.EAST]=pygame.transform.rotate(self.sprites[Heading.NORTH], 270)
 		self.sprites[Heading.SOUTH]=pygame.transform.rotate(self.sprites[Heading.NORTH], 180)
 		self.sprites[Heading.WEST]=pygame.transform.rotate(self.sprites[Heading.NORTH], 90)
 		
-		self.heading = heading
+		self.heading = scenario.getBeeBotHeading()
 		
 		self.sprite = self.sprites[self.heading]
-		
+
 		self.memory = {}
 		self.memoryCount = 0
 		
