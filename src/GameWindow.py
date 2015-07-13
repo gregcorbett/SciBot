@@ -74,6 +74,8 @@ class GameWindow():#threading.Thread):
 						
 			if event.type >= CustomEvent.MOVE_BEEBOT_UP and event.type <= CustomEvent.MOVE_BEEBOT_RIGHT:
 				self.robot.move(event,self.screen)
+				self.checkForObstacleCollisions()
+				self.checkForGoalCollisions()
 				
 			#newEvent = pygame.event.Event(Direction.LEFT)
 			#print(newEvent.type)
@@ -83,6 +85,26 @@ class GameWindow():#threading.Thread):
 			self.display()
 			pygame.display.update()
 			self.clock.tick(30)
+			
+	
+	def checkForGoalCollisions(self):
+		currentGoal = self.board.goalGroup.goals[self.board.goalGroup.goalPtr]
+		if self.robot.logicalPositionX == currentGoal.logicalPositionX and self.robot.logicalPositionY == currentGoal.logicalPositionY:
+			self.board.goalGroup.goalPtr = self.board.goalGroup.goalPtr + 1
+			if self.board.goalGroup.goalPtr == self.board.goalGroup.goalCount:
+				#final goal
+				pygame.event.clear()
+				pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
+				
+	def checkForObstacleCollisions(self):
+		obsPtr = 0
+		while obsPtr < self.board.obstacleGroup.obstacleCount:
+			obs = self.board.obstacleGroup.obstacles[obsPtr]
+			if self.robot.logicalPositionX == obs.logicalPositionX and self.robot.logicalPositionY == obs.logicalPositionY:
+				self.robot.sprite=pygame.image.load("./img/robotx.jpg")
+				pygame.event.clear()
+				pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
+			obsPtr = obsPtr + 1
 			
 	def display(self):
 		self.board.display(self.screen)

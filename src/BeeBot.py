@@ -47,30 +47,7 @@ class BeeBot(pygame.sprite.Sprite):
 			self.moveLeft(screen)
 		if event.type == CustomEvent.MOVE_BEEBOT_RIGHT:
 			self.moveRight(screen)
-		self.checkForObstacleCollisions()
-		self.checkForGoalCollisions()
-	
-	def checkForGoalCollisions(self):
-		currentGoal = self.board.goalGroup.goals[self.board.goalGroup.goalPtr]
-		if self.logicalPositionX == currentGoal.logicalPositionX and self.logicalPositionY == currentGoal.logicalPositionY:
-			self.board.goalGroup.goalPtr = self.board.goalGroup.goalPtr + 1
-			if self.board.goalGroup.goalPtr == self.board.goalGroup.goalCount:
-				#final goal
-				pygame.event.clear()
-				pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
-				
-				
-	
-	def checkForObstacleCollisions(self):
-		obsPtr = 0
-		while obsPtr < self.board.obstacleGroup.obstacleCount:
-			obs = self.board.obstacleGroup.obstacles[obsPtr]
-			if self.logicalPositionX == obs.logicalPositionX and self.logicalPositionY == obs.logicalPositionY:
-				self.sprite=pygame.image.load("./img/robotx.jpg")
-				pygame.event.clear()
-				pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
-			obsPtr = obsPtr + 1
-	
+
 	def addToMemory(self,event):
 		self.memory[self.memoryCount] = event
 		self.memoryCount = self.memoryCount + 1
