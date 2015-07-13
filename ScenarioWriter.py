@@ -18,14 +18,10 @@ borderColour = (0,0,255)
 s.setBackground("./img/background.jpg")
 s.setBorderColour(borderColour)
 
-#obstacleGroup = {}
+s.addObstacle("./img/obstacle1.jpg",2,1)
+s.addObstacle("./img/obstacle1.jpg",2,3)
 
-#o1 = Obstacle("./img/obstacle1.jpg",4,2,self)
-#o2 = Obstacle("./img/obstacle1.jpg",6,2,self)
+s.addGoal("./img/goal1.jpg",1,2)
+s.addGoal("./img/goal1.jpg",2,0)
 		
-#obstacleGroup.add(o1)
-#obstacleGroup.add(o2)
-
-#s.setObstacleGroup(obstacleGroup)
-
 s.writeToFile()

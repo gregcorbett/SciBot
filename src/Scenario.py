@@ -1,5 +1,9 @@
 import pickle
 import pygame
+from src.Obstacle import *
+from src.ObstacleGroup import *
+from src.Goal import *
+from src.GoalGroup import *
 
 class Scenario:
 	def __init__(self,name):
@@ -16,16 +20,38 @@ class Scenario:
 		self.beeBotSprite = None
 		self.beeBotHeading = None
 		
-		self.obstacleGroup = None
+		self.obstacleGroup = {}
+		self.obstacleCount = 0
 
-	def setObstacleGroup(self,obstacleGroup):
-		self.obstacleGroup = obstacleGroup
-		for obs in self.obstacleGroup:
-			obs.sprite = formatSurfaceForPickle(obs.sprite)
+		self.goalGroup = {}
+		self.goalCount = 0
+	
+	def addGoal(self,sprite,x,y):
+		self.goalGroup[self.goalCount] = (sprite,x,y)
+		self.goalCount = self.goalCount + 1
+		
+	def getGoalGroup(self):
+		goalGroup = GoalGroup()
+		goalPtr = 0
+		while goalPtr < self.goalCount:
+			pickledGoal = self.goalGroup[goalPtr]
+			goalGroup.add(Goal(pygame.image.load(pickledGoal[0]),pickledGoal[1],pickledGoal[2],self.boardStep))
+			goalPtr = goalPtr + 1
+		self.goalGroup = goalGroup
+		return self.goalGroup
+	
+	def addObstacle(self,sprite,x,y):
+		self.obstacleGroup[self.obstacleCount] = (sprite,x,y)
+		self.obstacleCount = self.obstacleCount + 1
 		
 	def getObstacleGroup(self):
-		for obs in self.obstacleGroup:
-			obs.sprite = formatPickleToSurface(obs.sprite)
+		obstacleGroup = ObstacleGroup()
+		obsPtr = 0
+		while obsPtr < self.obstacleCount:
+			pickledObs = self.obstacleGroup[obsPtr]
+			obstacleGroup.add(Obstacle(pygame.image.load(pickledObs[0]),pickledObs[1],pickledObs[2],self.boardStep))
+			obsPtr = obsPtr + 1
+		self.obstacleGroup = obstacleGroup
 		return self.obstacleGroup
 		
 	def setBeeBotHeading(self,input):
@@ -69,7 +95,7 @@ class Scenario:
 		return pygame.image.fromstring(input['image'],input['size'],input['format'])
 	
 	def formatSurfaceForPickle(self,input):
-		return {'image': pygame.image.tostring(input,"RGBA"), 'size': input.get_size(), 'format': "RGBA"};
+		return {'image': pygame.image.tostring(input,"RGBA"), 'size': input.get_size(), 'format': "RGBA"}
 		
 	def setBackground(self,inputString):
 		input = pygame.image.load(inputString)

@@ -1,7 +1,7 @@
 import pygame
 
 class Obstacle(pygame.sprite.Sprite):
-	def __init__(self,fileName,startLogicalPositionX,startLogicalPositionY,step):
+	def __init__(self,sprite,startLogicalPositionX,startLogicalPositionY,step):
 		
 		self.logicalPositionX = startLogicalPositionX
 		self.logicalPositionY = startLogicalPositionY
@@ -9,7 +9,7 @@ class Obstacle(pygame.sprite.Sprite):
 		self.screenLocationX = startLogicalPositionX * step
 		self.screenLocationY = startLogicalPositionY * step
 		
-		self.sprite = pygame.image.load(fileName)
+		self.sprite = sprite
 		
 	def display(self,screen):
 		screen.blit(self.sprite,(self.screenLocationX,self.screenLocationY))
