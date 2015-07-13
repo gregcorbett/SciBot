@@ -34,6 +34,8 @@ class BeeBot(pygame.sprite.Sprite):
 		self.heading = scenario.getBeeBotHeading()
 		
 		self.sprite = self.sprites[self.heading]
+		
+		self.failSprite = scenario.getBeeBotFailSprite()
 
 		self.memory = {}
 		self.memoryCount = 0

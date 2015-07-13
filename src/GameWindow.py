@@ -101,7 +101,7 @@ class GameWindow():#threading.Thread):
 		while obsPtr < self.board.obstacleGroup.obstacleCount:
 			obs = self.board.obstacleGroup.obstacles[obsPtr]
 			if self.robot.logicalPositionX == obs.logicalPositionX and self.robot.logicalPositionY == obs.logicalPositionY:
-				self.robot.sprite=pygame.image.load("./img/robotx.jpg")
+				self.robot.sprite = self.robot.failSprite
 				pygame.event.clear()
 				pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
 			obsPtr = obsPtr + 1

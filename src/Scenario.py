@@ -25,6 +25,15 @@ class Scenario:
 
 		self.goalGroup = {}
 		self.goalCount = 0
+		
+		self.beeBotFailSprite = None
+	
+	def setBeeBotFailSprite(self,inputString):
+		input = pygame.image.load(inputString)
+		self.beeBotFailSprite = self.formatSurfaceForPickle(input)
+		
+	def getBeeBotFailSprite(self):
+		return self.formatPickleToSurface(self.beeBotFailSprite)
 	
 	def addGoal(self,sprite,x,y):
 		self.goalGroup[self.goalCount] = (sprite,x,y)
