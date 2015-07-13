@@ -1,7 +1,7 @@
 import pygame
 
 class Obstacle(pygame.sprite.Sprite):
-	def __init__(self,fileName,startLogicalPositionY,startLogicalPositionX,step):
+	def __init__(self,fileName,startLogicalPositionX,startLogicalPositionY,step):
 		
 		self.logicalPositionX = startLogicalPositionX
 		self.logicalPositionY = startLogicalPositionY

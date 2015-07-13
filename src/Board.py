@@ -24,16 +24,16 @@ class Board:
 		
 		#self.obstacleGroup = scenario.getObstacleGroup()
 		self.obstacleGroup = ObstacleGroup()
-		o1 = Obstacle("./img/obstacle1.jpg",4,2,self.step)
-		o2 = Obstacle("./img/obstacle1.jpg",6,2,self.step)
+		o1 = Obstacle("./img/obstacle1.jpg",2,1,self.step)
+		o2 = Obstacle("./img/obstacle1.jpg",2,3,self.step)
 		
 		self.obstacleGroup.add(o1)
 		self.obstacleGroup.add(o2)
 		
 		self.goalGroup = GoalGroup()
-		g1 = Goal("./img/goal1.jpg",5,1,self.step)
+		g1 = Goal("./img/goal1.jpg",1,2,self.step)
 		#g2 = Goal("./img/goal1.jpg",2,4,self)
-		g3 = Goal("./img/goal1.jpg",7,2,self.step)
+		g3 = Goal("./img/goal1.jpg",2,0,self.step)
 		#g4 = Goal("./img/goal1.jpg",6,1,self)
 		
 		self.goalGroup.add(g1)

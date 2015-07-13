@@ -9,7 +9,7 @@ s.setBoardStep(150)
 s.setLogicalWidth(5)
 s.setLogicalHeight(8)
 
-s.setBeeBotStartPosition((3,6))
+s.setBeeBotStartPosition((3,1))
 s.setBeeBotSprite("./img/robot.jpg")
 s.setBeeBotHeading(Heading.NORTH)
 
