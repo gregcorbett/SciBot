@@ -36,7 +36,8 @@ class Scenario:
 		return self.formatPickleToSurface(self.beeBotFailSprite)
 	
 	def addGoal(self,sprite,x,y):
-		self.goalGroup[self.goalCount] = (sprite,x,y)
+		sprite = pygame.image.load(sprite)
+		self.goalGroup[self.goalCount] = (self.formatSurfaceForPickle(sprite),x,y)
 		self.goalCount = self.goalCount + 1
 		
 	def getGoalGroup(self):
@@ -44,7 +45,7 @@ class Scenario:
 		goalPtr = 0
 		while goalPtr < self.goalCount:
 			pickledGoal = self.goalGroup[goalPtr]
-			goalGroup.add(Goal(pygame.image.load(pickledGoal[0]),pickledGoal[1],pickledGoal[2],self.boardStep))
+			goalGroup.add(Goal(self.formatPickleToSurface(pickledGoal[0]),pickledGoal[1],pickledGoal[2],self.boardStep))
 			goalPtr = goalPtr + 1
 		self.goalGroup = goalGroup
 		return self.goalGroup
