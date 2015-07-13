@@ -50,7 +50,8 @@ class Scenario:
 		return self.goalGroup
 	
 	def addObstacle(self,sprite,x,y):
-		self.obstacleGroup[self.obstacleCount] = (sprite,x,y)
+		sprite = pygame.image.load(sprite)
+		self.obstacleGroup[self.obstacleCount] = (self.formatSurfaceForPickle(sprite),x,y)
 		self.obstacleCount = self.obstacleCount + 1
 		
 	def getObstacleGroup(self):
@@ -58,7 +59,7 @@ class Scenario:
 		obsPtr = 0
 		while obsPtr < self.obstacleCount:
 			pickledObs = self.obstacleGroup[obsPtr]
-			obstacleGroup.add(Obstacle(pygame.image.load(pickledObs[0]),pickledObs[1],pickledObs[2],self.boardStep))
+			obstacleGroup.add(Obstacle(self.formatPickleToSurface(pickledObs[0]),pickledObs[1],pickledObs[2],self.boardStep))
 			obsPtr = obsPtr + 1
 		self.obstacleGroup = obstacleGroup
 		return self.obstacleGroup
