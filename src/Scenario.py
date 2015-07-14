@@ -39,6 +39,11 @@ class Scenario:
 		sprite = pygame.image.load(sprite)
 		self.goalGroup[self.goalCount] = (self.formatSurfaceForPickle(sprite),x,y)
 		self.goalCount = self.goalCount + 1
+
+	def addGoal(self,x,y):
+		self.goalGroup[self.goalCount] = (None,x,y)
+		self.goalCount = self.goalCount + 1
+		
 		
 	def getGoalGroup(self):
 		goalGroup = GoalGroup()
@@ -47,12 +52,15 @@ class Scenario:
 			pickledGoal = self.goalGroup[goalPtr]
 			goalGroup.add(Goal(self.formatPickleToSurface(pickledGoal[0]),pickledGoal[1],pickledGoal[2],self.boardStep))
 			goalPtr = goalPtr + 1
-		self.goalGroup = goalGroup
-		return self.goalGroup
-	
+		return goalGroup
+
 	def addObstacle(self,sprite,x,y):
 		sprite = pygame.image.load(sprite)
 		self.obstacleGroup[self.obstacleCount] = (self.formatSurfaceForPickle(sprite),x,y)
+		self.obstacleCount = self.obstacleCount + 1
+
+	def addObstacle(self,x,y):
+		self.obstacleGroup[self.obstacleCount] = (None,x,y)
 		self.obstacleCount = self.obstacleCount + 1
 		
 	def getObstacleGroup(self):
@@ -62,8 +70,7 @@ class Scenario:
 			pickledObs = self.obstacleGroup[obsPtr]
 			obstacleGroup.add(Obstacle(self.formatPickleToSurface(pickledObs[0]),pickledObs[1],pickledObs[2],self.boardStep))
 			obsPtr = obsPtr + 1
-		self.obstacleGroup = obstacleGroup
-		return self.obstacleGroup
+		return obstacleGroup
 		
 	def setBeeBotHeading(self,input):
 		self.beeBotHeading = input
@@ -103,9 +110,13 @@ class Scenario:
 		self.boardStep = input
 	
 	def formatPickleToSurface(self,input):
+		if input == None:
+			return None
 		return pygame.image.fromstring(input['image'],input['size'],input['format'])
 	
 	def formatSurfaceForPickle(self,input):
+		if input == None:
+			return None
 		return {'image': pygame.image.tostring(input,"RGBA"), 'size': input.get_size(), 'format': "RGBA"}
 		
 	def setBackground(self,inputString):

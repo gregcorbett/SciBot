@@ -12,4 +12,5 @@ class Obstacle(pygame.sprite.Sprite):
 		self.sprite = sprite
 		
 	def display(self,screen):
-		screen.blit(self.sprite,(self.screenLocationX,self.screenLocationY))
+		if self.sprite != None:
+			screen.blit(self.sprite,(self.screenLocationX,self.screenLocationY))

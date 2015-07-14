@@ -147,12 +147,12 @@ class BeeBot(pygame.sprite.Sprite):
 		self.checkLocationLogicalConsistent()
 
 	def moveRight(self,screen):
-		time.sleep(1)
+		time.sleep(0.5)
 		self.rotateSprite(-45)
 		self.board.display(screen)
 		self.display(screen)
 		pygame.display.update()	
-		time.sleep(1)
+		time.sleep(0.5)
 		if (self.heading == Heading.NORTH ):
 			self.heading = Heading.EAST
 			self.sprite = self.sprites[self.heading]
@@ -166,13 +166,15 @@ class BeeBot(pygame.sprite.Sprite):
 			self.heading = Heading.NORTH
 			self.sprite = self.sprites[self.heading]
 
+		time.sleep(0.5)	
+			
 	def moveLeft(self,screen):
-		time.sleep(1)
+		time.sleep(0.5)
 		self.rotateSprite(45)
 		self.board.display(screen)
 		self.display(screen)
 		pygame.display.update()	
-		time.sleep(1)
+		time.sleep(0.5)
 		
 		if (self.heading == Heading.NORTH ):
 			self.heading = Heading.WEST
@@ -185,7 +187,9 @@ class BeeBot(pygame.sprite.Sprite):
 			self.sprite = self.sprites[self.heading]
 		elif (self.heading == Heading.WEST ):
 			self.heading = Heading.SOUTH
-			self.sprite = self.sprites[self.heading]			
+			self.sprite = self.sprites[self.heading]	
+
+		time.sleep(0.5)
 				
 	def rotateSprite(self,angle):
 		orig_rect = self.sprite.get_rect()
