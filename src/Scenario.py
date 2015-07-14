@@ -81,8 +81,8 @@ class Scenario:
 	def getBeeBotStartPosition(self):
 		return self.beeBotStartPosition
 		
-	def setBeeBotStartPosition(self,input):
-		self.beeBotStartPosition = input
+	def setBeeBotStartPosition(self,x,y):
+		self.beeBotStartPosition = (x,y)
 	
 	def getLogicalHeight(self):
 		return self.logicalHeight
