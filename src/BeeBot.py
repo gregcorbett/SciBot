@@ -149,6 +149,7 @@ class BeeBot(pygame.sprite.Sprite):
 	def moveRight(self,screen):
 		time.sleep(1)
 		self.rotateSprite(-45)
+		self.board.display(screen)
 		self.display(screen)
 		pygame.display.update()	
 		time.sleep(1)
@@ -168,6 +169,7 @@ class BeeBot(pygame.sprite.Sprite):
 	def moveLeft(self,screen):
 		time.sleep(1)
 		self.rotateSprite(45)
+		self.board.display(screen)
 		self.display(screen)
 		pygame.display.update()	
 		time.sleep(1)

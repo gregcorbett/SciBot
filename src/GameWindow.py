@@ -15,6 +15,8 @@ class GameWindow():#threading.Thread):
 		self.scenario = None
 		#Somehow choose a scenario
 		
+		self.scenario = "UV"
+		
 		if self.scenario == None:
 			self.scenario = "Default"
 		
