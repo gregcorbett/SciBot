@@ -56,13 +56,14 @@ class Board:
 			obsPtr = obsPtr + 1
 		self.goalGroup.display(screen)
 		
-		iterWidth = 0
-		while (iterWidth <= self.width):
-			pygame.draw.line(screen,self.borderColour,(iterWidth,0),(iterWidth,self.height),5)
-			iterWidth = iterWidth + self.step
-		
-		iterHeight = 0
-		while (iterHeight <= self.height):
-			pygame.draw.line(screen,self.borderColour,(0,iterHeight),(self.width,iterHeight),5)
-			iterHeight = iterHeight + self.step
+		if self.borderColour != None:
+			iterWidth = 0
+			while (iterWidth <= self.width):
+				pygame.draw.line(screen,self.borderColour,(iterWidth,0),(iterWidth,self.height),5)
+				iterWidth = iterWidth + self.step
+			
+			iterHeight = 0
+			while (iterHeight <= self.height):
+				pygame.draw.line(screen,self.borderColour,(0,iterHeight),(self.width,iterHeight),5)
+				iterHeight = iterHeight + self.step
 		

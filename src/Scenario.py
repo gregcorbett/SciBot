@@ -116,10 +116,10 @@ class Scenario:
 		return self.formatPickleToSurface(self.background)
 		
 	def setBorderColour(self,input):
-		self.boardColour = input
+		self.borderColour = input
 	
 	def getBorderColour(self):
-		return self.boardColour
+		return self.borderColour
 	
 	def writeToFile(self):
 		pickle.dump( self, open( "./scenarios/"+ self.name +".scibot", "wb" ) )
