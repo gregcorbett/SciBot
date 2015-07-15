@@ -1,7 +1,7 @@
-from enum import IntEnum
+#from enum import IntEnum
 import pygame
 
-class CustomEvent(IntEnum):
+class CustomEvent():
 	MOVE_BEEBOT_UP = pygame.USEREVENT+1
 	MOVE_BEEBOT_LEFT = pygame.USEREVENT+2
 	MOVE_BEEBOT_DOWN = pygame.USEREVENT+3

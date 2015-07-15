@@ -1,11 +1,11 @@
 import pygame
 import time
-from enum import Enum
+#from enum import Enum
 import sys
 
 from src.CustomEvent import *
 
-class Heading(Enum):
+class Heading():
 	NORTH = 1
 	EAST = 2
 	SOUTH = 3
