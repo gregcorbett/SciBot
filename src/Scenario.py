@@ -5,7 +5,7 @@ from src.ObstacleGroup import *
 from src.Goal import *
 from src.GoalGroup import *
 
-class Scenario:
+class Scenario(object):
 	def __init__(self,name):
 		self.name = name
 		
@@ -35,15 +35,12 @@ class Scenario:
 	def getBeeBotFailSprite(self):
 		return self.formatPickleToSurface(self.beeBotFailSprite)
 	
-	def addGoal(self,sprite,x,y):
-		sprite = pygame.image.load(sprite)
-		self.goalGroup[self.goalCount] = (self.formatSurfaceForPickle(sprite),x,y)
+	def addGoal(self,x,y,sprite=None):
+		if sprite != None:
+			sprite = pygame.image.load(sprite)
+			sprite = self.formatSurfaceForPickle(sprite)
+		self.goalGroup[self.goalCount] = (sprite,x,y)
 		self.goalCount = self.goalCount + 1
-
-	def addGoal(self,x,y):
-		self.goalGroup[self.goalCount] = (None,x,y)
-		self.goalCount = self.goalCount + 1
-		
 		
 	def getGoalGroup(self):
 		goalGroup = GoalGroup()
@@ -54,15 +51,13 @@ class Scenario:
 			goalPtr = goalPtr + 1
 		return goalGroup
 
-	def addObstacle(self,sprite,x,y):
-		sprite = pygame.image.load(sprite)
-		self.obstacleGroup[self.obstacleCount] = (self.formatSurfaceForPickle(sprite),x,y)
+	def addObstacle(self,x,y,sprite=None):
+		if sprite != None:
+			sprite = pygame.image.load(sprite)
+			sprite = self.formatSurfaceForPickle(sprite)
+		self.obstacleGroup[self.obstacleCount] = (sprite,x,y)
 		self.obstacleCount = self.obstacleCount + 1
-
-	def addObstacle(self,x,y):
-		self.obstacleGroup[self.obstacleCount] = (None,x,y)
-		self.obstacleCount = self.obstacleCount + 1
-		
+	
 	def getObstacleGroup(self):
 		obstacleGroup = ObstacleGroup()
 		obsPtr = 0
@@ -133,4 +128,4 @@ class Scenario:
 		return self.borderColour
 	
 	def writeToFile(self):
-		pickle.dump( self, open( "./scenarios/"+ self.name +".scibot", "wb" ) )
+		pickle.dump( self, open( "./scenarios/"+ self.name +".scibot", "wb" ),protocol=2 )
