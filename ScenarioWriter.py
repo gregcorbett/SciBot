@@ -18,11 +18,11 @@ borderColour = (0,0,255)
 s.setBackground("./img/background.jpg")
 s.setBorderColour(borderColour)
 
-s.addObstacle("./img/obstacle1.jpg",2,1)
-s.addObstacle("./img/obstacle1.jpg",2,3)
+s.addObstacle(2,1,"./img/obstacle1.jpg")
+s.addObstacle(2,3,"./img/obstacle1.jpg")
 
-s.addGoal("./img/goal1.jpg",1,2)
-s.addGoal("./img/goal1.jpg",2,0)
+s.addGoal(1,2,"./img/goal1.jpg")
+s.addGoal(2,0,"./img/goal1.jpg")
 
 s.setBeeBotFailSprite("./img/robotx.jpg")
 		
