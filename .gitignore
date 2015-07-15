@@ -3,3 +3,5 @@ img/UV/*
 PrivateScenarioWriter.py
 scenarios/UV.scibot
 *.pyc
+*Thumbs.db
+pyg.exe.log
