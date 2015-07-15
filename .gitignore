@@ -2,3 +2,4 @@ img/UV/
 img/UV/*
 PrivateScenarioWriter.py
 scenarios/UV.scibot
+*.pyc
