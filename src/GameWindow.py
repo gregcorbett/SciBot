@@ -6,6 +6,7 @@ import pickle
 from src.BeeBot import *
 from src.Board import *
 from src.CustomEvent import *
+from src.Scenario import *
 
 class GameWindow():#threading.Thread):
 	def __init__(self):
@@ -15,12 +16,12 @@ class GameWindow():#threading.Thread):
 		self.scenario = None
 		#Somehow choose a scenario
 		
-		#self.scenario = "UV"
+		self.scenario = "UV"
 		
 		if self.scenario == None:
 			self.scenario = "Default"
 		
-		self.scenario = pickle.load( open( "./scenarios/" + self.scenario + ".scibot", "rb" ) )
+		self.scenario = pickle.load( open( "../scenarios/" + self.scenario + ".scibot", "rb" ) )
 	
 	def loadScenario(self):
 		#	super(GameWindow,self).__init__()
