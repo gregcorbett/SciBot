@@ -21,7 +21,7 @@ class GameWindow():#threading.Thread):
 		if self.scenario == None:
 			self.scenario = "Default"
 		
-		self.scenario = pickle.load( open( "../scenarios/" + self.scenario + ".scibot", "rb" ) )
+		self.scenario = pickle.load( open( "./scenarios/" + self.scenario + ".scibot", "rb" ) )
 	
 	def loadScenario(self):
 		#	super(GameWindow,self).__init__()
