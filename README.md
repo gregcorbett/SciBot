@@ -22,7 +22,7 @@ Microsoft installers have been linked for each requirement for easy of installat
   * exact version used in testing ( https://www.python.org/ftp/python/3.4.3/python-3.4.3.msi)
 2. Pygame, 1.9.2 or higher (https://www.python.org/downloads/)
   * exact version used in testing (http://pygame.org/ftp/pygame-1.9.2a0.win32-py3.2.msi)
-3. py2exe 0.9.2.2(https://pypi.python.org/pypi/py2exe/)
+3. py2exe 0.9.2.2 (https://pypi.python.org/pypi/py2exe/)
   * exact version used in testing (https://pypi.python.org/packages/any/p/py2exe/py2exe-0.9.2.2.win32.exe)
 
 ##Building the exe file
