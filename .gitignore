@@ -5,3 +5,4 @@ scenarios/UV.scibot
 *.pyc
 *Thumbs.db
 pyg.exe.log
+runSciBot.log
