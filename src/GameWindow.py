@@ -8,7 +8,7 @@ from src.Board import *
 from src.CustomEvent import *
 from src.Scenario import *
 
-class GameWindow():#threading.Thread):
+class GameWindow():
 	def __init__(self):
 		pygame.init()
 		
@@ -24,7 +24,6 @@ class GameWindow():#threading.Thread):
 		self.scenario = pickle.load( open( "./scenarios/" + self.scenario + ".scibot", "rb" ) )
 	
 	def loadScenario(self):
-		#	super(GameWindow,self).__init__()
 		
 		self.step = self.scenario.getBoardStep()
 		self.height = self.scenario.getLogicalHeight()*self.step
@@ -42,12 +41,8 @@ class GameWindow():#threading.Thread):
 		self.clock = pygame.time.Clock()
 			
 	def startScenario(self):
-		
-		#pygame.event.set_allowed([])
-		#pygame.event.set_allowed([pygame.KEYDOWN,pygame.QUIT])
-		
+			
 		while True:
-			#pygame.event.pump()
 			event = pygame.event.poll()
 			
 			if event.type == pygame.QUIT:
@@ -79,12 +74,7 @@ class GameWindow():#threading.Thread):
 				self.robot.move(event,self.screen)
 				self.checkForObstacleCollisions()
 				self.checkForGoalCollisions()
-				
-			#newEvent = pygame.event.Event(Direction.LEFT)
-			#print(newEvent.type)
-			#pygame.quit()
-			#sys.exit()
-			
+					
 			self.display()
 			pygame.display.update()
 			self.clock.tick(30)
@@ -112,12 +102,3 @@ class GameWindow():#threading.Thread):
 	def display(self):
 		self.board.display(self.screen)
 		self.robot.display(self.screen)
-	
-	#def run(self):
-	#		clock = pygame.time.Clock()
-	#		while True:
-	#			self.board.display(self.screen)
-	#			self.robot.display(self.screen)
-	#			pygame.display.update()
-				#time.sleep(0.2)
-				#clock.tick(30)

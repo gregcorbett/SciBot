@@ -5,7 +5,7 @@ from src.ObstacleGroup import *
 from src.Goal import *
 from src.GoalGroup import *
 
-class Scenario(object):
+class Scenario():
 	def __init__(self,name):
 		self.name = name
 		
@@ -128,4 +128,4 @@ class Scenario(object):
 		return self.borderColour
 	
 	def writeToFile(self):
-		pickle.dump( self, open( "./scenarios/"+ self.name +".scibot", "wb" ),protocol=2 )
+		pickle.dump( self, open( "./scenarios/"+ self.name +".scibot", "wb" ) )
