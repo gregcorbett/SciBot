@@ -43,12 +43,16 @@ class BeeBot(pygame.sprite.Sprite):
 	def move(self,event,screen):
 		if event.type == CustomEvent.MOVE_BEEBOT_UP:
 			self.moveForward(screen)
+			time.sleep(0.5)
 		if event.type == CustomEvent.MOVE_BEEBOT_DOWN:
 			self.moveBackward(screen)
+			time.sleep(0.5)
 		if event.type == CustomEvent.MOVE_BEEBOT_LEFT:
 			self.moveLeft(screen)
+			time.sleep(0.5)
 		if event.type == CustomEvent.MOVE_BEEBOT_RIGHT:
 			self.moveRight(screen)
+			time.sleep(0.5)			
 
 	def addToMemory(self,event):
 		self.memory[self.memoryCount] = event
@@ -60,12 +64,18 @@ class BeeBot(pygame.sprite.Sprite):
 			pygame.event.post(self.memory[memPtr])
 			memPtr = memPtr + 1
 			time.sleep(0.005)
+
+	def clearMemory(self):
 		self.memory = {}
 		self.memoryCount = 0
 
+	def resetMemory(self):
+		self.memory = safe.safeMem
+		self.memoryCount = safe.safeMemCount
+
 	def display(self,screen):
 		screen.blit(self.sprite,(self.screenLocationX,self.screenLocationY))
-	
+		
 	def moveBackward(self,screen):
 		if (self.heading == Heading.SOUTH ):
 			incrStep = 0
