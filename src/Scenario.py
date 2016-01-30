@@ -10,7 +10,6 @@ class Scenario():
 	def __init__(self,name):
 				
 		self.elements = {}
-		self.name = name
 		self.elements['Name'] = name
 			
 	def get_element(self,key):
