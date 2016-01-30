@@ -142,5 +142,8 @@ class Scenario():
 	def getBorderColour(self):
 		return self.borderColour
 	
+	def getName(self):
+		return self.elements['Name']
+	
 	def writeToFile(self):
 		pickle.dump( self, open( "./scenarios/"+ self.name +".scibot", "wb" ) )
