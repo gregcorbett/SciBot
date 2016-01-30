@@ -18,32 +18,38 @@ class Scenario():
 			return None
 		
 		switcher = {
-			'Name': self.getName(),
-			'BoardStep': self.getBoardStep(),
-			'LogicalWidth': self.getLogicalWidth(),
-			'LogicalHeight': self.getLogicalHeight(),
-			'Background': self.getBackground(),
-			'BorderColour': self.getBorderColour(),
-			'BeeBotSprite': self.getBeeBotSprite(),
-			'BeeBotStartPosition': self.getBeeBotStartPosition(),
-			'BeeBotHeading': self.getBeeBotHeading(),
-			'ObstacleGroup': self.getObstacleGroup(),
-			'ObstacleCount': self.getObstacleCount(),
-			'GoalGroup': self.getGoalGroup(),
-			'GoalCount': self.getGoalCount(),
-			'BeeBotFailSprite': self.getBeeBotFailSprite(),
+			'Name': self.get_name(),
+			'BoardStep': self.get_board_step(),
+			'LogicalWidth': self.get_logical_width(),
+			'LogicalHeight': self.get_logical_height(),
+			'Background': self.get_background(),
+			'BorderColour': self.get_border_colour(),
+			'BeeBotSprite': self.get_beebot_sprite(),
+			'BeeBotStartPosition': self.get_beebot_start_position(),
+			'BeeBotHeading': self.get_beebot_heading(),
+			'ObstacleGroup': self.get_obstacle_group(),
+			'ObstacleCount': self.get_obstacle_count(),
+			'GoalGroup': self.get_goal_group(),
+			'GoalCount': self.get_goal_count(),
+			'BeeBotFailSprite': self.get_beebot_fail_sprite(),
 		}
 		
 		return switcher.get(key)
-		
-	def setBeeBotFailSprite(self,inputString):
-		input = pygame.image.load(inputString)
-		self.elements['BeeBotFailSprite'] = self.formatSurfaceForPickle(input)
-		
-	def getBeeBotFailSprite(self):
-		return self.formatPickleToSurface(self.elements['BeeBotFailSprite'])
 	
-	def addGoal(self,x,y,sprite=None):
+	def get_obstacle_count(self):
+		return self.elements['ObstacleCount']
+	
+	def get_goal_count(self):
+		return self.elements['GoalCount']
+	
+	def set_beebot_fail_sprite(self,inputString):
+		input = pygame.image.load(inputString)
+		self.elements['BeeBotFailSprite'] = self.format_surface_for_pickle(input)
+		
+	def get_beebot_fail_sprite(self):
+		return self.format_pickle_to_surface(self.elements['BeeBotFailSprite'])
+	
+	def add_goal(self,x,y,sprite=None):
 	
 		if 'GoalGroup' not in self.elements:
 			self.elements['GoalGroup'] = {}
@@ -51,21 +57,21 @@ class Scenario():
 			
 		if sprite != None:
 			sprite = pygame.image.load(sprite)
-			sprite = self.formatSurfaceForPickle(sprite)
+			sprite = self.format_surface_for_pickle(sprite)
 
 		self.elements['GoalGroup'][self.elements['GoalCount']] = (sprite,x,y)
 		self.elements['GoalCount'] = self.elements['GoalCount'] + 1
 		
-	def getGoalGroup(self):
+	def get_goal_group(self):
 		goalGroup = GoalGroup()
 		goalPtr = 0
 		while goalPtr < self.elements['GoalCount']:
 			pickledGoal = self.elements['GoalGroup'][goalPtr]
-			goalGroup.add(Goal(self.formatPickleToSurface(pickledGoal[0]),pickledGoal[1],pickledGoal[2],self.elements['BoardStep']))
+			goalGroup.add(Goal(self.format_pickle_to_surface(pickledGoal[0]),pickledGoal[1],pickledGoal[2],self.elements['BoardStep']))
 			goalPtr = goalPtr + 1
 		return goalGroup
 
-	def addObstacle(self,x,y,sprite=None):
+	def add_obstacle(self,x,y,sprite=None):
 	
 		if 'ObstacleGroup' not in self.elements:
 			self.elements['ObstacleGroup'] = {}
@@ -73,81 +79,81 @@ class Scenario():
 			
 		if sprite != None:
 			sprite = pygame.image.load(sprite)
-			sprite = self.formatSurfaceForPickle(sprite)
+			sprite = self.format_surface_for_pickle(sprite)
 		self.elements['ObstacleGroup'][self.elements['ObstacleCount']] = (sprite,x,y)
 		self.elements['ObstacleCount'] = self.elements['ObstacleCount'] + 1
 	
-	def getObstacleGroup(self):
+	def get_obstacle_group(self):
 		obstacleGroup = ObstacleGroup()
 		obsPtr = 0
 		while obsPtr < self.elements['ObstacleCount']:
 			pickledObs = self.elements['ObstacleGroup'][obsPtr]
-			obstacleGroup.add(Obstacle(self.formatPickleToSurface(pickledObs[0]),pickledObs[1],pickledObs[2],self.elements['BoardStep']))
+			obstacleGroup.add(Obstacle(self.format_pickle_to_surface(pickledObs[0]),pickledObs[1],pickledObs[2],self.elements['BoardStep']))
 			obsPtr = obsPtr + 1
 		return obstacleGroup
 		
-	def setBeeBotHeading(self,input):
+	def set_beebot_heading(self,input):
 		self.elements['BeeBotHeading'] = input
 
-	def getBeeBotHeading(self):
+	def get_beebot_heading(self):
 		return self.elements['BeeBotHeading']
 		
-	def setBeeBotSprite(self,inputString):
+	def set_beebot_sprite(self,inputString):
 		input = pygame.image.load(inputString)
-		self.elements['BeeBotSprite'] = self.formatSurfaceForPickle(input)
+		self.elements['BeeBotSprite'] = self.format_surface_for_pickle(input)
 		
-	def getBeeBotSprite(self):
-		return self.formatPickleToSurface(self.elements['BeeBotSprite'])
+	def get_beebot_sprite(self):
+		return self.format_pickle_to_surface(self.elements['BeeBotSprite'])
 		
-	def getBeeBotStartPosition(self):
+	def get_beebot_start_position(self):
 		return self.elements['BeeBotStartPosition']
 		
-	def setBeeBotStartPosition(self,x,y):
+	def set_beebot_start_position(self,x,y):
 		self.elements['BeeBotStartPosition'] = (x,y)
 	
-	def getLogicalHeight(self):
+	def get_logical_height(self):
 		return self.elements['LogicalHeight']
 		
-	def getLogicalWidth(self):
+	def get_logical_width(self):
 		return self.elements['LogicalWidth']	
 
-	def setLogicalHeight(self,input):
+	def set_logical_height(self,input):
 		self.elements['LogicalHeight'] = input
 		
-	def setLogicalWidth(self,input):
+	def set_logical_width(self,input):
 		self.elements['LogicalWidth'] = input
 		
-	def getBoardStep(self):
+	def get_board_step(self):
 		return self.elements['BoardStep']
 		
-	def setBoardStep(self,input):
+	def set_board_step(self,input):
 		self.elements['BoardStep'] = input
 	
-	def formatPickleToSurface(self,input):
+	def format_pickle_to_surface(self,input):
 		if input == None:
 			return None
 		return pygame.image.fromstring(input['image'],input['size'],input['format'])
 	
-	def formatSurfaceForPickle(self,input):
+	def format_surface_for_pickle(self,input):
 		if input == None:
 			return None
 		return {'image': pygame.image.tostring(input,"RGBA"), 'size': input.get_size(), 'format': "RGBA"}
 		
-	def setBackground(self,inputString):
+	def set_background(self,inputString):
 		input = pygame.image.load(inputString)
-		self.elements['Background'] = self.formatSurfaceForPickle(input)
+		self.elements['Background'] = self.format_surface_for_pickle(input)
 		
-	def getBackground(self):
-		return self.formatPickleToSurface(self.elements['Background'])
+	def get_background(self):
+		return self.format_pickle_to_surface(self.elements['Background'])
 		
-	def setBorderColour(self,input):
+	def set_border_colour(self,input):
 		self.elements['BorderColour'] = input
 	
-	def getBorderColour(self):
+	def get_border_colour(self):
 		return self.elements['BorderColour']
 	
-	def getName(self):
+	def get_name(self):
 		return self.elements['Name']
 	
-	def writeToFile(self):
-		pickle.dump( self, open( "./scenarios/"+ self.name +".scibot", "wb" ) )
+	def write_to_file(self):
+		pickle.dump( self, open( "./scenarios/"+ self.elements['Name'] +".scibot", "wb" ) )

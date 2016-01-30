@@ -32,11 +32,11 @@ class GameWindow():
 	
 	def loadScenario(self):
 		
-		self.step = self.scenario.getBoardStep()
-		self.height = self.scenario.getLogicalHeight()*self.step
-		self.width = self.scenario.getLogicalWidth()*self.step
+		self.step = self.scenario.get_element('BoardStep')
+		self.height = self.scenario.get_element('LogicalHeight')*self.step
+		self.width = self.scenario.get_element('LogicalWidth')*self.step
 		
-		self.board = Board(self.scenario.getLogicalWidth(),self.scenario.getLogicalHeight(),self.step,self.scenario) #Board.py
+		self.board = Board(self.scenario.get_element('LogicalWidth'),self.scenario.get_element('LogicalHeight'),self.step,self.scenario) #Board.py
 		self.size = (self.width,self.height)
 		
 		self.robot = BeeBot(self.board,self.scenario)

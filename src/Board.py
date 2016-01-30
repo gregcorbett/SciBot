@@ -18,13 +18,13 @@ class Board:
 		self.height = height*step
 		self.width = width*step
 		
-		self.background=scenario.getBackground()
+		self.background=scenario.get_element('Background')
 		
-		self.borderColour = scenario.getBorderColour()
+		self.borderColour = scenario.get_element('BorderColour')
 		
-		self.obstacleGroup = scenario.getObstacleGroup()
+		self.obstacleGroup = scenario.get_element('ObstacleGroup')
 
-		self.goalGroup = scenario.getGoalGroup()
+		self.goalGroup = scenario.get_element('GoalGroup')
 		
 		if (self.height != self.background.get_height()):
 			print("Error 1: board height does not match image height")
