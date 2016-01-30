@@ -6,8 +6,16 @@ from src.Goal import *
 from src.GoalGroup import *
 
 class Scenario():
+
 	def __init__(self,name):
+				
+		self.elements = {}
 		self.name = name
+		self.elements['Name'] = name
+		
+		self.switcher = {
+			'Name': self.elements['Name'],
+		}
 		
 		self.boardStep = 0
 		self.logicalWidth = 0
@@ -27,7 +35,14 @@ class Scenario():
 		self.goalCount = 0
 		
 		self.beeBotFailSprite = None
+		
+	def get_element(self,key):
 	
+		if key not in self.elements:
+			return None
+			
+		return self.switcher.get(key)
+		
 	def setBeeBotFailSprite(self,inputString):
 		input = pygame.image.load(inputString)
 		self.beeBotFailSprite = self.formatSurfaceForPickle(input)
