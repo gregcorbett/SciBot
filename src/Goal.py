@@ -17,6 +17,8 @@ class Goal(Sprite):
         self.screen_location_x = start_logical_position_x * step
         self.screen_location_y = start_logical_position_y * step
 
+        self.has_been_met = False
+        
         self.sprite = sprite
 
         # calling superclass constructor

@@ -16,7 +16,7 @@ s.set_logical_height(8)
 
 #the dimensions of the image must match up exactly with how the map is represented in the program, ie the image width must be BoardStep * LogicalWidth
 
-#sets the bee bot starting square (x,y) 
+#sets the bee bot starting square (x,y)
 s.set_beebot_start_position(3,1)
 #set the beebot sprite
 s.set_beebot_sprite("./img/Default/robot.jpg")
@@ -29,19 +29,19 @@ s.set_background("./img/Default/background.jpg")
 border_colour = (0,0,255)
 s.set_border_colour(border_colour)
 
-#this line addes an obstacle at square (2,1) with sprite "./img/Default/obstacle1.jpg". 
+#this line addes an obstacle at square (2,1) with sprite "./img/Default/obstacle1.jpg".
 #s.addObstacle(2,1) addes an obstacle at (2,1) with no sprite, ie it will show whatever is on the background
 s.add_obstacle(2,1,"./img/Default/obstacle1.jpg")
 #this line addes an obstacle at square (2,3) with sprite "./img/Default/obstacle1.jpg".
 s.add_obstacle(2,3,"./img/Default/obstacle1.jpg")
 
-#this line adds an goal square at (1,2) with sprite "./img/Default/goal1.jpg"
-#again, s.addGoal(1,2) would add a spriteless goal at (1,2)
+
+#adds an goal square at (1,2) with sprite "./img/Default/goal1.jpg"
 s.add_goal(1,2,"./img/Default/goal1.jpg")
-#currently, goals must be reached by the beebot in the order they are added
+#again, s.addGoal(1,2) would add a spriteless goal at (1,2)
 s.add_goal(2,0,"./img/Default/goal1.jpg")
 
 #sets the sprite to be displayed when the robot crashes
 s.set_beebot_fail_sprite("./img/Default/robotx.jpg")
-		
+
 s.write_to_file()

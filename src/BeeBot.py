@@ -63,7 +63,6 @@ class BeeBot(pygame.sprite.Sprite):
         while ( memPtr < self.memoryCount ):
             pygame.event.post(self.memory[memPtr])
             memPtr = memPtr + 1
-            time.sleep(0.005)
 
     def clearMemory(self):
         self.memory = {}
