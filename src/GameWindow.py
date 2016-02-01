@@ -140,14 +140,11 @@ class GameWindow():
                     pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
 
     def checkForObstacleCollisions(self):
-        obsPtr = 0
-        while obsPtr < self.board.obstacleGroup.obstacleCount:
-            obs = self.board.obstacleGroup.obstacles[obsPtr]
-            if self.robot.logical_position_x == obs.logical_position_x and self.robot.logical_position_y == obs.logical_position_y:
+        for obstacle in self.board.obstacleGroup.obstacles:
+            if self.robot.logical_position_x == obstacle.logical_position_x and self.robot.logical_position_y == obstacle.logical_position_y:
                 self.robot.sprite = self.robot.failSprite
                 pygame.event.clear()
                 pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
-            obsPtr = obsPtr + 1
 
     def display(self):
         self.board.display(self.screen)
