@@ -6,6 +6,7 @@ from pygame import USEREVENT
 class CustomEvent(IntEnum):
     """A class of IntEnums for locally defined events, such as RUN_FAIL."""
 
+    # events MUST sequentially build up from USEREVENT
     # BeeBot movement events
     MOVE_BEEBOT_UP = USEREVENT + 1
     MOVE_BEEBOT_LEFT = USEREVENT + 2
