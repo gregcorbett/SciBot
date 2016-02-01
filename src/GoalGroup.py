@@ -6,14 +6,11 @@ class GoalGroup:
 
     def __init__(self):
         """Create an empty GoalGroup."""
-#        self.goal_count = 0  # The number of Goal objects in the group
         self.goals = []  # The underlying Goal objects
-#        self._goal_ptr = 0  # A pointer for manipulating Goal objects
 
     def add(self, goal):
         """Add a Goal to the GoalGroup."""
         self.goals.append(goal)
-#        self.goal_count = self.goal_count + 1
 
     def display(self, screen):
         """Draw all Goal objects in the GoalGroup."""
