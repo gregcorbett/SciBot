@@ -2,7 +2,7 @@
 
 
 class GoalGroup:
-    """This class defines a store for all the _goals used."""
+    """This class defines a store for all the goals used."""
 
     def __init__(self):
         """Create an empty GoalGroup."""
