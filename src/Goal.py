@@ -7,8 +7,8 @@ class Goal(Sprite):
 
     def __init__(self,
                  sprite,  # The image to display (can be None)
-                 start_logical_position_x,  # The start x position of the Goal
-                 start_logical_position_y,  # The start y position of the Goal
+                 start_logical_position_x,  # The starting x of the Goal
+                 start_logical_position_y,  # The starting y of the Goal
                  step):  # Should be the same as the BeeBot step
         """Create a Goal."""
         self.logical_position_x = start_logical_position_x
