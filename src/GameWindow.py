@@ -92,7 +92,7 @@ class GameWindow():
                 pygame.display.update()
                 time.sleep(2)
 
-                self.board.goalGroup.goalPtr = 0 # resetting the wins
+                self.board.goalGroup.goal_ptr = 0 # resetting the wins
                 safeMem = self.robot.memory                 # saving moves so far
                 safeMemCount = self.robot.memoryCount
                 self.robot = BeeBot(self.board,self.scenario) # resetting the board
@@ -132,10 +132,10 @@ class GameWindow():
 
 
     def checkForGoalCollisions(self):
-        currentGoal = self.board.goalGroup.goals[self.board.goalGroup.goalPtr]
+        currentGoal = self.board.goalGroup.goals[self.board.goalGroup.goal_ptr]
         if self.robot.logical_position_x == currentGoal.logical_position_x and self.robot.logical_position_y == currentGoal.logical_position_y:
-            self.board.goalGroup.goalPtr = self.board.goalGroup.goalPtr + 1
-            if self.board.goalGroup.goalPtr == self.board.goalGroup.goalCount:
+            self.board.goalGroup.goal_ptr = self.board.goalGroup.goal_ptr + 1
+            if self.board.goalGroup.goal_ptr == self.board.goalGroup.goal_count:
                 #final goal
                 pygame.event.clear()
                 pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
