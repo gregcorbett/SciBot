@@ -21,9 +21,7 @@ class GoalGroup:
         """True iff all the Goal objects in the GoalGroup have been met."""
         for goal in self.goals:
             if not goal.has_been_met:
-                print("Goal has not been met!")
                 return False
-        print("Goal has been met!")
         return True
 
     def reset_all_goals(self):
