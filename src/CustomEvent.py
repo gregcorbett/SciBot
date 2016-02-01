@@ -1,11 +1,11 @@
-"""This file contains the CustomEvent class"""
-
+"""This file contains the CustomEvent class."""
 from enum import IntEnum
 from pygame import USEREVENT
 
 
 class CustomEvent(IntEnum):
-    """A class of IntEnums for locally defined events, such as RUN_FAIL"""
+    """A class of IntEnums for locally defined events, such as RUN_FAIL."""
+
     MOVE_BEEBOT_UP = USEREVENT + 1
     MOVE_BEEBOT_LEFT = USEREVENT + 2
     MOVE_BEEBOT_DOWN = USEREVENT + 3
