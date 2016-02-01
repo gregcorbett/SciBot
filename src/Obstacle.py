@@ -1,8 +1,16 @@
-import pygame
+"""This file defines the Object class."""
+from pygame.sprite import Sprite
 
-class Obstacle(pygame.sprite.Sprite):
-    def __init__(self,sprite,start_logical_position_x,start_logical_position_y,step):
 
+class Obstacle(Sprite):
+    """This class defines an individual Obstacle."""
+
+    def __init__(self,
+                 sprite,  # The image to display (can be None)
+                 start_logical_position_x,  # The starting x of the Obstacle
+                 start_logical_position_y,  # The starting y of the Obstacle
+                 step):  # Should be the same as the BeeBot step
+        """Create a Obstacle."""
         self.logical_position_x = start_logical_position_x
         self.logical_position_y = start_logical_position_y
 
@@ -11,6 +19,11 @@ class Obstacle(pygame.sprite.Sprite):
 
         self.sprite = sprite
 
-    def display(self,screen):
-        if self.sprite != None:
-            screen.blit(self.sprite,(self.screen_location_x,self.screen_location_y))
+        # calling superclass constructor
+        Sprite.__init__(self)
+
+    def display(self, screen):
+        """Draw the Obstacle object on screen, if it has a sprite."""
+        if self.sprite is not None:
+            screen.blit(self.sprite, (self.screen_location_x,
+                                      self.screen_location_y))
