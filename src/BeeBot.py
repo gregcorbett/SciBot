@@ -213,7 +213,6 @@ class BeeBot(pygame.sprite.Sprite):
         sprite_copy = self.sprite.copy()  # this seems to stop thread errors
         orig_rect = sprite_copy.get_rect()
         rot_image = pygame.transform.rotate(sprite_copy, angle)
-        self.sprite = rot_image
         rot_rect = orig_rect.copy()
         rot_rect.center = rot_image.get_rect().center
         self.sprite = rot_image.subsurface(rot_rect).copy()
