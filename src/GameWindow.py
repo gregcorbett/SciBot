@@ -51,7 +51,7 @@ class GameWindow(threading.Thread):
         self.board = Board(self.scenario.get_element('LogicalWidth'),self.scenario.get_element('LogicalHeight'),self.step,self.scenario) #Board.py
         self.size = (self.width,self.height)
 
-        self.robot = BeeBot(self.board,self.scenario)
+        self.robot = BeeBot(self.scenario)
         safeMem ={}
         safeMemCount = 0
 
