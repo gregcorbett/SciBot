@@ -116,26 +116,27 @@ class GameWindow(threading.Thread):
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
-                    self.robot.addToMemory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP))
+                    self.robot.add_to_memory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP))
                 if event.key == pygame.K_DOWN:
-                    self.robot.addToMemory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_DOWN))
+                    self.robot.add_to_memory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_DOWN))
                 if event.key == pygame.K_LEFT:
-                    self.robot.addToMemory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT))
+                    self.robot.add_to_memory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT))
                 if event.key == pygame.K_RIGHT:
-                    self.robot.addToMemory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_RIGHT))
+                    self.robot.add_to_memory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_RIGHT))
                 if event.key == pygame.K_SPACE: # space puts the robot back to the start - it doesn't clear the memory!
-                                        safeMem = self.robot.memory
-                                        safeMemCount = self.robot.memoryCount
-                                        self.robot = BeeBot(self.board,self.scenario)
-                                        self.robot.memory = safeMem
-                                        self.robot.memoryCount = safeMemCount
+                                        pass
+                                        #safeMem = self.robot.memory
+                                        #safeMemCount = self.robot.memoryCount
+                                        #self.robot = BeeBot(self.board,self.scenario)
+                                        #self.robot.memory = safeMem
+                                        #self.robot.memoryCount = safeMemCount
                 if event.key == ord('x') or event.key == ord('X'):  # X clears the memory
                                         self.robot.memoryCount = safeMemCount
                 if event.key == ord('g') or event.key == ord('G'):
-                        self.robot.pushOutMemory()
+                        self.robot.push_out_memory()
 
             if event.type >= CustomEvent.MOVE_BEEBOT_UP and event.type <= CustomEvent.MOVE_BEEBOT_RIGHT:
-                self.robot.move(event,self.screen)
+                self.robot.move(event)
                 self.checkForObstacleCollisions()
                 self.checkForGoalCollisions()
 
@@ -155,7 +156,7 @@ class GameWindow(threading.Thread):
     def checkForObstacleCollisions(self):
         for obstacle in self.board.obstacleGroup.obstacles:
             if self.robot.logical_position_x == obstacle.logical_position_x and self.robot.logical_position_y == obstacle.logical_position_y:
-                self.robot.sprite = self.robot.failSprite
+                self.robot.heading = Heading.FAIL
                 pygame.event.clear()
                 pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
 
