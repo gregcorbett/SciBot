@@ -215,7 +215,7 @@ class BeeBot(pygame.sprite.Sprite):
         rot_image = pygame.transform.rotate(sprite_copy, angle)
         rot_rect = orig_rect.copy()
         rot_rect.center = rot_image.get_rect().center
-        self.sprite = rot_image.subsurface(rot_rect).copy()
+        self.sprite = rot_image.subsurface(rot_rect)
 
     def checkLocationLogicalConsistent(self):
         if ( self.screen_location_x != self.logical_position_x * self.board.step):
