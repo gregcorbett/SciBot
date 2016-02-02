@@ -26,9 +26,10 @@ class GameWindow(threading.Thread):
                 self.board.display(self.screen)
             if self.robot is not None:
                 self.robot.display(self.screen)
-            pygame.display.update()
-            print("BOO")
             time.sleep(0.01)
+            pygame.display.update()
+            #print("BOO")
+
 
     def chooseScenario(self):
         self.scenario = None
@@ -73,45 +74,45 @@ class GameWindow(threading.Thread):
             if event.type == CustomEvent.RUN_FAIL:
                 time.sleep(2)
 
-                self.screen.fill(BLACK) # displaying a fail message
-                basicFont = pygame.font.Font("./src/freesansbold.ttf", 30)
-                text = basicFont.render('Oh no, you crashed! Try again!', True, WHITE, BLACK)
-                textRect = text.get_rect()
-                textRect.centerx = self.screen.get_rect().centerx
-                textRect.centery = self.screen.get_rect().centery
-                self.screen.blit(text, textRect)
-                pygame.display.update()
-                time.sleep(2)
+                #self.screen.fill(BLACK) # displaying a fail message
+                #basicFont = pygame.font.Font("./src/freesansbold.ttf", 30)
+                #text = basicFont.render('Oh no, you crashed! Try again!', True, WHITE, BLACK)
+                #textRect = text.get_rect()
+                #textRect.centerx = self.screen.get_rect().centerx
+                #textRect.centery = self.screen.get_rect().centery
+                #self.screen.blit(text, textRect)
+                #pygame.display.update()
+                #time.sleep(2)
 
-                safeMem = self.robot.memory                 # saving moves so far
-                safeMemCount = self.robot.memoryCount
-                self.robot = BeeBot(self.board,self.scenario)# resetting the board
-                self.robot.memory = safeMem                 # resetting memory of moves
-                self.robot.memoryCount = safeMemCount
-                #pygame.quit()
-                #sys.exit()
+                #safeMem = self.robot.memory                 # saving moves so far
+                #safeMemCount = self.robot.memoryCount
+                #self.robot = BeeBot(self.board,self.scenario)# resetting the board
+                #self.robot.memory = safeMem                 # resetting memory of moves
+                #self.robot.memoryCount = safeMemCount
+                pygame.quit()
+                sys.exit()
 
             if event.type == CustomEvent.RUN_WIN:
-                time.sleep(2)
+                #time.sleep(2)
 
-                self.screen.fill(RED) # displaying a win message
-                basicFont = pygame.font.Font("./src/freesansbold.ttf", 30)
-                text = basicFont.render('Hooray you won!! Play again!', True, WHITE, RED)
-                textRect = text.get_rect()
-                textRect.centerx = self.screen.get_rect().centerx
-                textRect.centery = self.screen.get_rect().centery
-                self.screen.blit(text, textRect)
-                pygame.display.update()
-                time.sleep(2)
+                #self.screen.fill(RED) # displaying a win message
+                #basicFont = pygame.font.Font("./src/freesansbold.ttf", 30)
+                #text = basicFont.render('Hooray you won!! Play again!', True, WHITE, RED)
+                #textRect = text.get_rect()
+                #textRect.centerx = self.screen.get_rect().centerx
+                #textRect.centery = self.screen.get_rect().centery
+                #self.screen.blit(text, textRect)
+                #pygame.display.update()
+                #time.sleep(2)
 
-                self.board.goalGroup.reset_all_goals()  # resetting the wins
-                safeMem = self.robot.memory                 # saving moves so far
-                safeMemCount = self.robot.memoryCount
-                self.robot = BeeBot(self.board,self.scenario) # resetting the board
-                self.robot.memory = safeMem                 # resetting memory of moves
-                self.robot.memoryCount = safeMemCount
-                #pygame.quit()
-                #sys.exit()
+                #self.board.goalGroup.reset_all_goals()  # resetting the wins
+                #safeMem = self.robot.memory                 # saving moves so far
+                #safeMemCount = self.robot.memoryCount
+                #self.robot = BeeBot(self.board,self.scenario) # resetting the board
+                #self.robot.memory = safeMem                 # resetting memory of moves
+                #self.robot.memoryCount = safeMemCount
+                pygame.quit()
+                sys.exit()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:

@@ -167,9 +167,9 @@ class BeeBot(pygame.sprite.Sprite):
     def moveRight(self,screen):
         time.sleep(0.5)
         self.rotateSprite(-45)
-        self.board.display(screen)
-        self.display(screen)
-        pygame.display.update()
+        #self.board.display(screen)
+        #self.display(screen)
+        #pygame.display.update()
         time.sleep(0.5)
         if (self.heading == Heading.NORTH ):
             self.heading = Heading.EAST
@@ -210,11 +210,13 @@ class BeeBot(pygame.sprite.Sprite):
         time.sleep(0.5)
 
     def rotateSprite(self,angle):
-        orig_rect = self.sprite.get_rect()
-        rot_image = pygame.transform.rotate(self.sprite, angle)
-        rot_rect = orig_rect.copy()
-        rot_rect.center = rot_image.get_rect().center
-        self.sprite = rot_image.subsurface(rot_rect).copy()
+        pass
+        #orig_rect = self.sprite.get_rect()
+        #rot_image = pygame.transform.rotate(self.sprite, angle)
+        #self.sprite = rot_image
+        #rot_rect = orig_rect.copy()
+        #rot_rect.center = rot_image.get_rect().center
+        #self.sprite = rot_image.subsurface(rot_rect).copy()
 
     def checkLocationLogicalConsistent(self):
         if ( self.screen_location_x != self.logical_position_x * self.board.step):
