@@ -1,10 +1,10 @@
 """This file defines the BeeBot class and the Heading Enum."""
 
 
+import pygame
 from enum import Enum
 #from time import sleep
 from src.CustomEvent import CustomEvent
-import pygame
 import time
 
 class Heading(Enum):
@@ -19,25 +19,27 @@ class Heading(Enum):
 class BeeBot(pygame.sprite.Sprite):
     """This class defines the BeeBot."""
 
-    def __init__(self, board, scenario):
+    def __init__(self, scenario):
         """Create a BeeBot."""
-        self.board = board  # TODO: why is this needed?
+        start_logical_position = scenario.get_element('BeeBotStartPosition')
+        start_logical_position_x = start_logical_position[0]  # x co-ord
+        start_logical_position_y = start_logical_position[1]  # y co-ord
 
-        start_logical_position_x, start_logical_position_y = scenario.get_element('BeeBotStartPosition')
+        self.step = scenario.get_element('BoardStep')
 
-        self.screen_location_x = start_logical_position_x * self.board.step
-        self.screen_location_y = start_logical_position_y * self.board.step
+        self.screen_location_x = start_logical_position_x * self.step
+        self.screen_location_y = start_logical_position_y * self.step
 
         self.logical_position_x = start_logical_position_x
         self.logical_position_y = start_logical_position_y
 
         self.sprites = {}
 
-        self.sprites[Heading.NORTH]=scenario.get_element('BeeBotSprite')
+        self.sprites[Heading.NORTH] = scenario.get_element('BeeBotSprite')
 
-        self.sprites[Heading.EAST]=pygame.transform.rotate(self.sprites[Heading.NORTH], 270)
-        self.sprites[Heading.SOUTH]=pygame.transform.rotate(self.sprites[Heading.NORTH], 180)
-        self.sprites[Heading.WEST]=pygame.transform.rotate(self.sprites[Heading.NORTH], 90)
+        self.sprites[Heading.EAST] = self.rotate(self.sprites[Heading.NORTH], 270)
+        self.sprites[Heading.SOUTH] = self.rotate(self.sprites[Heading.NORTH], 180)
+        self.sprites[Heading.WEST] = self.rotate(self.sprites[Heading.NORTH], 90)
 
         self.heading = scenario.get_element('BeeBotHeading')
 
@@ -95,7 +97,7 @@ class BeeBot(pygame.sprite.Sprite):
             self.logical_position_y = self.logical_position_y - 1
         elif (self.heading == Heading.WEST ):
             incrStep = 0
-            while ( incrStep < self.board.step ):
+            while ( incrStep < self.step ):
                 incrStep = incrStep + 1
                 self.screen_location_x = self.screen_location_x + 1
                 #self.board.display(screen)
@@ -104,7 +106,7 @@ class BeeBot(pygame.sprite.Sprite):
             self.logical_position_x = self.logical_position_x + 1
         elif (self.heading == Heading.NORTH ):
             incrStep = 0
-            while ( incrStep < self.board.step ):
+            while ( incrStep < self.step ):
                 incrStep = incrStep + 1
                 self.screen_location_y = self.screen_location_y + 1
                 #self.board.display(screen)
@@ -113,7 +115,7 @@ class BeeBot(pygame.sprite.Sprite):
             self.logical_position_y = self.logical_position_y + 1
         elif (self.heading == Heading.EAST ):
             incrStep = 0
-            while ( incrStep < self.board.step ):
+            while ( incrStep < self.step ):
                 incrStep = incrStep + 1
                 self.screen_location_x = self.screen_location_x - 1
                 #self.board.display(screen)
@@ -126,7 +128,7 @@ class BeeBot(pygame.sprite.Sprite):
     def moveForward(self,screen):
         if (self.heading == Heading.NORTH ):
             incrStep = 0
-            while ( incrStep < self.board.step ):
+            while ( incrStep < self.step ):
                 incrStep = incrStep + 1
                 self.screen_location_y = self.screen_location_y - 1
                 time.sleep(0.01)
@@ -136,7 +138,7 @@ class BeeBot(pygame.sprite.Sprite):
             self.logical_position_y = self.logical_position_y - 1
         elif (self.heading == Heading.EAST ):
             incrStep = 0
-            while ( incrStep < self.board.step ):
+            while ( incrStep < self.step ):
                 incrStep = incrStep + 1
                 self.screen_location_x = self.screen_location_x + 1
                 #self.board.display(screen)
@@ -145,7 +147,7 @@ class BeeBot(pygame.sprite.Sprite):
             self.logical_position_x = self.logical_position_x + 1
         elif (self.heading == Heading.SOUTH ):
             incrStep = 0
-            while ( incrStep < self.board.step ):
+            while ( incrStep < self.step ):
                 incrStep = incrStep + 1
                 self.screen_location_y = self.screen_location_y + 1
                 #self.board.display(screen)
@@ -154,7 +156,7 @@ class BeeBot(pygame.sprite.Sprite):
             self.logical_position_y = self.logical_position_y + 1
         elif (self.heading == Heading.WEST ):
             incrStep = 0
-            while ( incrStep < self.board.step ):
+            while ( incrStep < self.step ):
                 incrStep = incrStep + 1
                 self.screen_location_x = self.screen_location_x - 1
                 #self.board.display(screen)
@@ -166,7 +168,7 @@ class BeeBot(pygame.sprite.Sprite):
 
     def moveRight(self,screen):
         time.sleep(0.5)
-        self.rotateSprite(-45)
+        self.sprite = self.rotate(self.sprite,-45)
         #self.board.display(screen)
         #self.display(screen)
         #pygame.display.update()
@@ -188,7 +190,7 @@ class BeeBot(pygame.sprite.Sprite):
 
     def moveLeft(self,screen):
         time.sleep(0.5)
-        self.rotateSprite(45)
+        self.sprite = self.rotate(self.sprite,45)
         #self.board.display(screen)
         #self.display(screen)
         #pygame.display.update()
@@ -209,22 +211,23 @@ class BeeBot(pygame.sprite.Sprite):
 
         time.sleep(0.5)
 
-    def rotateSprite(self,angle):
-        sprite_copy = self.sprite.copy()  # this seems to stop thread errors
-        orig_rect = sprite_copy.get_rect()
-        rot_image = pygame.transform.rotate(sprite_copy, angle)
+    def rotate(self, image, angle):
+        image_copy = image.copy()  # this seems to stop thread errors
+        orig_rect = image_copy.get_rect()
+        rot_image = pygame.transform.rotate(image_copy, angle)
         rot_rect = orig_rect.copy()
         rot_rect.center = rot_image.get_rect().center
-        self.sprite = rot_image.subsurface(rot_rect)
+        return rot_image.subsurface(rot_rect)
 
     def checkLocationLogicalConsistent(self):
-        if ( self.screen_location_x != self.logical_position_x * self.board.step):
-            print("Error 5: screen_location_x != logical_position_x")
-            print("screen_location_x = ",self.screen_location_x)
-            print("logical_position_x = ",self.logical_position_x)
-            sys.exit()
-        if ( self.screen_location_y != self.logical_position_y * self.board.step):
-            print("Error 6: self.screen_location_y / self.board.step + self.board.logicalHeight - 1 != self.logical_position_y")
-            print("screen_location_y = ",self.screen_location_y)
-            print("logical_position_y",self.logical_position_y)
-            sys.exit()
+        pass
+        #if ( self.screen_location_x != self.logical_position_x * self.board.step):
+        #    print("Error 5: screen_location_x != logical_position_x")
+        #    print("screen_location_x = ",self.screen_location_x)
+        #    print("logical_position_x = ",self.logical_position_x)
+        #    sys.exit()
+        #if ( self.screen_location_y != self.logical_position_y * self.board.step):
+        #    print("Error 6: self.screen_location_y / self.board.step + self.board.logicalHeight - 1 != self.logical_position_y")
+        #    print("screen_location_y = ",self.screen_location_y)
+        #    print("logical_position_y",self.logical_position_y)
+        #    sys.exit()
