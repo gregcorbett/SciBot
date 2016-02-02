@@ -14,10 +14,21 @@ BLACK = (0,0,0)
 WHITE = (255,255,255)
 RED = (255, 0, 0)
 
-class GameWindow():
+class GameWindow(threading.Thread):
     def __init__(self):
         pygame.init()
+        threading.Thread.__init__(self)
         #basicFont = pygame.font.SysFont("./freesansbold.tff",48)
+
+    def run(self):
+        while(True):
+            if self.board is not None:
+                self.board.display(self.screen)
+            if self.robot is not None:
+                self.robot.display(self.screen)
+            pygame.display.update()
+            print("BOO")
+            time.sleep(0.01)
 
     def chooseScenario(self):
         self.scenario = None
@@ -44,8 +55,9 @@ class GameWindow():
         safeMemCount = 0
 
         self.screen = pygame.display.set_mode(self.size)
+        self.start()
 
-        self.display()
+        #self.display()
 
         self.clock = pygame.time.Clock()
 
@@ -126,9 +138,9 @@ class GameWindow():
                 self.checkForObstacleCollisions()
                 self.checkForGoalCollisions()
 
-            self.display()
-            pygame.display.update()
-            self.clock.tick(30)
+            #self.display()
+            #pygame.display.update()
+            #self.clock.tick(30)
 
 
     def checkForGoalCollisions(self):
