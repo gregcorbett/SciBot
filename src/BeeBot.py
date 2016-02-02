@@ -210,13 +210,13 @@ class BeeBot(pygame.sprite.Sprite):
         time.sleep(0.5)
 
     def rotateSprite(self,angle):
-        pass
-        #orig_rect = self.sprite.get_rect()
-        #rot_image = pygame.transform.rotate(self.sprite, angle)
-        #self.sprite = rot_image
-        #rot_rect = orig_rect.copy()
-        #rot_rect.center = rot_image.get_rect().center
-        #self.sprite = rot_image.subsurface(rot_rect).copy()
+        sprite_copy = self.sprite.copy()  # this seems to stop thread errors
+        orig_rect = sprite_copy.get_rect()
+        rot_image = pygame.transform.rotate(sprite_copy, angle)
+        self.sprite = rot_image
+        rot_rect = orig_rect.copy()
+        rot_rect.center = rot_image.get_rect().center
+        self.sprite = rot_image.subsurface(rot_rect).copy()
 
     def checkLocationLogicalConsistent(self):
         if ( self.screen_location_x != self.logical_position_x * self.board.step):
