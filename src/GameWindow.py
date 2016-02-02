@@ -48,7 +48,7 @@ class GameWindow(threading.Thread):
         self.height = self.scenario.get_element('LogicalHeight')*self.step
         self.width = self.scenario.get_element('LogicalWidth')*self.step
 
-        self.board = Board(self.scenario.get_element('LogicalWidth'),self.scenario.get_element('LogicalHeight'),self.step,self.scenario) #Board.py
+        self.board = Board(self.scenario)
         self.size = (self.width,self.height)
 
         self.robot = BeeBot(self.scenario)
@@ -105,7 +105,7 @@ class GameWindow(threading.Thread):
                 #pygame.display.update()
                 #time.sleep(2)
 
-                #self.board.goalGroup.reset_all_goals()  # resetting the wins
+                #self.board.goal_group.reset_all_goals()  # resetting the wins
                 #safeMem = self.robot.memory                 # saving moves so far
                 #safeMemCount = self.robot.memoryCount
                 #self.robot = BeeBot(self.board,self.scenario) # resetting the board
@@ -146,15 +146,15 @@ class GameWindow(threading.Thread):
 
 
     def checkForGoalCollisions(self):
-        for goal in self.board.goalGroup.goals:
+        for goal in self.board.goal_group.goals:
             if self.robot.logical_position_x == goal.logical_position_x and self.robot.logical_position_y == goal.logical_position_y:
                 goal.has_been_met = True
-                if self.board.goalGroup.have_all_goals_been_met():
+                if self.board.goal_group.have_all_goals_been_met():
                     pygame.event.clear()
                     pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
 
     def checkForObstacleCollisions(self):
-        for obstacle in self.board.obstacleGroup.obstacles:
+        for obstacle in self.board.obstacle_group.obstacles:
             if self.robot.logical_position_x == obstacle.logical_position_x and self.robot.logical_position_y == obstacle.logical_position_y:
                 self.robot.heading = Heading.FAIL
                 pygame.event.clear()

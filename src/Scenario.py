@@ -64,11 +64,11 @@ class Scenario():
 
     def get_goal_group(self):
         goalGroup = GoalGroup()
-        goal_ptr = 0
-        while goal_ptr < self.elements['goal_count']:
-            pickledGoal = self.elements['GoalGroup'][goal_ptr]
+        goalPtr = 0
+        while goalPtr < self.elements['goal_count']:
+            pickledGoal = self.elements['GoalGroup'][goalPtr]
             goalGroup.add(Goal(self.format_pickle_to_surface(pickledGoal[0]),pickledGoal[1],pickledGoal[2],self.elements['BoardStep']))
-            goal_ptr = goal_ptr + 1
+            goalPtr = goalPtr + 1
         return goalGroup
 
     def add_obstacle(self,x,y,sprite=None):
