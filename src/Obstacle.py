@@ -1,8 +1,8 @@
 """This file defines the Object class."""
-from pygame.sprite import Sprite
+import pygame
 
 
-class Obstacle(Sprite):
+class Obstacle(pygame.sprite.Sprite):
     """This class defines an individual Obstacle."""
 
     def __init__(self,
@@ -20,7 +20,7 @@ class Obstacle(Sprite):
         self.sprite = sprite
 
         # calling superclass constructor
-        Sprite.__init__(self)
+        pygame.sprite.Sprite.__init__(self)
 
     def display(self, screen):
         """Draw the Obstacle object on screen, if it has a sprite."""

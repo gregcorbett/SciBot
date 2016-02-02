@@ -1,8 +1,8 @@
 """This file defines the Goal class."""
-from pygame.sprite import Sprite
+import pygame
 
 
-class Goal(Sprite):
+class Goal(pygame.sprite.Sprite):
     """This class defines an individual Goal."""
 
     def __init__(self,
@@ -22,7 +22,7 @@ class Goal(Sprite):
         self.sprite = sprite
 
         # calling superclass constructor
-        Sprite.__init__(self)
+        pygame.sprite.Sprite.__init__(self)
 
     def display(self, screen):
         """Draw the Goal object on screen, if it has a sprite."""
