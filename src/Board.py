@@ -13,6 +13,7 @@ class Board:
         logical_board_height = scenario.get_element('LogicalHeight')
         logical_board_width = scenario.get_element('LogicalWidth')
 
+        # Board dimensions in terms of pixels
         self.board_height = logical_board_height * self.step
         self.board_width = logical_board_width * self.step
 
@@ -24,24 +25,28 @@ class Board:
 
         self.goal_group = scenario.get_element('GoalGroup')
 
+        # Need to check the Board pixel height matches the image pixel height
         if self.board_height != self.background_image.get_height():
             print("Error 1: board height does not match image height")
             print("Board Height = ", self.board_height)
             print("Image Height = ", self.background_image.get_height())
             exit()
 
+        # Need to check the Board pixel width matches the image pixel width
         if self.board_width != self.background_image.get_width():
             print("Error 2: board width does not match image width")
             print("Board Width = ", self.board_width)
             print("Image Width = ", self.background_image.get_width())
             exit()
 
+        # Need to check the pixel height is a multiple of step
         if self.board_height % self.step != 0:
             print("Error 3: height % step != 0")
             print("Height = ", self.board_height)
             print("Step   = ", self.step)
             exit()
 
+        # Need to check the pixel height is a multiple of step
         if self.board_width % self.step != 0:
             print("Error 4: width % step != 0")
             print("Width = ", self.board_width)
@@ -54,6 +59,7 @@ class Board:
         self.obstacle_group.display(screen)
         self.goal_group.display(screen)
 
+        # Draw lines over Board background image
         if self.border_colour is not None:
             for iter_width in range(0, self.board_width, self.step):
                 pygame.draw.line(screen,

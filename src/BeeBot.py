@@ -22,32 +22,42 @@ class BeeBot(pygame.sprite.Sprite):
 
     def __init__(self, scenario):
         """Create a BeeBot."""
+        # Initial position of the BeeBot in terms of square on the Board.
         start_logical_position = scenario.get_element('BeeBotStartPosition')
         start_logical_position_x = start_logical_position[0]  # x co-ord
         start_logical_position_y = start_logical_position[1]  # y co-ord
 
+        # The amount the BeeBot moves.
         self.step = scenario.get_element('BoardStep')
 
+        # The BeeBot's position of the BeeBot in terms of pixels.
         self.screen_location_x = start_logical_position_x * self.step
         self.screen_location_y = start_logical_position_y * self.step
 
+        # The BeeBot's position of the BeeBot in terms of the Board.
         self.logical_position_x = start_logical_position_x
         self.logical_position_y = start_logical_position_y
 
+        # All the sprites the BeeBot may display.
         self.sprites = {}
 
+        # Read the sprite and assign it as the "NORTH" sprite.
         base_sprite = scenario.get_element('BeeBotSprite')
         self.sprites[Heading.NORTH] = base_sprite
 
+        # Define other sprites by rotating the "NORTH" sprite.
         self.sprites[Heading.EAST] = self.rotate(base_sprite, 270)
         self.sprites[Heading.SOUTH] = self.rotate(base_sprite, 180)
         self.sprites[Heading.WEST] = self.rotate(base_sprite, 90)
         self.sprites[Heading.FAIL] = scenario.get_element('BeeBotFailSprite')
 
+        # Which way is the BeeBot facing.
         self.heading = scenario.get_element('BeeBotHeading')
 
+        # Which sprite to display.
         self.sprite = self.sprites[self.heading]
 
+        # Store MOVE_BEEBOT_* events here.
         self.memory = []
 
     def move(self, event):
@@ -71,14 +81,14 @@ class BeeBot(pygame.sprite.Sprite):
 
     def push_out_memory(self):
         """Act out the instructions in the BeeBot's "memory"."""
-        memory_pointer = 0
-        while memory_pointer < len(self.memory):
-            pygame.event.post(self.memory[memory_pointer])
-            memory_pointer = memory_pointer + 1
+        for instruction in self.memory:
+            # we use pygame's event queue because we need to check
+            # it regularly to prevent the game from crashing.
+            pygame.event.post(instruction)
 
     def clear_memory(self):
         """Clear the BeeBot's "memory"."""
-        self.memory = {}
+        self.memory = []
 
     def display(self, screen):
         """Display the BeeBot on screen."""
@@ -87,6 +97,7 @@ class BeeBot(pygame.sprite.Sprite):
 
     def move_backward(self):
         """Move the BeeBot backward."""
+        # The origin is in the top left corner
         if self.heading == Heading.SOUTH:
             for _ in range(0, self.step):
                 self.screen_location_y = self.screen_location_y - 1
@@ -113,6 +124,7 @@ class BeeBot(pygame.sprite.Sprite):
 
     def move_forward(self):
         """Move the BeeBot forward."""
+        # The origin is in the top left corner
         if self.heading == Heading.NORTH:
             for _ in range(0, self.step):
                 self.screen_location_y = self.screen_location_y - 1
@@ -139,6 +151,7 @@ class BeeBot(pygame.sprite.Sprite):
 
     def move_right(self):
         """Turn the BeeBot right."""
+        # No need to move the BeeBot, just change it's sprite.
         sleep(0.5)
         self.sprite = self.rotate(self.sprite, -45)
         sleep(0.5)
@@ -163,6 +176,7 @@ class BeeBot(pygame.sprite.Sprite):
 
     def move_left(self):
         """Turn the BeeBot left."""
+        # No need to move the BeeBot, just change it's sprite.
         sleep(0.5)
         self.sprite = self.rotate(self.sprite, 45)
         sleep(0.5)
@@ -187,7 +201,7 @@ class BeeBot(pygame.sprite.Sprite):
 
     @classmethod
     def rotate(cls, image, angle):
-        """Rotate image by angle."""
+        """Rotate given image by given angle."""
         image_copy = image.copy()  # this seems to stop thread errors
         orig_rect = image_copy.get_rect()
         rot_image = pygame.transform.rotate(image_copy, angle)
