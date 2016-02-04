@@ -1,165 +1,258 @@
+"""This file defines the main GameWindow and the Enum RenderingMode."""
+
+
+from threading import Thread
+from pickle import load
+from time import sleep
+from enum import Enum
+import sys
 import pygame
-import time
-import threading
-import pickle
+from src.BeeBot import BeeBot, Heading
+from src.Board import Board
+from src.CustomEvent import CustomEvent
 
-from src.BeeBot import *
-from src.Board import *
-from src.CustomEvent import *
-from src.Scenario import *
 
-from pygame.locals import *
+class RenderingMode(Enum):
+    """A class of Enums determining how the GameWindow will render."""
 
-BLACK = (0,0,0)
-WHITE = (255,255,255)
-RED = (255, 0, 0)
+    TITLE_SCREEN = 1
+    CHOOSE_SCENARIO = 2
+    NORMAL = 3
+    WIN_SCREEN = 4
+    FAIL_SCREEN = 5
+    END_RENDERING = 6
 
-class GameWindow(threading.Thread):
+
+class GameWindow(Thread):
+    """This class defines the main GameWindow."""
+
+    BLACK = (0, 0, 0)
+    WHITE = (255, 255, 255)
+    RED = (255, 0, 0)
+    FRAMES_PER_SECOND = 24
+
     def __init__(self):
+        """Initiate the GameWindow."""
         pygame.init()
-        threading.Thread.__init__(self)
-        #basicFont = pygame.font.SysFont("./freesansbold.tff",48)
+
+        # Define vars here
+        self.rendering_mode = None
+
+        self.scenario = None
+
+        self.step = None
+        self.height = None
+        self.width = None
+
+        self.board = None
+        self.size = None
+
+        self.robot = None
+
+        self.screen = None
+
+        self.clock = None
+
+        self.font = None
+
+        # Call the superclass constructor
+        Thread.__init__(self)
+
+    def start_rendering(self):
+        """Change rendering_mode to TITLE_SCREEN and begin rendering."""
+        self.font = pygame.font.SysFont("../font/freesansbold.tff", 30)
+        self.rendering_mode = RenderingMode.TITLE_SCREEN
+        self.start()  # Runs the run method.
 
     def run(self):
-        while(True):
-            if self.board is not None:
-                self.board.display(self.screen)
-            if self.robot is not None:
-                self.robot.display(self.screen)
-            time.sleep(0.01)
-            pygame.display.update()
-            #print("BOO")
+        """Run the rendering engine."""
+        while True:
+            if self.rendering_mode is RenderingMode.TITLE_SCREEN:
+                # For now, we will let runSciBot drive the rendering
+                pass
 
+            elif self.rendering_mode is RenderingMode.CHOOSE_SCENARIO:
+                # For now, we will let runSciBot drive the rendering
+                pass
 
-    def chooseScenario(self):
-        self.scenario = None
-        #Somehow choose a scenario
+            elif self.rendering_mode is RenderingMode.NORMAL:
+                # Display the Board and BeeBot
+                self.display_board_and_beebot()
 
-        #self.scenario = "UV"
+                # Update display
+                pygame.display.update()
 
-        if self.scenario == None:
+                # Limits the render to FRAMES_PER_SECOND
+                self.clock.tick(GameWindow.FRAMES_PER_SECOND)
+
+            elif self.rendering_mode is RenderingMode.WIN_SCREEN:
+                # Display some text
+                self.display_text('Hooray you won!! Thanks for playing!',
+                                  GameWindow.WHITE,
+                                  GameWindow.RED)
+
+                # Update display
+                pygame.display.update()
+
+                # Limits the render to FRAMES_PER_SECOND
+                self.clock.tick(GameWindow.FRAMES_PER_SECOND)
+
+            elif self.rendering_mode is RenderingMode.FAIL_SCREEN:
+                # Display some text
+                self.display_text('Oh no, you crashed! Try again!',
+                                  GameWindow.WHITE,
+                                  GameWindow.BLACK)
+
+                # Update display
+                pygame.display.update()
+
+                # Limits the render to FRAMES_PER_SECOND
+                self.clock.tick(GameWindow.FRAMES_PER_SECOND)
+
+            elif self.rendering_mode is RenderingMode.END_RENDERING:
+                break  # Let the renderer die
+
+    def choose_scenario(self):
+        """Somehow Choose a Scenario."""
+        self.scenario = "Default"
+
+        if self.scenario is None:
             self.scenario = "Default"
 
-        self.scenario = pickle.load( open( "./scenarios/" + self.scenario + ".scibot", "rb" ) )
+        self.scenario = load(open("./scenarios/" + self.scenario + ".scibot",
+                                  "rb"))
 
-    def loadScenario(self):
-
+    def load_scenario(self):
+        """Load the chosen Scenario."""
         self.step = self.scenario.get_element('BoardStep')
         self.height = self.scenario.get_element('LogicalHeight')*self.step
         self.width = self.scenario.get_element('LogicalWidth')*self.step
 
         self.board = Board(self.scenario)
-        self.size = (self.width,self.height)
+        self.size = (self.width, self.height)
 
         self.robot = BeeBot(self.scenario)
-        safeMem ={}
-        safeMemCount = 0
 
         self.screen = pygame.display.set_mode(self.size)
-        self.start()
-
-        #self.display()
 
         self.clock = pygame.time.Clock()
 
-    def startScenario(self):
-
+    def start_scenario(self):
+        """Start the Scenario."""
+        # Go to NORMAL rendering
+        self.rendering_mode = RenderingMode.NORMAL
         while True:
             event = pygame.event.poll()
 
             if event.type == pygame.QUIT:
+                self.rendering_mode = RenderingMode.END_RENDERING
+                sleep(1)
                 pygame.quit()
                 sys.exit()
 
             if event.type == CustomEvent.RUN_FAIL:
-                time.sleep(2)
-
-                #self.screen.fill(BLACK) # displaying a fail message
-                #basicFont = pygame.font.Font("./src/freesansbold.ttf", 30)
-                #text = basicFont.render('Oh no, you crashed! Try again!', True, WHITE, BLACK)
-                #textRect = text.get_rect()
-                #textRect.centerx = self.screen.get_rect().centerx
-                #textRect.centery = self.screen.get_rect().centery
-                #self.screen.blit(text, textRect)
-                #pygame.display.update()
-                #time.sleep(2)
-
-                #safeMem = self.robot.memory                 # saving moves so far
-                #safeMemCount = self.robot.memoryCount
-                #self.robot = BeeBot(self.board,self.scenario)# resetting the board
-                #self.robot.memory = safeMem                 # resetting memory of moves
-                #self.robot.memoryCount = safeMemCount
-                pygame.quit()
-                sys.exit()
+                self.robot.heading = Heading.FAIL
+                sleep(1)
+                self.rendering_mode = RenderingMode.FAIL_SCREEN
+                sleep(2)
+                self.rendering_mode = RenderingMode.NORMAL
+                self.robot.reset_position()
+                self.robot.clear_memory()
+                self.board.goal_group.reset_all_goals()
 
             if event.type == CustomEvent.RUN_WIN:
-                #time.sleep(2)
-
-                #self.screen.fill(RED) # displaying a win message
-                #basicFont = pygame.font.Font("./src/freesansbold.ttf", 30)
-                #text = basicFont.render('Hooray you won!! Play again!', True, WHITE, RED)
-                #textRect = text.get_rect()
-                #textRect.centerx = self.screen.get_rect().centerx
-                #textRect.centery = self.screen.get_rect().centery
-                #self.screen.blit(text, textRect)
-                #pygame.display.update()
-                #time.sleep(2)
-
-                #self.board.goal_group.reset_all_goals()  # resetting the wins
-                #safeMem = self.robot.memory                 # saving moves so far
-                #safeMemCount = self.robot.memoryCount
-                #self.robot = BeeBot(self.board,self.scenario) # resetting the board
-                #self.robot.memory = safeMem                 # resetting memory of moves
-                #self.robot.memoryCount = safeMemCount
+                sleep(1)
+                self.rendering_mode = RenderingMode.WIN_SCREEN
+                sleep(2)
+                self.rendering_mode = RenderingMode.END_RENDERING
+                sleep(1)
                 pygame.quit()
-                sys.exit()
+                exit()
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    self.robot.add_to_memory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP))
-                if event.key == pygame.K_DOWN:
-                    self.robot.add_to_memory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_DOWN))
-                if event.key == pygame.K_LEFT:
-                    self.robot.add_to_memory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT))
-                if event.key == pygame.K_RIGHT:
-                    self.robot.add_to_memory(pygame.event.Event(CustomEvent.MOVE_BEEBOT_RIGHT))
-                if event.key == pygame.K_SPACE: # space puts the robot back to the start - it doesn't clear the memory!
-                                        pass
-                                        #safeMem = self.robot.memory
-                                        #safeMemCount = self.robot.memoryCount
-                                        #self.robot = BeeBot(self.board,self.scenario)
-                                        #self.robot.memory = safeMem
-                                        #self.robot.memoryCount = safeMemCount
-                if event.key == ord('x') or event.key == ord('X'):  # X clears the memory
-                                        self.robot.memoryCount = safeMemCount
-                if event.key == ord('g') or event.key == ord('G'):
-                        self.robot.push_out_memory()
+                self.handle_key_press(event)
 
+            # If the event is a movement event
+            # Move the BeeBot.
             if event.type >= CustomEvent.MOVE_BEEBOT_UP and event.type <= CustomEvent.MOVE_BEEBOT_RIGHT:
                 self.robot.move(event)
-                self.checkForObstacleCollisions()
-                self.checkForGoalCollisions()
+                self.check_for_obstacle_collisions()
+                self.check_for_goal_collisions()
 
-            #self.display()
-            #pygame.display.update()
-            #self.clock.tick(30)
-
-
-    def checkForGoalCollisions(self):
+    def check_for_goal_collisions(self):
+        """Check if the BeeBot is currently on a Goal."""
+        # If so, mark that Goal as met.
+        # If all Goals met, push a CustomEvent.RUN_WIN.
         for goal in self.board.goal_group.goals:
             if self.robot.logical_position_x == goal.logical_position_x and self.robot.logical_position_y == goal.logical_position_y:
                 goal.has_been_met = True
                 if self.board.goal_group.have_all_goals_been_met():
+                    # clear any remaining events
                     pygame.event.clear()
+                    # push a win event
                     pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
 
-    def checkForObstacleCollisions(self):
+    def check_for_obstacle_collisions(self):
+        """Check if the BeeBot is currently on a Obstacle."""
+        # If so, push a CustomEvent.RUN_FAIL.
         for obstacle in self.board.obstacle_group.obstacles:
             if self.robot.logical_position_x == obstacle.logical_position_x and self.robot.logical_position_y == obstacle.logical_position_y:
-                self.robot.heading = Heading.FAIL
+                # clear any remaining events
                 pygame.event.clear()
+                # push a fail event
                 pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
 
-    def display(self):
-        self.board.display(self.screen)
-        self.robot.display(self.screen)
+    def display_board_and_beebot(self):
+        """Display the Board and BeeBot."""
+        if self.board is not None:
+            self.board.display(self.screen)
+        if self.robot is not None:
+            self.robot.display(self.screen)
+
+    def display_text(self, text, text_colour, background_colour):
+        """Display text on background_colour."""
+        self.screen.fill(background_colour)
+        text = self.font.render(text,
+                                True,
+                                text_colour,
+                                background_colour)
+        text_rect = text.get_rect()
+        text_rect.centerx = self.screen.get_rect().centerx
+        text_rect.centery = self.screen.get_rect().centery
+        self.screen.blit(text, text_rect)
+
+    def handle_key_press(self, event):
+        """Convert key press into game logic."""
+        # If the event is an arrow key, store
+        # a movement event in the BeeBot.
+        if event.key == pygame.K_UP:
+            new_event = CustomEvent.MOVE_BEEBOT_UP
+            self.robot.add_to_memory(pygame.event.Event(new_event))
+
+        if event.key == pygame.K_DOWN:
+            new_event = CustomEvent.MOVE_BEEBOT_DOWN
+            self.robot.add_to_memory(pygame.event.Event(new_event))
+
+        if event.key == pygame.K_LEFT:
+            new_event = CustomEvent.MOVE_BEEBOT_LEFT
+            self.robot.add_to_memory(pygame.event.Event(new_event))
+
+        if event.key == pygame.K_RIGHT:
+            new_event = CustomEvent.MOVE_BEEBOT_RIGHT
+            self.robot.add_to_memory(pygame.event.Event(new_event))
+
+        # if the event is the space bar,
+        # reset the BeeBot's position and clears any met goals.
+        # it doesn't clear the memory!
+        if event.key == pygame.K_SPACE:
+            self.robot.reset_position()
+            self.board.goal_group.reset_all_goals()
+
+        # if the event is the X key, clear the BeeBot's memory
+        if event.key == ord('x') or event.key == ord('X'):
+            self.robot.memory = []
+
+        # if the event is the G key, push stored movement
+        # events into the event queue.
+        if event.key == ord('g') or event.key == ord('G'):
+            self.robot.push_out_memory()
