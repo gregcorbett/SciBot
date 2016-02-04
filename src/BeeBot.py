@@ -22,13 +22,15 @@ class BeeBot(pygame.sprite.Sprite):
 
     def __init__(self, scenario):
         """Create a BeeBot."""
+        self.scenario = scenario  # Store so we can reset BeeBot
+
         # Initial position of the BeeBot in terms of square on the Board.
-        start_logical_position = scenario.get_element('BeeBotStartPosition')
+        start_logical_position = self.scenario.get_element('BeeBotStartPosition')
         start_logical_position_x = start_logical_position[0]  # x co-ord
         start_logical_position_y = start_logical_position[1]  # y co-ord
 
         # The amount the BeeBot moves.
-        self.step = scenario.get_element('BoardStep')
+        self.step = self.scenario.get_element('BoardStep')
 
         # The BeeBot's position of the BeeBot in terms of pixels.
         self.screen_location_x = start_logical_position_x * self.step
@@ -42,17 +44,17 @@ class BeeBot(pygame.sprite.Sprite):
         self.sprites = {}
 
         # Read the sprite and assign it as the "NORTH" sprite.
-        base_sprite = scenario.get_element('BeeBotSprite')
+        base_sprite = self.scenario.get_element('BeeBotSprite')
         self.sprites[Heading.NORTH] = base_sprite
 
         # Define other sprites by rotating the "NORTH" sprite.
         self.sprites[Heading.EAST] = self.rotate(base_sprite, 270)
         self.sprites[Heading.SOUTH] = self.rotate(base_sprite, 180)
         self.sprites[Heading.WEST] = self.rotate(base_sprite, 90)
-        self.sprites[Heading.FAIL] = scenario.get_element('BeeBotFailSprite')
+        self.sprites[Heading.FAIL] = self.scenario.get_element('BeeBotFailSprite')
 
         # Which way is the BeeBot facing.
-        self.heading = scenario.get_element('BeeBotHeading')
+        self.heading = self.scenario.get_element('BeeBotHeading')
 
         # Which sprite to display.
         self.sprite = self.sprites[self.heading]
@@ -198,6 +200,25 @@ class BeeBot(pygame.sprite.Sprite):
             self.sprite = self.sprites[self.heading]
 
         sleep(0.5)
+
+    def reset_position(self):
+        # Initial position of the BeeBot in terms of square on the Board.
+        start_logical_position = self.scenario.get_element('BeeBotStartPosition')
+        start_logical_position_x = start_logical_position[0]  # x co-ord
+        start_logical_position_y = start_logical_position[1]  # y co-ord
+
+        self.heading = self.scenario.get_element('BeeBotHeading')
+
+        # Which sprite to display.
+        self.sprite = self.sprites[self.heading]
+
+        # The BeeBot's position of the BeeBot in terms of pixels.
+        self.screen_location_x = start_logical_position_x * self.step
+        self.screen_location_y = start_logical_position_y * self.step
+
+        # The BeeBot's position of the BeeBot in terms of the Board.
+        self.logical_position_x = start_logical_position_x
+        self.logical_position_y = start_logical_position_y
 
     @classmethod
     def rotate(cls, image, angle):
