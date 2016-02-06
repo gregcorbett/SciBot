@@ -122,14 +122,14 @@ class GameWindow(Thread):
                 if scenarioPath is "":
                     scenarioPath = "./scenarios/Default.scibot"
                 self.scenario = load(open(scenarioPath, "rb"))
-                break  # only get here if no exception
+                break  # only get here if there is no exception
 
             except FileNotFoundError:
                 print("Could not find file: %s, try again!" % scenarioPath)
 
             except OSError:
                 print("OSError! Try again!")
-                print("HINT: Possibly remove \" as they arent needed.")
+                print("HINT: Possibly remove \", as they arent needed.")
 
 
     def load_scenario(self):
@@ -162,6 +162,7 @@ class GameWindow(Thread):
 
             if event.type == CustomEvent.RUN_FAIL:
                 self.robot.heading = Heading.FAIL
+                self.robot.sprite = self.robot.sprites[self.robot.heading]
                 sleep(1)
                 self.rendering_mode = RenderingMode.FAIL_SCREEN
                 sleep(2)
@@ -184,7 +185,10 @@ class GameWindow(Thread):
 
             # If the event is a movement event
             # Move the BeeBot.
-            if event.type >= CustomEvent.MOVE_BEEBOT_UP and event.type <= CustomEvent.MOVE_BEEBOT_RIGHT:
+            if (
+               event.type >= CustomEvent.MOVE_BEEBOT_UP and
+               event.type <= CustomEvent.MOVE_BEEBOT_RIGHT
+               ):
                 self.robot.move(event)
                 self.check_for_obstacle_collisions()
                 self.check_for_goal_collisions()
