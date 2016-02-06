@@ -116,13 +116,21 @@ class GameWindow(Thread):
 
     def choose_scenario(self):
         """Somehow Choose a Scenario."""
+        while True:
+            try:
+                scenarioPath = input("Please enter path and file name of scenario: ")
+                if scenarioPath is "":
+                    scenarioPath = "./scenarios/Default.scibot"
+                self.scenario = load(open(scenarioPath, "rb"))
+                break  # only get here if no exception
 
-        scenarioPath = input("Please enter path and file name of scenario: ")
-        if scenarioPath is "":
-            scenarioPath = "./scenarios/Default.scibot"
+            except FileNotFoundError:
+                print("Could not find file: %s, try again!" % scenarioPath)
 
-        self.scenario = load(open(scenarioPath,
-                                  "rb"))
+            except OSError:
+                print("OSError! Try again!")
+                print("HINT: Possibly remove \" as they arent needed.")
+
 
     def load_scenario(self):
         """Load the chosen Scenario."""
