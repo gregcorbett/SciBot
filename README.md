@@ -29,4 +29,4 @@ Microsoft installers have been linked for each requirement for easy of installat
 
 After the requirements below are met, open a command line and navigate to the unzipped directory.
 
-Run `python build.py py2exe`.
+Run `python setup.py py2exe`.

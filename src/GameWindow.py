@@ -116,12 +116,10 @@ class GameWindow(Thread):
 
     def choose_scenario(self):
         """Somehow Choose a Scenario."""
-        self.scenario = "Default"
 
-        if self.scenario is None:
-            self.scenario = "Default"
+        scenarioPath = input("Please enter path and file name of scenario: ")
 
-        self.scenario = load(open("./scenarios/" + self.scenario + ".scibot",
+        self.scenario = load(open(scenarioPath,
                                   "rb"))
 
     def load_scenario(self):
