@@ -7,9 +7,11 @@ from time import sleep
 from enum import Enum
 import sys
 import pygame
+import pygame.freetype
 from src.BeeBot import BeeBot, Heading
 from src.Board import Board
 from src.CustomEvent import CustomEvent
+from src.Scenario import Scenario
 
 
 class RenderingMode(Enum):
@@ -60,7 +62,7 @@ class GameWindow(Thread):
 
     def start_rendering(self):
         """Change rendering_mode to TITLE_SCREEN and begin rendering."""
-        self.font = pygame.font.SysFont("../font/freesansbold.tff", 30)
+        self.font = pygame.font.SysFont("comicsansms", 30)
         self.rendering_mode = RenderingMode.TITLE_SCREEN
         self.start()  # Runs the run method.
 
@@ -216,6 +218,7 @@ class GameWindow(Thread):
                                 True,
                                 text_colour,
                                 background_colour)
+
         text_rect = text.get_rect()
         text_rect.centerx = self.screen.get_rect().centerx
         text_rect.centery = self.screen.get_rect().centery
