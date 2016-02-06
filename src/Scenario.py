@@ -14,8 +14,12 @@ class Scenario():
 
     def __init__(self, name):
         """Create empty Scenario called name."""
+        # contains pickleable data
         self._elements = {}
         self._elements['Name'] = name
+        # contains methods to turn pickleable data into pygame stuff
+        self._methods = {}
+        self._methods['Name'] = self._get_name
 
     def get_element(self, key):
         """Safely access Scenario elements."""
@@ -24,31 +28,20 @@ class Scenario():
             # this method will return None."""
             return None
 
-        # Defines keys and _get methods
-        # This essentially performs a run time check that any defined key has
-        # a defined _get method.
-        switcher = {
-            'Name': self._get_name(),
-            'BoardStep': self._get_board_step(),
-            'LogicalWidth': self._get_logical_width(),
-            'LogicalHeight': self._get_logical_height(),
-            'Background': self._get_background(),
-            'BorderColour': self._get_border_colour(),
-            'BeeBotSprite': self._get_beebot_sprite(),
-            'BeeBotStartPosition': self._get_beebot_start_position(),
-            'BeeBotHeading': self._get_beebot_heading(),
-            'ObstacleGroup': self._get_obstacle_group(),
-            'GoalGroup': self._get_goal_group(),
-            'BeeBotFailSprite': self._get_beebot_fail_sprite(),
-        }
+        if key not in self._methods:
+            # if data is stored but no means of retreiving it, return none
+            return None
 
-        return switcher.get(key)
+        function = self._methods[key]
+
+        return function()
 
     def set_beebot_fail_sprite(self, sprite):
         """Store the fail sprite in pickle-able form."""
         sprite = pygame.image.load(sprite)
         pickled_sprite = self.format_surface_for_pickle(sprite)
         self._elements['BeeBotFailSprite'] = pickled_sprite
+        self._methods['BeeBotFailSprite'] = self._get_beebot_fail_sprite
 
     def _get_beebot_fail_sprite(self):
         """Return BeeBot fail sprte."""
@@ -60,6 +53,7 @@ class Scenario():
         # if no GoalGroup, create an empty one.
         if 'GoalGroup' not in self._elements:
             self._elements['GoalGroup'] = []
+            self._methods['GoalGroup'] = self._get_goal_group
 
         # prepare sprite (if any) for pickling
         if sprite is not None:
@@ -91,6 +85,7 @@ class Scenario():
         # if no ObstacleGroup, create one
         if 'ObstacleGroup' not in self._elements:
             self._elements['ObstacleGroup'] = []
+            self._methods['ObstacleGroup'] = self._get_obstacle_group
 
         # prepare sprite (if any) for pickling
         if sprite is not None:
@@ -121,6 +116,7 @@ class Scenario():
     def set_beebot_heading(self, heading):
         """Return the staring heading of the BeeBot."""
         self._elements['BeeBotHeading'] = heading
+        self._methods['BeeBotHeading'] = self._get_beebot_heading
 
     def _get_beebot_heading(self):
         """Set the staring heading of the BeeBot."""
@@ -130,6 +126,7 @@ class Scenario():
         """Set the "NORTH" BeeBot sprite."""
         sprite = pygame.image.load(image_file)
         self._elements['BeeBotSprite'] = self.format_surface_for_pickle(sprite)
+        self._methods['BeeBotSprite'] = self._get_beebot_sprite
 
     def _get_beebot_sprite(self):
         """Return the "NORTH" BeeBot sprite."""
@@ -142,6 +139,7 @@ class Scenario():
     def set_beebot_start_position(self, x_coord, y_coord):
         """Set the BeeBot's starting position."""
         self._elements['BeeBotStartPosition'] = (x_coord, y_coord)
+        self._methods['BeeBotStartPosition'] = self._get_beebot_start_position
 
     def _get_logical_height(self):
         """Get the Board height."""
@@ -154,10 +152,12 @@ class Scenario():
     def set_logical_height(self, height):
         """Set the Board height."""
         self._elements['LogicalHeight'] = height
+        self._methods['LogicalHeight'] = self._get_logical_height
 
     def set_logical_width(self, width):
         """Set the Board width."""
         self._elements['LogicalWidth'] = width
+        self._methods['LogicalWidth'] = self._get_logical_width
 
     def _get_board_step(self):
         """Return the Board step (aka how far the BeeBot moves.)."""
@@ -166,6 +166,7 @@ class Scenario():
     def set_board_step(self, step):
         """Set the Board step (aka how far the BeeBot moves.)."""
         self._elements['BoardStep'] = step
+        self._methods['BoardStep'] = self._get_board_step
 
     @classmethod
     def format_pickle_to_surface(cls, pickled_image):
@@ -190,6 +191,7 @@ class Scenario():
         background = pygame.image.load(background_image)
         pickled_background = self.format_surface_for_pickle(background)
         self._elements['Background'] = pickled_background
+        self._methods['Background'] = self._get_background
 
     def _get_background(self):
         """Return the Background of this Scenario."""
@@ -198,6 +200,7 @@ class Scenario():
     def set_border_colour(self, colour):
         """Set the Border Colour of this Scenario."""
         self._elements['BorderColour'] = colour
+        self._methods['BorderColour'] = self._get_border_colour
 
     def _get_border_colour(self):
         """Return the Border Colour of this Scenario."""
