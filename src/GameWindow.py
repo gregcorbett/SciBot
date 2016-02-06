@@ -118,6 +118,8 @@ class GameWindow(Thread):
         """Somehow Choose a Scenario."""
 
         scenarioPath = input("Please enter path and file name of scenario: ")
+        if scenarioPath is "":
+            scenarioPath = "./scenarios/Default.scibot"
 
         self.scenario = load(open(scenarioPath,
                                   "rb"))
