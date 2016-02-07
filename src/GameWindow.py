@@ -7,7 +7,6 @@ from time import sleep
 from enum import Enum
 import sys
 import pygame
-import pygame.freetype
 from src.BeeBot import BeeBot, Heading
 from src.Board import Board
 from src.CustomEvent import CustomEvent
@@ -178,7 +177,7 @@ class GameWindow(Thread):
                 self.rendering_mode = RenderingMode.END_RENDERING
                 sleep(1)
                 pygame.quit()
-                exit()
+                sys.exit()
 
             if event.type == pygame.KEYDOWN:
                 self.handle_key_press(event)
