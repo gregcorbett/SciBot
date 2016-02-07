@@ -1,8 +1,11 @@
 img/UV/
 img/UV/*
-PrivateScenarioWriter.py
+img/SKA/
+img/SKA/*
 scenarios/UV.scibot
+scenarios/SKA.scibot
+scenarioWriters/ScenarioWriterUV.py
+scenarioWriters/ScenarioWriterSKA.py
 *.pyc
 *Thumbs.db
-pyg.exe.log
 runSciBot.log

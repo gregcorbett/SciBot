@@ -1,13 +1,30 @@
+"""This file defines the GoalGroup class."""
+
+
 class GoalGroup:
-	def __init__(self):
-		self.goals = {}
-		self.goalCount = 0
-		self.goalPtr = 0
-		
-	def add(self,goal):
-		self.goals[self.goalCount] = goal
-		self.goalCount = self.goalCount + 1
-		
-	def display(self,screen):
-		if self.goalPtr < self.goalCount:
-			self.goals[self.goalPtr].display(screen)
+    """This class defines a store for all the goals used."""
+
+    def __init__(self):
+        """Create an empty GoalGroup."""
+        self.goals = []  # The underlying Goal objects
+
+    def add(self, goal):
+        """Add a Goal to the GoalGroup."""
+        self.goals.append(goal)
+
+    def display(self, screen):
+        """Draw all Goal objects in the GoalGroup."""
+        for goal in self.goals:
+            goal.display(screen)
+
+    def have_all_goals_been_met(self):
+        """True iff all the Goal objects in the GoalGroup have been met."""
+        for goal in self.goals:
+            if not goal.has_been_met:
+                return False
+        return True
+
+    def reset_all_goals(self):
+        """True iff all Goal objects have been met."""
+        for goal in self.goals:
+            goal.has_been_met = False
