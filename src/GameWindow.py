@@ -117,19 +117,18 @@ class GameWindow(Thread):
         """Somehow Choose a Scenario."""
         while True:
             try:
-                scenarioPath = input("Please enter path and file name of scenario: ")
-                if scenarioPath is "":
-                    scenarioPath = "./scenarios/Default.scibot"
-                self.scenario = load(open(scenarioPath, "rb"))
+                scenario_path = input("Please enter path and file name of scenario: ")
+                if scenario_path is "":
+                    scenario_path = "./scenarios/Default.scibot"
+                self.scenario = load(open(scenario_path, "rb"))
                 break  # only get here if there is no exception
 
             except FileNotFoundError:
-                print("Could not find file: %s, try again!" % scenarioPath)
+                print("Could not find file: %s, try again!" % scenario_path)
 
             except OSError:
                 print("OSError! Try again!")
                 print("HINT: Possibly remove \", as they arent needed.")
-
 
     def load_scenario(self):
         """Load the chosen Scenario."""
@@ -196,14 +195,22 @@ class GameWindow(Thread):
         """Check if the BeeBot is currently on a Goal."""
         # If so, mark that Goal as met.
         # If all Goals met, push a CustomEvent.RUN_WIN.
-        for goal in self.board.goal_group.goals:
+        if self.board.goal_group.is_ordered:
+            goal = self.board.goal_group.get_current_goal()
             if self.robot.logical_position_x == goal.logical_position_x and self.robot.logical_position_y == goal.logical_position_y:
                 goal.has_been_met = True
-                if self.board.goal_group.have_all_goals_been_met():
-                    # clear any remaining events
-                    pygame.event.clear()
-                    # push a win event
-                    pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
+                self.board.goal_group.increment_pointer()
+
+        else:
+            for goal in self.board.goal_group.goals:
+                if self.robot.logical_position_x == goal.logical_position_x and self.robot.logical_position_y == goal.logical_position_y:
+                    goal.has_been_met = True
+
+        if self.board.goal_group.have_all_goals_been_met():
+            # clear any remaining events
+            pygame.event.clear()
+            # push a win event
+            pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
 
     def check_for_obstacle_collisions(self):
         """Check if the BeeBot is currently on a Obstacle."""

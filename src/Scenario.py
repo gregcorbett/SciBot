@@ -63,10 +63,27 @@ class Scenario():
         # Store Goal in pickle-able format
         self._elements['GoalGroup'].append((sprite, x_coord, y_coord))
 
+    def set_ordered_goals(self, ordered):
+        """Set whether the Goals in the GoalGroup must be met in order."""
+        self._elements['OrderedGoals'] = ordered
+        self._methods['OrderedGoals'] = self._get_ordered_goals
+
+    def _get_ordered_goals(self):
+        """Return whether the Goals in the GoalGroup must be met in order."""
+        return self._elements['OrderedGoals']
+
     def _get_goal_group(self):
         """Return the Scenario's GoalGroup."""
+        # no guarantee OrderGoals is defined, so using get_element
+        is_group_ordered = self.get_element('OrderedGoals')
+
         # Create a temp, empty, GoalGroup
-        goal_group = GoalGroup()
+        if is_group_ordered is None:
+            goal_group = GoalGroup()  # use the class default
+        elif is_group_ordered:
+            goal_group = GoalGroup(True)
+        else:
+            goal_group = GoalGroup(False)
 
         # For each pickled goal, unpickle and add to the temp GoalGroup
         for pickled_goal in self._elements['GoalGroup']:
