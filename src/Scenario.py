@@ -7,6 +7,7 @@ from src.GoalGroup import GoalGroup
 from src.Goal import Goal
 from src.ObstacleGroup import ObstacleGroup
 from src.Obstacle import Obstacle
+from src.Point import Point
 
 
 class Scenario():
@@ -89,8 +90,7 @@ class Scenario():
         for pickled_goal in self._elements['GoalGroup']:
             goal_sprite = self.format_pickle_to_surface(pickled_goal[0])
             goal = Goal(goal_sprite,
-                        pickled_goal[1],
-                        pickled_goal[2],
+                        Point(pickled_goal[1], pickled_goal[2]),
                         self._elements['BoardStep'])
             # Add unpickled goal to temp GoalGroup
             goal_group.add(goal)
@@ -121,8 +121,7 @@ class Scenario():
         for pickled_obs in self._elements['ObstacleGroup']:
             obstacle_sprite = self.format_pickle_to_surface(pickled_obs[0])
             obstacle = Obstacle(obstacle_sprite,
-                                pickled_obs[1],
-                                pickled_obs[2],
+                                Point(pickled_obs[1], pickled_obs[2]),
                                 self._elements['BoardStep'])
 
             # Add unpickled goal to temp GoalGroup

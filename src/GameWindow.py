@@ -197,13 +197,13 @@ class GameWindow(Thread):
         # If all Goals met, push a CustomEvent.RUN_WIN.
         if self.board.goal_group.is_ordered:
             goal = self.board.goal_group.get_current_goal()
-            if self.robot.logical_position_x == goal.logical_position_x and self.robot.logical_position_y == goal.logical_position_y:
+            if self.robot.logical_position.is_equal_to(goal.logical_position):
                 goal.has_been_met = True
                 self.board.goal_group.increment_pointer()
 
         else:
             for goal in self.board.goal_group.goals:
-                if self.robot.logical_position_x == goal.logical_position_x and self.robot.logical_position_y == goal.logical_position_y:
+                if self.robot.logical_position.is_equal_to(goal.logical_position):
                     goal.has_been_met = True
 
         if self.board.goal_group.have_all_goals_been_met():
@@ -216,7 +216,7 @@ class GameWindow(Thread):
         """Check if the BeeBot is currently on a Obstacle."""
         # If so, push a CustomEvent.RUN_FAIL.
         for obstacle in self.board.obstacle_group.obstacles:
-            if self.robot.logical_position_x == obstacle.logical_position_x and self.robot.logical_position_y == obstacle.logical_position_y:
+            if self.robot.logical_position.is_equal_to(obstacle.logical_position):
                 # clear any remaining events
                 pygame.event.clear()
                 # push a fail event
