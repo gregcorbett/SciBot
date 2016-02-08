@@ -5,6 +5,7 @@ from enum import Enum
 from time import sleep
 import pygame
 from src.CustomEvent import CustomEvent
+from src.Point import Point
 
 
 class Heading(Enum):
@@ -22,39 +23,34 @@ class BeeBot(pygame.sprite.Sprite):
 
     def __init__(self, scenario):
         """Create a BeeBot."""
-        self.scenario = scenario  # Store so we can reset BeeBot
-
         # Initial position of the BeeBot in terms of square on the Board.
-        start_logical_position = self.scenario.get_element('BeeBotStartPosition')
-        start_logical_position_x = start_logical_position[0]  # x co-ord
-        start_logical_position_y = start_logical_position[1]  # y co-ord
+        self.start_logical_position = Point(scenario.get_element('BeeBotStartPosition'))
 
         # The amount the BeeBot moves.
-        self.step = self.scenario.get_element('BoardStep')
+        self.step = scenario.get_element('BoardStep')
 
         # The BeeBot's position of the BeeBot in terms of pixels.
-        self.screen_location_x = start_logical_position_x * self.step
-        self.screen_location_y = start_logical_position_y * self.step
+        self.screen_location = self.start_logical_position.scale(self.step)
 
         # The BeeBot's position of the BeeBot in terms of the Board.
-        self.logical_position_x = start_logical_position_x
-        self.logical_position_y = start_logical_position_y
+        self.logical_position = self.start_logical_position
 
         # All the sprites the BeeBot may display.
         self.sprites = {}
 
         # Read the sprite and assign it as the "NORTH" sprite.
-        base_sprite = self.scenario.get_element('BeeBotSprite')
+        base_sprite = scenario.get_element('BeeBotSprite')
         self.sprites[Heading.NORTH] = base_sprite
 
         # Define other sprites by rotating the "NORTH" sprite.
         self.sprites[Heading.EAST] = self.rotate(base_sprite, 270)
         self.sprites[Heading.SOUTH] = self.rotate(base_sprite, 180)
         self.sprites[Heading.WEST] = self.rotate(base_sprite, 90)
-        self.sprites[Heading.FAIL] = self.scenario.get_element('BeeBotFailSprite')
+        self.sprites[Heading.FAIL] = scenario.get_element('BeeBotFailSprite')
 
         # Which way is the BeeBot facing.
-        self.heading = self.scenario.get_element('BeeBotHeading')
+        self.start_heading = scenario.get_element('BeeBotHeading')
+        self.heading = self.start_heading
 
         # Which sprite to display.
         self.sprite = self.sprites[self.heading]
@@ -94,62 +90,62 @@ class BeeBot(pygame.sprite.Sprite):
 
     def display(self, screen):
         """Display the BeeBot on screen."""
-        screen.blit(self.sprite, (self.screen_location_x,
-                                  self.screen_location_y))
+        screen.blit(self.sprite, (self.screen_location.x,
+                                  self.screen_location.y))
 
     def move_backward(self):
         """Move the BeeBot backward."""
         # The origin is in the top left corner
         if self.heading == Heading.SOUTH:
             for _ in range(0, self.step):
-                self.screen_location_y = self.screen_location_y - 1
+                self.screen_location.y = self.screen_location.y - 1
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position_y = self.logical_position_y - 1
+            self.logical_position.y = self.logical_position.y - 1
 
         elif self.heading == Heading.WEST:
             for _ in range(0, self.step):
-                self.screen_location_x = self.screen_location_x + 1
+                self.screen_location.x = self.screen_location.x + 1
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position_x = self.logical_position_x + 1
+            self.logical_position.x = self.logical_position.x + 1
 
         elif self.heading == Heading.NORTH:
             for _ in range(0, self.step):
-                self.screen_location_y = self.screen_location_y + 1
+                self.screen_location.y = self.screen_location.y + 1
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position_y = self.logical_position_y + 1
+            self.logical_position.y = self.logical_position.y + 1
 
         elif self.heading == Heading.EAST:
             for _ in range(0, self.step):
-                self.screen_location_x = self.screen_location_x - 1
+                self.screen_location.x = self.screen_location.x - 1
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position_x = self.logical_position_x - 1
+            self.logical_position.x = self.logical_position.x - 1
 
     def move_forward(self):
         """Move the BeeBot forward."""
         # The origin is in the top left corner
         if self.heading == Heading.NORTH:
             for _ in range(0, self.step):
-                self.screen_location_y = self.screen_location_y - 1
+                self.screen_location.y = self.screen_location.y - 1
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position_y = self.logical_position_y - 1
+            self.logical_position.y = self.logical_position.y - 1
 
         elif self.heading == Heading.EAST:
             for _ in range(0, self.step):
-                self.screen_location_x = self.screen_location_x + 1
+                self.screen_location.x = self.screen_location.x + 1
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position_x = self.logical_position_x + 1
+            self.logical_position.x = self.logical_position.x + 1
 
         elif self.heading == Heading.SOUTH:
             for _ in range(0, self.step):
-                self.screen_location_y = self.screen_location_y + 1
+                self.screen_location.y = self.screen_location.y + 1
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position_y = self.logical_position_y + 1
+            self.logical_position.y = self.logical_position.y + 1
 
         elif self.heading == Heading.WEST:
             for _ in range(0, self.step):
-                self.screen_location_x = self.screen_location_x - 1
+                self.screen_location.x = self.screen_location.x - 1
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position_x = self.logical_position_x - 1
+            self.logical_position.x = self.logical_position.x - 1
 
     def move_right(self):
         """Turn the BeeBot right."""
@@ -202,23 +198,17 @@ class BeeBot(pygame.sprite.Sprite):
         sleep(0.5)
 
     def reset_position(self):
+        """Reset the position of the BeeBot."""
         # Initial position of the BeeBot in terms of square on the Board.
-        start_logical_position = self.scenario.get_element('BeeBotStartPosition')
-        start_logical_position_x = start_logical_position[0]  # x co-ord
-        start_logical_position_y = start_logical_position[1]  # y co-ord
+        self.logical_position = self.start_logical_position
 
-        self.heading = self.scenario.get_element('BeeBotHeading')
+        self.heading = self.heading = self.start_heading
 
         # Which sprite to display.
         self.sprite = self.sprites[self.heading]
 
-        # The BeeBot's position of the BeeBot in terms of pixels.
-        self.screen_location_x = start_logical_position_x * self.step
-        self.screen_location_y = start_logical_position_y * self.step
-
-        # The BeeBot's position of the BeeBot in terms of the Board.
-        self.logical_position_x = start_logical_position_x
-        self.logical_position_y = start_logical_position_y
+        # The BeeBot's position in terms of pixels.
+        self.screen_location = self.start_logical_position.scale(self.step)
 
     @classmethod
     def rotate(cls, image, angle):
