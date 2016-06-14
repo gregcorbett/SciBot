@@ -33,7 +33,7 @@ class BeeBot(pygame.sprite.Sprite):
         self.screen_location = self.start_logical_position.scale(self.step)
 
         # The BeeBot's position of the BeeBot in terms of the Board.
-        self.logical_position = self.start_logical_position
+        self.logical_position = self.start_logical_position.copy()
 
         # All the sprites the BeeBot may display.
         self.sprites = {}

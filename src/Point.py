@@ -20,3 +20,6 @@ class Point():
     def scale(self, multipler):
         """Return a point such that x and y are multipled bt multipler."""
         return Point(self.x * multipler, self.y * multipler)
+
+    def copy(self):
+         return Point(self.x , self.y )
