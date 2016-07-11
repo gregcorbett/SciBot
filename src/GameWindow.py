@@ -197,6 +197,14 @@ class GameWindow(Thread):
                 self.check_for_obstacle_collisions()
                 self.check_for_goal_collisions()
 
+            # If the event is a left mouse button up
+            # assume it is a button press
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                if self.button.is_mouse_over_button(event.pos):
+                    temp = self.button.background_colour
+                    self.button.background_colour = self.button.text_colour
+                    self.button.text_colour = temp
+
     def check_for_goal_collisions(self):
         """Check if the BeeBot is currently on a Goal."""
         # If so, mark that Goal as met.
