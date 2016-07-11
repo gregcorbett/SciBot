@@ -2,7 +2,7 @@
 import pygame
 
 
-class Button():
+class Button:
     """This class defines an individual Button."""
 
     def __init__(self,
@@ -10,7 +10,8 @@ class Button():
                  text_colour,  # The colour of the text (can be None)
                  background_colour,  # The colour of the text (can be None)
                  screen_location,  # The position on the screen
-                 size):  # The size of the Button
+                 size,  # The size of the Button
+                 event):  # The event trigger by the Button
         """Create a Button."""
         self.text = text
         self.text_colour = text_colour
@@ -18,6 +19,7 @@ class Button():
         self.screen_location = screen_location
         self.size = size
         self.rect = pygame.Rect(screen_location, size)
+        self.event = pygame.event.Event(event)
         self.font = pygame.font.SysFont("comicsansms", 30)
 
     def display(self, screen):

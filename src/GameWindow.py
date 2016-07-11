@@ -10,6 +10,7 @@ import pygame
 from src.BeeBot import BeeBot, Heading
 from src.Board import Board
 from src.Button import Button
+from src.ButtonGroup import ButtonGroup
 from src.CustomEvent import CustomEvent
 from src.Scenario import Scenario
 
@@ -58,7 +59,10 @@ class GameWindow(Thread):
 
         self.font = None
 
-        self.button = Button("BOO", GameWindow.BLACK, GameWindow.WHITE, (600,300),(100,100))
+        button = Button("BOO", GameWindow.BLACK, GameWindow.WHITE, (600,300),(100,100),CustomEvent.MOVE_BEEBOT_UP)
+
+        self.buttons = ButtonGroup()
+        self.buttons.add('BOO', button)
 
         # Call the superclass constructor
         Thread.__init__(self)
@@ -84,7 +88,7 @@ class GameWindow(Thread):
                 # Display the Board and BeeBot
                 self.display_board_and_beebot()
                 # Display any Buttons
-                self.button.display(self.screen)
+                self.buttons.display(self.screen)
 
                 # Update display
                 pygame.display.update()
@@ -200,10 +204,8 @@ class GameWindow(Thread):
             # If the event is a left mouse button up
             # assume it is a button press
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-                if self.button.is_mouse_over_button(event.pos):
-                    temp = self.button.background_colour
-                    self.button.background_colour = self.button.text_colour
-                    self.button.text_colour = temp
+                self.buttons.action_appropriate_button(event.pos)
+
 
     def check_for_goal_collisions(self):
         """Check if the BeeBot is currently on a Goal."""
