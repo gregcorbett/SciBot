@@ -18,8 +18,8 @@ class ButtonGroup:
         for key, button in self.buttons.items():
             button.display(screen)
 
-    def action_appropriate_button(self, mouse_position):
+    def get_appropriate_button_name(self, mouse_position):
         """Action the appropriate Button."""
         for key, button in self.buttons.items():
             if button.is_mouse_over_button(mouse_position):
-                pygame.event.post(button.event)
+                return key

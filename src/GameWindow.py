@@ -204,7 +204,8 @@ class GameWindow(Thread):
             # If the event is a left mouse button up
             # assume it is a button press
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-                self.buttons.action_appropriate_button(event.pos)
+                button = self.buttons.get_appropriate_button_name(event.pos)
+                self.handle_button_press(button)
 
 
     def check_for_goal_collisions(self):
@@ -258,6 +259,11 @@ class GameWindow(Thread):
         text_rect.centerx = self.screen.get_rect().centerx
         text_rect.centery = self.screen.get_rect().centery
         self.screen.blit(text, text_rect)
+
+    def handle_button_press(self, button):
+        if button == "BOO":
+            new_event = CustomEvent.MOVE_BEEBOT_UP
+            self.robot.add_to_memory(pygame.event.Event(new_event))
 
     def handle_key_press(self, event):
         """Convert key press into game logic."""
