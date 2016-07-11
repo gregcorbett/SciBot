@@ -28,6 +28,7 @@ class GameWindow(Thread):
     """This class defines the main GameWindow."""
 
     BLACK = (0, 0, 0)
+    GREY = (100, 100, 100)
     WHITE = (255, 255, 255)
     RED = (255, 0, 0)
     FRAMES_PER_SECOND = 24
@@ -137,7 +138,7 @@ class GameWindow(Thread):
         self.width = self.scenario.get_element('LogicalWidth')*self.step
 
         self.board = Board(self.scenario)
-        self.size = (self.width, self.height)
+        self.size = (self.width + 400, self.height)
 
         self.robot = BeeBot(self.scenario)
 
@@ -224,6 +225,7 @@ class GameWindow(Thread):
 
     def display_board_and_beebot(self):
         """Display the Board and BeeBot."""
+        self.screen.fill(GameWindow.GREY)
         if self.board is not None:
             self.board.display(self.screen)
         if self.robot is not None:
