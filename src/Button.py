@@ -41,6 +41,7 @@ class Button:
         screen.blit(text, text_rect)
 
     def is_mouse_over_button(self, mouse_position):
+        """Given a mouse position, return True if mouse over Button."""
         if (mouse_position[0] > self.rect.topleft[0] and
             mouse_position[1] > self.rect.topleft[1] and
             mouse_position[0] < self.rect.bottomright[0] and

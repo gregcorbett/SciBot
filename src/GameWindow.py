@@ -261,6 +261,7 @@ class GameWindow(Thread):
         self.screen.blit(text, text_rect)
 
     def handle_button_press(self, button):
+        """Convert button press into game logic."""
         if button == "BOO":
             new_event = CustomEvent.MOVE_BEEBOT_UP
             self.robot.add_to_memory(pygame.event.Event(new_event))

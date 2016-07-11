@@ -19,7 +19,7 @@ class ButtonGroup:
             button.display(screen)
 
     def get_appropriate_button_name(self, mouse_position):
-        """Action the appropriate Button."""
+        """Return the pressed Button name."""
         for key, button in self.buttons.items():
             if button.is_mouse_over_button(mouse_position):
                 return key
