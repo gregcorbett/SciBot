@@ -9,6 +9,7 @@ import sys
 import pygame
 from src.BeeBot import BeeBot, Heading
 from src.Board import Board
+from src.Button import Button
 from src.CustomEvent import CustomEvent
 from src.Scenario import Scenario
 
@@ -57,6 +58,8 @@ class GameWindow(Thread):
 
         self.font = None
 
+        self.button = Button("BOO", GameWindow.BLACK, GameWindow.WHITE, (600,300),(100,100))
+
         # Call the superclass constructor
         Thread.__init__(self)
 
@@ -80,6 +83,8 @@ class GameWindow(Thread):
             elif self.rendering_mode is RenderingMode.NORMAL:
                 # Display the Board and BeeBot
                 self.display_board_and_beebot()
+                # Display any Buttons
+                self.button.display(self.screen)
 
                 # Update display
                 pygame.display.update()
