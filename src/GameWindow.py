@@ -59,15 +59,6 @@ class GameWindow(Thread):
 
         self.font = None
 
-        forward_button = Button('Forward',
-                                GameWindow.BLACK,
-                                GameWindow.WHITE,
-                                (600,300),
-                                (120,120))
-
-        self.buttons = ButtonGroup()
-        self.buttons.add('forward', forward_button)
-
         # Call the superclass constructor
         Thread.__init__(self)
 
@@ -158,6 +149,15 @@ class GameWindow(Thread):
         self.screen = pygame.display.set_mode(self.size)
 
         self.clock = pygame.time.Clock()
+
+        forward_button = Button('Forward',
+                                GameWindow.BLACK,
+                                GameWindow.WHITE,
+                                (self.width + 140, 50),
+                                (120,90))
+
+        self.buttons = ButtonGroup()
+        self.buttons.add('forward', forward_button)
 
     def start_scenario(self):
         """Start the Scenario."""
