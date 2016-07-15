@@ -23,7 +23,7 @@ class Button:
         self.font = pygame.font.SysFont("comicsansms", 30)
 
     def display(self, screen):
-        """Draw the Goal object on screen, if it has a sprite."""
+        """Draw the Buttton object on screen, if it has a sprite."""
         # Draw the Button background
         screen.fill(self.background_colour, rect=self.rect)
 
