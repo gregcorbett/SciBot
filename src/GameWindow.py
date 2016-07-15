@@ -150,14 +150,19 @@ class GameWindow(Thread):
 
         self.clock = pygame.time.Clock()
 
+        self.create_buttons()
+
+    def create_buttons(self):
+        """Helper method to populate ButtonGroup."""
+        self.buttons = ButtonGroup()
+
         forward_button = Button('Forward',
                                 GameWindow.BLACK,
                                 GameWindow.WHITE,
-                                (self.width + 140, 50),
-                                (120,90))
+                                (self.width + 140, 10),
+                                (120,120))
 
-        self.buttons = ButtonGroup()
-        self.buttons.add('forward', forward_button)
+        self.buttons.add(forward_button)
 
     def start_scenario(self):
         """Start the Scenario."""
@@ -208,8 +213,17 @@ class GameWindow(Thread):
             # If the event is a left mouse button up
             # assume it is a button press
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-                button = self.buttons.get_appropriate_button_name(event.pos)
-                self.handle_button_press(button)
+                button = self.buttons.get_appropriate_button(event.pos)
+                if button is not None:
+                    button.swap_colours()
+                    self.handle_button_press(button)
+                else:
+                    self.buttons.unswap_all()
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                button = self.buttons.get_appropriate_button(event.pos)
+                if button is not None:
+                    button.swap_colours()
 
 
     def check_for_goal_collisions(self):
@@ -264,19 +278,23 @@ class GameWindow(Thread):
         text_rect.centery = self.screen.get_rect().centery
         self.screen.blit(text, text_rect)
 
-    def handle_button_press(self, button):
-        """Convert button press into game logic."""
-        if button == 'forward':
+    def store_movement(self, movement):
+        """Store a movement in the BeeBot."""
+        if movement == 'Forward':
             new_event = CustomEvent.MOVE_BEEBOT_UP
             self.robot.add_to_memory(pygame.event.Event(new_event))
+
+    def handle_button_press(self, button):
+        """Convert button press into game logic."""
+        if button.text == 'Forward':
+            self.store_movement('Forward')
 
     def handle_key_press(self, event):
         """Convert key press into game logic."""
         # If the event is an arrow key, store
         # a movement event in the BeeBot.
         if event.key == pygame.K_UP:
-            new_event = CustomEvent.MOVE_BEEBOT_UP
-            self.robot.add_to_memory(pygame.event.Event(new_event))
+            self.store_movement('Forward')
 
         if event.key == pygame.K_DOWN:
             new_event = CustomEvent.MOVE_BEEBOT_DOWN

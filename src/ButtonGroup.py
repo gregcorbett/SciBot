@@ -9,17 +9,24 @@ class ButtonGroup:
         """Create an empty ButtonGroup."""
         self.buttons = {}  # The underlying Goal objects
 
-    def add(self, key, button):
+    def add(self, button):
         """Add a Button to the ButtonGroup."""
-        self.buttons[key] = button
+        self.buttons[button.text] = button
 
     def display(self, screen):
         """Draw all Button objects in the ButtonGroup."""
         for key, button in self.buttons.items():
             button.display(screen)
 
-    def get_appropriate_button_name(self, mouse_position):
+    def get_appropriate_button(self, mouse_position):
         """Return the pressed Button name."""
         for key, button in self.buttons.items():
             if button.is_mouse_over_button(mouse_position):
-                return key
+                return button
+        return None
+
+    def unswap_all(self):
+        """Unswap all Buttons where swapped equals True."""
+        for key, button in self.buttons.items():
+            if button.swapped:
+                button.swap_colours()

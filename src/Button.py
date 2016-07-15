@@ -20,6 +20,7 @@ class Button:
         self.size = size
         self.rect = pygame.Rect(screen_location, size)
         self.font = pygame.font.SysFont("comicsansms", 30)
+        self.swapped = False  # Keeps track of wether a Button is swapped
 
     def display(self, screen):
         """Draw the Buttton object on screen, if it has a sprite."""
@@ -38,6 +39,13 @@ class Button:
 
         # Render Button on screen
         screen.blit(text, text_rect)
+
+    def swap_colours(self):
+        """Swap the background and text colour of the Button."""
+        temp_colour = self.text_colour
+        self.text_colour = self.background_colour
+        self.background_colour = temp_colour
+        self.swapped = not self.swapped
 
     def is_mouse_over_button(self, mouse_position):
         """Given a mouse position, return True if mouse over Button."""
