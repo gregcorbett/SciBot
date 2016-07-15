@@ -80,8 +80,12 @@ class GameWindow(Thread):
                 pass
 
             elif self.rendering_mode is RenderingMode.NORMAL:
+                self.screen.fill(GameWindow.GREY)
+
                 # Display the Board and BeeBot
-                self.display_board_and_beebot()
+                self.board.display(self.screen)
+                self.robot.display(self.screen)
+
                 # Display any Buttons
                 self.buttons.display(self.screen)
 
@@ -256,14 +260,6 @@ class GameWindow(Thread):
                 pygame.event.clear()
                 # push a fail event
                 pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
-
-    def display_board_and_beebot(self):
-        """Display the Board and BeeBot."""
-        self.screen.fill(GameWindow.GREY)
-        if self.board is not None:
-            self.board.display(self.screen)
-        if self.robot is not None:
-            self.robot.display(self.screen)
 
     def display_text(self, text, text_colour, background_colour):
         """Display text on background_colour."""
