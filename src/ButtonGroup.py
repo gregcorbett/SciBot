@@ -15,18 +15,18 @@ class ButtonGroup:
 
     def display(self, screen):
         """Draw all Button objects in the ButtonGroup."""
-        for key, button in self.buttons.items():
+        for _, button in self.buttons.items():
             button.display(screen)
 
     def get_appropriate_button(self, mouse_position):
         """Return the pressed Button name."""
-        for key, button in self.buttons.items():
+        for _, button in self.buttons.items():
             if button.is_mouse_over_button(mouse_position):
                 return button
         return None
 
     def unswap_all(self):
         """Unswap all Buttons where swapped equals True."""
-        for key, button in self.buttons.items():
+        for _, button in self.buttons.items():
             if button.swapped:
                 button.swap_colours()
