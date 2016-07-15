@@ -59,10 +59,14 @@ class GameWindow(Thread):
 
         self.font = None
 
-        button = Button("BOO", GameWindow.BLACK, GameWindow.WHITE, (600,300),(100,100),CustomEvent.MOVE_BEEBOT_UP)
+        forward_button = Button('Forward',
+                                GameWindow.BLACK,
+                                GameWindow.WHITE,
+                                (600,300),
+                                (120,120))
 
         self.buttons = ButtonGroup()
-        self.buttons.add('BOO', button)
+        self.buttons.add('forward', forward_button)
 
         # Call the superclass constructor
         Thread.__init__(self)
@@ -262,7 +266,7 @@ class GameWindow(Thread):
 
     def handle_button_press(self, button):
         """Convert button press into game logic."""
-        if button == "BOO":
+        if button == 'forward':
             new_event = CustomEvent.MOVE_BEEBOT_UP
             self.robot.add_to_memory(pygame.event.Event(new_event))
 
