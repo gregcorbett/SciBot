@@ -120,6 +120,9 @@ class GameWindow(Thread):
                 scenario_path = input("Please enter path and file name of scenario: ")
                 if scenario_path is "":
                     scenario_path = "./scenarios/Default.scibot"
+                elif ".scibot" not in scenario_path:
+                    scenario_path = "./scenarios/" + scenario_path + ".scibot"
+
                 self.scenario = load(open(scenario_path, "rb"))
                 break  # only get here if there is no exception
 
