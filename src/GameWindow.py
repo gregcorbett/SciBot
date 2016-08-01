@@ -117,7 +117,7 @@ class GameWindow(Thread):
         """Somehow Choose a Scenario."""
         while True:
             try:
-                scenario_path = input("Please enter path and file name of scenario: ")
+                scenario_path = input("Choose a Scenario: ")
                 if scenario_path is "":
                     scenario_path = "./scenarios/Default.scibot"
                 elif ".scibot" not in scenario_path:
