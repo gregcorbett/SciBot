@@ -357,6 +357,16 @@ class GameWindow(Thread):
         if button.text == 'Backward':
             self.store_movement('Backward')
 
+        if button.text == 'Reset':
+            self.robot.reset_position()
+            self.board.goal_group.reset_all_goals()
+
+        if button.text == 'Clear':
+            self.robot.memory = []
+
+        if button.text == 'Go':
+            self.robot.push_out_memory()
+
     def handle_key_press(self, event):
         """Convert key press into game logic."""
         # If the event is an arrow key, store
@@ -365,17 +375,13 @@ class GameWindow(Thread):
             self.store_movement('Forward')
 
         if event.key == pygame.K_DOWN:
-            new_event = CustomEvent.MOVE_BEEBOT_DOWN
-            self.robot.add_to_memory(pygame.event.Event(new_event))
+            self.store_movement('Down')
 
         if event.key == pygame.K_LEFT:
-            new_event = CustomEvent.MOVE_BEEBOT_LEFT
-            self.robot.add_to_memory(pygame.event.Event(new_event))
+            self.store_movement('Left')
 
         if event.key == pygame.K_RIGHT:
-            new_event = CustomEvent.MOVE_BEEBOT_RIGHT
-            self.robot.add_to_memory(pygame.event.Event(new_event))
-
+            self.store_movement('Right')
         # if the event is the space bar,
         # reset the BeeBot's position and clears any met goals.
         # it doesn't clear the memory!
