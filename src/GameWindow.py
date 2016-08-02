@@ -146,77 +146,144 @@ class GameWindow(Thread):
         self.width = self.scenario.get_element('LogicalWidth')*self.step
 
         self.board = Board(self.scenario)
-        self.size = (self.width + 400, self.height)
 
         self.robot = BeeBot(self.scenario)
 
-        self.screen = pygame.display.set_mode(self.size)
-
         self.clock = pygame.time.Clock()
 
-        self.create_buttons()
+        buttons_on_the_left = False
 
-    def create_buttons(self):
+        self.create_buttons(buttons_on_the_left)
+
+        if buttons_on_the_left:
+            self.size = (self.width + 400, self.height)
+        else:
+            self.size = (self.width, self.height + 400)
+
+        self.screen = pygame.display.set_mode(self.size)
+
+
+    def create_buttons(self, buttons_on_the_left):
         """Helper method to populate ButtonGroup."""
         self.buttons = ButtonGroup()
 
-        forward_button = Button('Forward',
-                                GameWindow.BLACK,
-                                GameWindow.WHITE,
-                                (self.width + 140, 10),
-                                (120,120))
+        if buttons_on_the_left:
+            forward_button = Button('Forward',
+                                    GameWindow.BLACK,
+                                    GameWindow.WHITE,
+                                    (self.width + 140, 10),
+                                    (120,120))
 
-        self.buttons.add(forward_button)
+            self.buttons.add(forward_button)
 
-        backward_button = Button('Backward',
-                                 GameWindow.BLACK,
-                                 GameWindow.WHITE,
-                                 (self.width + 140, 270),
-                                 (120,120))
+            backward_button = Button('Backward',
+                                     GameWindow.BLACK,
+                                     GameWindow.WHITE,
+                                     (self.width + 140, 270),
+                                     (120,120))
 
-        self.buttons.add(backward_button)
+            self.buttons.add(backward_button)
 
-        turn_left_button = Button('Turn Left',
-                                 GameWindow.BLACK,
-                                 GameWindow.WHITE,
-                                 (self.width + 10, 140),
-                                 (120,120))
+            turn_left_button = Button('Turn Left',
+                                     GameWindow.BLACK,
+                                     GameWindow.WHITE,
+                                     (self.width + 10, 140),
+                                     (120,120))
 
-        self.buttons.add(turn_left_button)
+            self.buttons.add(turn_left_button)
 
-        turn_right_button = Button('Turn Right',
-                                 GameWindow.BLACK,
-                                 GameWindow.WHITE,
-                                 (self.width + 270, 140),
-                                 (120,120))
+            turn_right_button = Button('Turn Right',
+                                     GameWindow.BLACK,
+                                     GameWindow.WHITE,
+                                     (self.width + 270, 140),
+                                     (120,120))
 
-        self.buttons.add(turn_right_button)
+            self.buttons.add(turn_right_button)
 
-        go_button = Button('Go',
-                           GameWindow.BLACK,
-                           GameWindow.WHITE,
-                           (self.width + 140, 140),
-                           (120,120))
+            go_button = Button('Go',
+                               GameWindow.BLACK,
+                               GameWindow.WHITE,
+                               (self.width + 140, 140),
+                               (120,120))
 
-        self.buttons.add(go_button)
+            self.buttons.add(go_button)
 
 
 
-        reset_button = Button('Reset',
-                                 GameWindow.BLACK,
-                                 GameWindow.WHITE,
-                                 (self.width + 10, 270),
-                                 (120,120))
+            reset_button = Button('Reset',
+                                     GameWindow.BLACK,
+                                     GameWindow.WHITE,
+                                     (self.width + 10, 270),
+                                     (120,120))
 
-        self.buttons.add(reset_button)
+            self.buttons.add(reset_button)
 
-        clear_button = Button('Clear',
-                           GameWindow.BLACK,
-                           GameWindow.WHITE,
-                           (self.width + 270, 270),
-                           (120,120))
+            clear_button = Button('Clear',
+                               GameWindow.BLACK,
+                               GameWindow.WHITE,
+                               (self.width + 270, 270),
+                               (120,120))
 
-        self.buttons.add(clear_button)
+            self.buttons.add(clear_button)
+
+        else:
+            forward_button = Button('Forward',
+                                    GameWindow.BLACK,
+                                    GameWindow.WHITE,
+                                    (190, self.height + 10),
+                                    (120,120))
+
+            self.buttons.add(forward_button)
+
+            backward_button = Button('Backward',
+                                     GameWindow.BLACK,
+                                     GameWindow.WHITE,
+                                     (190, self.height + 270),
+                                     (120,120))
+
+            self.buttons.add(backward_button)
+
+            turn_left_button = Button('Turn Left',
+                                     GameWindow.BLACK,
+                                     GameWindow.WHITE,
+                                     (60, self.height + 140),
+                                     (120,120))
+
+            self.buttons.add(turn_left_button)
+
+            turn_right_button = Button('Turn Right',
+                                     GameWindow.BLACK,
+                                     GameWindow.WHITE,
+                                     (320, self.height + 140),
+                                     (120,120))
+
+            self.buttons.add(turn_right_button)
+
+            go_button = Button('Go',
+                               GameWindow.BLACK,
+                               GameWindow.WHITE,
+                               (190, self.height + 140),
+                               (120,120))
+
+            self.buttons.add(go_button)
+
+
+
+            reset_button = Button('Reset',
+                                     GameWindow.BLACK,
+                                     GameWindow.WHITE,
+                                     (60, self.height + 270),
+                                     (120,120))
+
+            self.buttons.add(reset_button)
+
+            clear_button = Button('Clear',
+                               GameWindow.BLACK,
+                               GameWindow.WHITE,
+                               (320, self.height + 270),
+                               (120,120))
+
+            self.buttons.add(clear_button)
 
 
     def start_scenario(self):
