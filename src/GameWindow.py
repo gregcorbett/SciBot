@@ -269,7 +269,7 @@ class GameWindow(Thread):
             # assume it is a button press
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 button = self.buttons.get_appropriate_button(event.pos)
-                if button is not None:
+                if button is not None and button.swapped:
                     button.swap_colours()
                     self.handle_button_press(button)
                 else:
