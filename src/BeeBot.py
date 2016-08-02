@@ -200,9 +200,9 @@ class BeeBot(pygame.sprite.Sprite):
     def reset_position(self):
         """Reset the position of the BeeBot."""
         # Initial position of the BeeBot in terms of square on the Board.
-        self.logical_position = self.start_logical_position
+        self.logical_position = self.start_logical_position.copy()
 
-        self.heading = self.heading = self.start_heading
+        self.heading = self.start_heading
 
         # Which sprite to display.
         self.sprite = self.sprites[self.heading]
