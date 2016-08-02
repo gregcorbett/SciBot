@@ -331,10 +331,31 @@ class GameWindow(Thread):
             new_event = CustomEvent.MOVE_BEEBOT_UP
             self.robot.add_to_memory(pygame.event.Event(new_event))
 
+        if movement == 'Left':
+            new_event = CustomEvent.MOVE_BEEBOT_LEFT
+            self.robot.add_to_memory(pygame.event.Event(new_event))
+
+        if movement == 'Right':
+            new_event = CustomEvent.MOVE_BEEBOT_RIGHT
+            self.robot.add_to_memory(pygame.event.Event(new_event))
+
+        if movement == 'Backward':
+            new_event = CustomEvent.MOVE_BEEBOT_DOWN
+            self.robot.add_to_memory(pygame.event.Event(new_event))
+
     def handle_button_press(self, button):
         """Convert button press into game logic."""
         if button.text == 'Forward':
             self.store_movement('Forward')
+
+        if button.text == 'Turn Left':
+            self.store_movement('Left')
+
+        if button.text == 'Turn Right':
+            self.store_movement('Right')
+
+        if button.text == 'Backward':
+            self.store_movement('Backward')
 
     def handle_key_press(self, event):
         """Convert key press into game logic."""
