@@ -168,6 +168,57 @@ class GameWindow(Thread):
 
         self.buttons.add(forward_button)
 
+        backward_button = Button('Backward',
+                                 GameWindow.BLACK,
+                                 GameWindow.WHITE,
+                                 (self.width + 140, 270),
+                                 (120,120))
+
+        self.buttons.add(backward_button)
+
+        turn_left_button = Button('Turn Left',
+                                 GameWindow.BLACK,
+                                 GameWindow.WHITE,
+                                 (self.width + 10, 140),
+                                 (120,120))
+
+        self.buttons.add(turn_left_button)
+
+        turn_right_button = Button('Turn Right',
+                                 GameWindow.BLACK,
+                                 GameWindow.WHITE,
+                                 (self.width + 270, 140),
+                                 (120,120))
+
+        self.buttons.add(turn_right_button)
+
+        go_button = Button('Go',
+                           GameWindow.BLACK,
+                           GameWindow.WHITE,
+                           (self.width + 140, 140),
+                           (120,120))
+
+        self.buttons.add(go_button)
+
+
+
+        reset_button = Button('Reset',
+                                 GameWindow.BLACK,
+                                 GameWindow.WHITE,
+                                 (self.width + 10, 270),
+                                 (120,120))
+
+        self.buttons.add(reset_button)
+
+        clear_button = Button('Clear',
+                           GameWindow.BLACK,
+                           GameWindow.WHITE,
+                           (self.width + 270, 270),
+                           (120,120))
+
+        self.buttons.add(clear_button)
+
+
     def start_scenario(self):
         """Start the Scenario."""
         # Go to NORMAL rendering
