@@ -15,7 +15,6 @@ class Heading(Enum):
     EAST = 2
     SOUTH = 3
     WEST = 4
-    FAIL = 5
 
 
 class BeeBot(pygame.sprite.Sprite):
@@ -24,7 +23,8 @@ class BeeBot(pygame.sprite.Sprite):
     def __init__(self, scenario):
         """Create a BeeBot."""
         # Initial position of the BeeBot in terms of square on the Board.
-        self.start_logical_position = Point(scenario.get_element('BeeBotStartPosition'))
+        self.start_logical_position = Point(
+            scenario.get_element('BeeBotStartPosition'))
 
         # The amount the BeeBot moves.
         self.step = scenario.get_element('BoardStep')
@@ -36,13 +36,14 @@ class BeeBot(pygame.sprite.Sprite):
         self.logical_position = self.start_logical_position.copy()
 
         # Read the sprite and assume it is the "NORTH" sprite.
-        self.sprite = scenario.get_element('BeeBotSprite')
+        self.original_sprite = scenario.get_element('BeeBotSprite')
+        self.sprite = self.original_sprite
 
         # Which way is the BeeBot facing.
-        self.start_heading = Heading.EAST# scenario.get_element('BeeBotHeading')
+        self.start_heading = scenario.get_element('BeeBotHeading')
         self.heading = self.start_heading
 
-        # then rotate based on heading
+        # Rotate sprite based on start heading
         if self.start_heading == Heading.EAST:
             self.sprite = self.rotate(self.sprite, 270)
         elif self.start_heading == Heading.WEST:
@@ -152,7 +153,7 @@ class BeeBot(pygame.sprite.Sprite):
         # Take a copy of the sprite
         old_sprite = self.sprite
         # Rotate the copy, 1 degree more every time
-        for i in range(0,90):
+        for i in range(0, 90):
             self.sprite = self.rotate(old_sprite, -(i+1))
             sleep(0.01)
 
@@ -177,7 +178,7 @@ class BeeBot(pygame.sprite.Sprite):
         # Take a copy of the sprite
         old_sprite = self.sprite
         # Rotate the copy, 1 degree more every time
-        for i in range(0,90):
+        for i in range(0, 90):
             self.sprite = self.rotate(old_sprite, i+1)
             sleep(0.01)
 
@@ -203,14 +204,10 @@ class BeeBot(pygame.sprite.Sprite):
         # The BeeBot's position in terms of pixels.
         self.screen_location = self.start_logical_position.scale(self.step)
 
-        # Reset rotation of BeeBot.
-        if self.heading == Heading.EAST:
-            self.sprite = self.rotate(self.sprite, 90)
-        elif self.heading == Heading.WEST:
-            self.sprite = self.rotate(self.sprite, 270)
-        elif self.heading == Heading.SOUTH:
-            self.sprite = self.rotate(self.sprite, 180)
+        # Reset BeeBot sprite
+        self.sprite = self.original_sprite
 
+        # From the original sprite, rotate to the start_heading
         if self.start_heading == Heading.EAST:
             self.sprite = self.rotate(self.sprite, 270)
         elif self.start_heading == Heading.WEST:
