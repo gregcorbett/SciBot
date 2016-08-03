@@ -35,25 +35,23 @@ class BeeBot(pygame.sprite.Sprite):
         # The BeeBot's position of the BeeBot in terms of the Board.
         self.logical_position = self.start_logical_position.copy()
 
-        # All the sprites the BeeBot may display.
-        self.sprites = {}
-
-        # Read the sprite and assign it as the "NORTH" sprite.
-        base_sprite = scenario.get_element('BeeBotSprite')
-        self.sprites[Heading.NORTH] = base_sprite
-
-        # Define other sprites by rotating the "NORTH" sprite.
-        self.sprites[Heading.EAST] = self.rotate(base_sprite, 270)
-        self.sprites[Heading.SOUTH] = self.rotate(base_sprite, 180)
-        self.sprites[Heading.WEST] = self.rotate(base_sprite, 90)
-        self.sprites[Heading.FAIL] = scenario.get_element('BeeBotFailSprite')
+        # Read the sprite and assume it is the "NORTH" sprite.
+        self.sprite = scenario.get_element('BeeBotSprite')
 
         # Which way is the BeeBot facing.
-        self.start_heading = scenario.get_element('BeeBotHeading')
+        self.start_heading = Heading.EAST# scenario.get_element('BeeBotHeading')
         self.heading = self.start_heading
 
-        # Which sprite to display.
-        self.sprite = self.sprites[self.heading]
+        # then rotate based on heading
+        if self.start_heading == Heading.EAST:
+            self.sprite = self.rotate(self.sprite, 270)
+        elif self.start_heading == Heading.WEST:
+            self.sprite = self.rotate(self.sprite, 90)
+        elif self.start_heading == Heading.SOUTH:
+            self.sprite = self.rotate(self.sprite, 180)
+
+        # set fail sprite from scenario
+        self.fail_sprite = scenario.get_element('BeeBotFailSprite')
 
         # Store MOVE_BEEBOT_* events here.
         self.memory = []
@@ -160,19 +158,15 @@ class BeeBot(pygame.sprite.Sprite):
 
         if self.heading == Heading.NORTH:
             self.heading = Heading.EAST
-            self.sprite = self.sprites[self.heading]
 
         elif self.heading == Heading.EAST:
             self.heading = Heading.SOUTH
-            self.sprite = self.sprites[self.heading]
 
         elif self.heading == Heading.SOUTH:
             self.heading = Heading.WEST
-            self.sprite = self.sprites[self.heading]
 
         elif self.heading == Heading.WEST:
             self.heading = Heading.NORTH
-            self.sprite = self.sprites[self.heading]
 
         sleep(0.5)
 
@@ -189,34 +183,42 @@ class BeeBot(pygame.sprite.Sprite):
 
         if self.heading == Heading.NORTH:
             self.heading = Heading.WEST
-            self.sprite = self.sprites[self.heading]
 
         elif self.heading == Heading.EAST:
             self.heading = Heading.NORTH
-            self.sprite = self.sprites[self.heading]
 
         elif self.heading == Heading.SOUTH:
             self.heading = Heading.EAST
-            self.sprite = self.sprites[self.heading]
 
         elif self.heading == Heading.WEST:
             self.heading = Heading.SOUTH
-            self.sprite = self.sprites[self.heading]
 
         sleep(0.5)
 
     def reset_position(self):
         """Reset the position of the BeeBot."""
         # Initial position of the BeeBot in terms of square on the Board.
-        self.logical_position = self.start_logical_position
-
-        self.heading = self.heading = self.start_heading
-
-        # Which sprite to display.
-        self.sprite = self.sprites[self.heading]
+        self.logical_position = self.start_logical_position.copy()
 
         # The BeeBot's position in terms of pixels.
         self.screen_location = self.start_logical_position.scale(self.step)
+
+        # Reset rotation of BeeBot.
+        if self.heading == Heading.EAST:
+            self.sprite = self.rotate(self.sprite, 90)
+        elif self.heading == Heading.WEST:
+            self.sprite = self.rotate(self.sprite, 270)
+        elif self.heading == Heading.SOUTH:
+            self.sprite = self.rotate(self.sprite, 180)
+
+        if self.start_heading == Heading.EAST:
+            self.sprite = self.rotate(self.sprite, 270)
+        elif self.start_heading == Heading.WEST:
+            self.sprite = self.rotate(self.sprite, 90)
+        elif self.start_heading == Heading.SOUTH:
+            self.sprite = self.rotate(self.sprite, 180)
+
+        self.heading = self.start_heading
 
     @classmethod
     def rotate(cls, image, angle):
