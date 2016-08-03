@@ -151,7 +151,7 @@ class GameWindow(Thread):
 
         self.clock = pygame.time.Clock()
 
-        buttons_on_the_left = False
+        buttons_on_the_left = True
 
         self.create_buttons(buttons_on_the_left)
 
@@ -171,7 +171,7 @@ class GameWindow(Thread):
             forward_button = Button('Forward',
                                     GameWindow.BLACK,
                                     GameWindow.WHITE,
-                                    (self.width + 140, 10),
+                                    (self.width + 140, float(self.height)/2 - 190),
                                     (120,120))
 
             self.buttons.add(forward_button)
@@ -179,7 +179,7 @@ class GameWindow(Thread):
             backward_button = Button('Backward',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     (self.width + 140, 270),
+                                     (self.width + 140, float(self.height)/2 + 70),
                                      (120,120))
 
             self.buttons.add(backward_button)
@@ -187,7 +187,7 @@ class GameWindow(Thread):
             turn_left_button = Button('Turn Left',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     (self.width + 10, 140),
+                                     (self.width + 10, float(self.height)/2 - 60),
                                      (120,120))
 
             self.buttons.add(turn_left_button)
@@ -195,7 +195,7 @@ class GameWindow(Thread):
             turn_right_button = Button('Turn Right',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     (self.width + 270, 140),
+                                     (self.width + 270, float(self.height)/2 - 60),
                                      (120,120))
 
             self.buttons.add(turn_right_button)
@@ -203,7 +203,7 @@ class GameWindow(Thread):
             go_button = Button('Go',
                                GameWindow.BLACK,
                                GameWindow.WHITE,
-                               (self.width + 140, 140),
+                               (self.width + 140, float(self.height)/2 - 60),
                                (120,120))
 
             self.buttons.add(go_button)
@@ -213,7 +213,7 @@ class GameWindow(Thread):
             reset_button = Button('Reset',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     (self.width + 10, 270),
+                                     (self.width + 10, float(self.height)/2 + 70),
                                      (120,120))
 
             self.buttons.add(reset_button)
@@ -221,7 +221,7 @@ class GameWindow(Thread):
             clear_button = Button('Clear',
                                GameWindow.BLACK,
                                GameWindow.WHITE,
-                               (self.width + 270, 270),
+                               (self.width + 270, float(self.height)/2 + 70),
                                (120,120))
 
             self.buttons.add(clear_button)
@@ -230,7 +230,7 @@ class GameWindow(Thread):
             forward_button = Button('Forward',
                                     GameWindow.BLACK,
                                     GameWindow.WHITE,
-                                    (190, self.height + 10),
+                                    (float(self.width)/2 - 60, self.height + 10),
                                     (120,120))
 
             self.buttons.add(forward_button)
@@ -238,7 +238,7 @@ class GameWindow(Thread):
             backward_button = Button('Backward',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     (190, self.height + 270),
+                                     (float(self.width)/2 - 60, self.height + 270),
                                      (120,120))
 
             self.buttons.add(backward_button)
@@ -246,7 +246,7 @@ class GameWindow(Thread):
             turn_left_button = Button('Turn Left',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     (60, self.height + 140),
+                                     (float(self.width)/2 - 190, self.height + 140),
                                      (120,120))
 
             self.buttons.add(turn_left_button)
@@ -254,7 +254,7 @@ class GameWindow(Thread):
             turn_right_button = Button('Turn Right',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     (320, self.height + 140),
+                                     (float(self.width)/2 + 70, self.height + 140),
                                      (120,120))
 
             self.buttons.add(turn_right_button)
@@ -262,7 +262,7 @@ class GameWindow(Thread):
             go_button = Button('Go',
                                GameWindow.BLACK,
                                GameWindow.WHITE,
-                               (190, self.height + 140),
+                               (float(self.width)/2 - 60, self.height + 140),
                                (120,120))
 
             self.buttons.add(go_button)
@@ -272,7 +272,7 @@ class GameWindow(Thread):
             reset_button = Button('Reset',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     (60, self.height + 270),
+                                     (float(self.width)/2 - 190, self.height + 270),
                                      (120,120))
 
             self.buttons.add(reset_button)
@@ -280,7 +280,7 @@ class GameWindow(Thread):
             clear_button = Button('Clear',
                                GameWindow.BLACK,
                                GameWindow.WHITE,
-                               (320, self.height + 270),
+                               (float(self.width)/2 + 70, self.height + 270),
                                (120,120))
 
             self.buttons.add(clear_button)
