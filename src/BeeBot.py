@@ -151,8 +151,12 @@ class BeeBot(pygame.sprite.Sprite):
         """Turn the BeeBot right."""
         # No need to move the BeeBot, just change it's sprite.
         sleep(0.5)
-        self.sprite = self.rotate(self.sprite, -45)
-        sleep(0.5)
+        # Take a copy of the sprite
+        old_sprite = self.sprite
+        # Rotate the copy, 1 degree more every time
+        for i in range(0,90):
+            self.sprite = self.rotate(old_sprite, -(i+1))
+            sleep(0.01)
 
         if self.heading == Heading.NORTH:
             self.heading = Heading.EAST
@@ -176,8 +180,12 @@ class BeeBot(pygame.sprite.Sprite):
         """Turn the BeeBot left."""
         # No need to move the BeeBot, just change it's sprite.
         sleep(0.5)
-        self.sprite = self.rotate(self.sprite, 45)
-        sleep(0.5)
+        # Take a copy of the sprite
+        old_sprite = self.sprite
+        # Rotate the copy, 1 degree more every time
+        for i in range(0,90):
+            self.sprite = self.rotate(old_sprite, i+1)
+            sleep(0.01)
 
         if self.heading == Heading.NORTH:
             self.heading = Heading.WEST
