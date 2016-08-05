@@ -192,6 +192,7 @@ class GameWindow(Thread):
                 self.robot.move(event)
                 self.check_for_obstacle_collisions()
                 self.check_for_goal_collisions()
+                self.check_for_off_map()
 
     def check_for_goal_collisions(self):
         """Check if the BeeBot is currently on a Goal."""
@@ -223,6 +224,13 @@ class GameWindow(Thread):
                 pygame.event.clear()
                 # push a fail event
                 pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
+
+    def check_for_off_map(self):
+        """Check if the BeeBot is off the map"""
+        if self.robot.logical_position.x not in range(0, self.board.logical_board_width):
+            print("Off map")
+        elif self.robot.logical_position.y not in range(0, self.board.logical_board_height):
+            print("Off map")
 
     def display_board_and_beebot(self):
         """Display the Board and BeeBot."""
