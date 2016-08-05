@@ -201,6 +201,8 @@ class BeeBot(pygame.sprite.Sprite):
         # Initial position of the BeeBot in terms of square on the Board.
         self.logical_position = self.start_logical_position.copy()
 
+        self.heading = self.start_heading
+
         # The BeeBot's position in terms of pixels.
         self.screen_location = self.start_logical_position.scale(self.step)
 

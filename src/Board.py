@@ -61,14 +61,14 @@ class Board:
 
         # Draw lines over Board background image
         if self.border_colour is not None:
-            for iter_width in range(0, self.board_width, self.step):
+            for iter_width in range(0, self.board_width + 1, self.step):
                 pygame.draw.line(screen,
                                  self.border_colour,
                                  (iter_width, 0),
                                  (iter_width, self.board_height),
                                  5)
 
-            for iter_height in range(0, self.board_height, self.step):
+            for iter_height in range(0, self.board_height + 1, self.step):
                 pygame.draw.line(screen,
                                  self.border_colour,
                                  (0, iter_height),
