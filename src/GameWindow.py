@@ -215,28 +215,25 @@ class GameWindow(Thread):
             # push a win event
             pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
 
+    def fail_run(self):
+        # clear any remaining events
+        pygame.event.clear()
+        # push a fail event
+        pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
+
     def check_for_obstacle_collisions(self):
         """Check if the BeeBot is currently on a Obstacle."""
         # If so, push a CustomEvent.RUN_FAIL.
         for obstacle in self.board.obstacle_group.obstacles:
             if self.robot.logical_position.is_equal_to(obstacle.logical_position):
-                # clear any remaining events
-                pygame.event.clear()
-                # push a fail event
-                pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
+                self.fail_run()
 
     def check_for_off_map(self):
         """Check if the BeeBot is off the map"""
         if self.robot.logical_position.x not in range(0, self.board.logical_board_width):
-            # clear any remaining events
-            pygame.event.clear()
-            # push a fail event
-            pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
+            self.fail_run()
         elif self.robot.logical_position.y not in range(0, self.board.logical_board_height):
-            # clear any remaining events
-            pygame.event.clear()
-            # push a fail event
-            pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
+            self.fail_run()
 
     def display_board_and_beebot(self):
         """Display the Board and BeeBot."""
