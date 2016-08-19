@@ -228,9 +228,15 @@ class GameWindow(Thread):
     def check_for_off_map(self):
         """Check if the BeeBot is off the map"""
         if self.robot.logical_position.x not in range(0, self.board.logical_board_width):
-            print("Off map")
+            # clear any remaining events
+            pygame.event.clear()
+            # push a fail event
+            pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
         elif self.robot.logical_position.y not in range(0, self.board.logical_board_height):
-            print("Off map")
+            # clear any remaining events
+            pygame.event.clear()
+            # push a fail event
+            pygame.event.post(pygame.event.Event(CustomEvent.RUN_FAIL))
 
     def display_board_and_beebot(self):
         """Display the Board and BeeBot."""
