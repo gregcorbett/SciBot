@@ -303,7 +303,7 @@ class GameWindow(Thread):
                 sys.exit()
 
             if event.type == CustomEvent.RUN_FAIL:
-                self.robot.sprite = self.robot.fail_sprite
+                self.robot.crash()
                 sleep(1)
                 self.rendering_mode = RenderingMode.FAIL_SCREEN
                 sleep(2)

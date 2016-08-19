@@ -219,6 +219,9 @@ class BeeBot(pygame.sprite.Sprite):
 
         self.heading = self.start_heading
 
+    def crash(self):
+        self.sprite = self.fail_sprite
+
     @classmethod
     def rotate(cls, image, angle):
         """Rotate given image by given angle."""
