@@ -14,11 +14,11 @@ class Point():
             self.y = y
 
     def is_equal_to(self, other_point):
-        """True iff both x and y are equal in self and other_point."""
+        """True if both x and y are equal in self and other_point."""
         return self.x == other_point.x and self.y == other_point.y
 
     def scale(self, multipler):
-        """Return a point such that x and y are multipled bt multipler."""
+        """Return a point such that x and y are multipled by multipler."""
         return Point(self.x * multipler, self.y * multipler)
 
     def copy(self):

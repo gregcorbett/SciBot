@@ -9,13 +9,14 @@ class Board:
         """Create the board."""
         self.step = scenario.get_element('BoardStep')
 
-        # Only need these to work out (and check) screen size
-        logical_board_height = scenario.get_element('LogicalHeight')
-        logical_board_width = scenario.get_element('LogicalWidth')
+        # Work out (and check) screen size, also store for 
+        # checking the BeeBot has not fallen of the edge
+        self.logical_board_height = scenario.get_element('LogicalHeight')
+        self.logical_board_width = scenario.get_element('LogicalWidth')
 
         # Board dimensions in terms of pixels
-        self.board_height = logical_board_height * self.step
-        self.board_width = logical_board_width * self.step
+        self.board_height = self.logical_board_height * self.step
+        self.board_width = self.logical_board_width * self.step
 
         self.background_image = scenario.get_element('Background')
 
