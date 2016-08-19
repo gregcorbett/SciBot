@@ -5,6 +5,7 @@ from threading import Thread
 from pickle import load
 from time import sleep
 from enum import Enum
+import glob
 import os
 import pygame
 import sys
@@ -133,7 +134,7 @@ class GameWindow(Thread):
                 elif ".scibot" not in scenario_path:
                     scenario_path = "./scenarios/" + scenario_path + ".scibot"
 
-                self.scenario = load(open(scenario_path, "rb"))
+                # self.scenario = load(open(scenario_path, "rb"))
                 break  # only get here if there is no exception
 
             except FileNotFoundError:
@@ -148,6 +149,10 @@ class GameWindow(Thread):
 
     def load_scenario(self):
         """Load the chosen Scenario."""
+        # Unpickle the Scenario file
+        self.scenario = load(open(self.scenario, "rb"))
+
+        # Load variables into memory
         self.step = self.scenario.get_element('BoardStep')
         self.height = self.scenario.get_element('LogicalHeight')*self.step
         self.width = self.scenario.get_element('LogicalWidth')*self.step
@@ -295,6 +300,18 @@ class GameWindow(Thread):
     def start_logic(self):
         """Start the game logic."""
         # Choose a scenario
+        scenario_list = []
+        for scenario_path in glob.glob("./scenarios/*.scibot"):
+            scenario_list.append(scenario_path)
+            # Get the Scenario filename from the full path
+            #scenario_file = os.path.basename(scenario_path)
+            # Add the Scenario filename (minus extension) to a list
+            #scenario_list.append(os.path.splitext(scenario_file)[0])
+
+        # If only one scenario, use that one!
+        if len(scenario_list) is 1:
+            self.scenario = scenario_list[0]
+
         self.choose_scenario()
         self.rendering_mode = RenderingMode.CHOOSE_SCENARIO
         while self.scenario is None:
