@@ -5,8 +5,9 @@ from threading import Thread
 from pickle import load
 from time import sleep
 from enum import Enum
-import sys
+import os
 import pygame
+import sys
 from src.BeeBot import BeeBot, Heading
 from src.Board import Board
 from src.Button import Button
@@ -137,6 +138,9 @@ class GameWindow(Thread):
 
             except FileNotFoundError:
                 print("Could not find file: %s, try again!" % scenario_path)
+                scenarios_directory = list(os.listdir(r"./scenarios/"))
+                print("Could not find file: %s." % scenario_path)
+                print("Did you mean:\n\t" + str(scenarios_directory) + "?\n")   
 
             except OSError:
                 print("OSError! Try again!")
