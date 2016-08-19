@@ -140,7 +140,7 @@ class GameWindow(Thread):
                 print("Could not find file: %s, try again!" % scenario_path)
                 scenarios_directory = list(os.listdir(r"./scenarios/"))
                 print("Could not find file: %s." % scenario_path)
-                print("Did you mean:\n\t" + str(scenarios_directory) + "?\n")   
+                print("Did you mean:\n\t" + str(scenarios_directory) + "?\n")
 
             except OSError:
                 print("OSError! Try again!")
@@ -292,9 +292,17 @@ class GameWindow(Thread):
 
             self.buttons.add(clear_button)
 
+    def start_logic(self):
+        """Start the game logic."""
+        # Choose a scenario
+        self.choose_scenario()
+        self.rendering_mode = RenderingMode.CHOOSE_SCENARIO
+        while self.scenario is None:
+            pass  # sit in a loop
 
-    def start_scenario(self):
-        """Start the Scenario."""
+        # Load the chosen scenario
+        self.load_scenario()
+
         # Go to NORMAL rendering
         self.rendering_mode = RenderingMode.NORMAL
         while True:
