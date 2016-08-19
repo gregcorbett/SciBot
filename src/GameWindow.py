@@ -6,6 +6,7 @@ from pickle import load
 from time import sleep
 from enum import Enum
 import glob
+import math
 import os
 import pygame
 import sys
@@ -299,18 +300,26 @@ class GameWindow(Thread):
 
     def start_logic(self):
         """Start the game logic."""
-        # Choose a scenario
-        scenario_list = []
-        for scenario_path in glob.glob("./scenarios/*.scibot"):
-            scenario_list.append(scenario_path)
-            # Get the Scenario filename from the full path
-            #scenario_file = os.path.basename(scenario_path)
-            # Add the Scenario filename (minus extension) to a list
-            #scenario_list.append(os.path.splitext(scenario_file)[0])
+        # Get the available Scenarios (those under ./scenarios/)
+        scenario_list = glob.glob("./scenarios/*.scibot")
+
+        # Get the Scenario filename from the full path
+        #scenario_file = os.path.basename(scenario_path)
+        # Add the Scenario filename (minus extension) to a list
+        #scenario_list.append(os.path.splitext(scenario_file)[0])
 
         # If only one scenario, use that one!
         if len(scenario_list) is 1:
             self.scenario = scenario_list[0]
+
+        # Determine the size of the window needed to display all the buttons.
+        width = 3  # Set how many to display on a single row
+        if len(scenario_list) <= width:  # If less scenarios than width, they
+                                         # can be displayed on one row
+            height = 1
+        else:  # Work out how many rows are needed.
+            height = math.ceil(len(scenario_list)) / 3.0)
+
 
         self.choose_scenario()
         self.rendering_mode = RenderingMode.CHOOSE_SCENARIO
