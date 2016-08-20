@@ -135,7 +135,7 @@ class GameWindow(Thread):
                 elif ".scibot" not in scenario_path:
                     scenario_path = "./scenarios/" + scenario_path + ".scibot"
 
-                # self.scenario = load(open(scenario_path, "rb"))
+                self.scenario = scenario_path
                 break  # only get here if there is no exception
 
             except FileNotFoundError:
@@ -315,12 +315,11 @@ class GameWindow(Thread):
         # Determine the size of the window needed to display all the buttons.
         width = 3  # Set how many to display on a single row
         if len(scenario_list) <= width:  # If less scenarios than width, they
-                                         # can be displayed on one row
-            height = 1
+            height = 1                   # can be displayed on one row
         else:  # Work out how many rows are needed.
-            height = math.ceil(len(scenario_list)) / 3.0)
+            height = math.ceil(len(scenario_list) / 3.0)
 
-
+        self.screen = pygame.display.set_mode((width*150, height*150))
         self.choose_scenario()
         self.rendering_mode = RenderingMode.CHOOSE_SCENARIO
         while self.scenario is None:
