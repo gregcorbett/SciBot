@@ -313,13 +313,24 @@ class GameWindow(Thread):
             self.scenario = scenario_list[0]
 
         # Determine the size of the window needed to display all the buttons.
-        width = 3  # Set how many to display on a single row
-        if len(scenario_list) <= width:  # If less scenarios than width, they
-            height = 1                   # can be displayed on one row
+        # Set maximum scenarios to display on a single row.
+        max_width = 3
+        # If scenarios less than max_width, they can be displayed on one row.
+        if len(scenario_list) <= max_width:
+            height = 1
+            width = len(scenario_list)
         else:  # Work out how many rows are needed.
             height = math.ceil(len(scenario_list) / 3.0)
+            width = max_width
 
-        self.screen = pygame.display.set_mode((width*150, height*150))
+        # Work out screen size to display 120x120
+        # buttons with 10 space between.
+        screen_width = 10 + (width * (120 + 10))
+        screen_height = 10 + (height * (120 + 10))
+
+
+
+        self.screen = pygame.display.set_mode((screen_width, screen_height))
         self.choose_scenario()
         self.rendering_mode = RenderingMode.CHOOSE_SCENARIO
         while self.scenario is None:
