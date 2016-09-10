@@ -23,10 +23,11 @@ class RenderingMode(Enum):
 
     TITLE_SCREEN = 1
     CHOOSE_SCENARIO = 2
-    NORMAL = 3
-    WIN_SCREEN = 4
-    FAIL_SCREEN = 5
-    END_RENDERING = 6
+    LOAD_SCENARIO = 3
+    NORMAL = 4
+    WIN_SCREEN = 5
+    FAIL_SCREEN = 6
+    END_RENDERING = 7
 
 
 class GameWindow(Thread):
@@ -79,8 +80,17 @@ class GameWindow(Thread):
                 pass
 
             elif self.rendering_mode is RenderingMode.CHOOSE_SCENARIO:
-                # For now, we will let runSciBot drive the rendering
-                pass
+                # Display the background
+                self.screen.fill(GameWindow.BLACK)
+
+                # Display the Scenario Buttons
+                self.buttons.display(self.screen)
+
+                # Update display
+                pygame.display.update()
+
+            elif self.rendering_mode is RenderingMode.LOAD_SCENARIO:
+                pass # Maybe one day we'll have a fancy loading bar
 
             elif self.rendering_mode is RenderingMode.NORMAL:
                 self.screen.fill(GameWindow.GREY)
@@ -150,6 +160,7 @@ class GameWindow(Thread):
 
     def load_scenario(self):
         """Load the chosen Scenario."""
+        self.rendering_mode = RenderingMode.LOAD_SCENARIO
         # Unpickle the Scenario file
         self.scenario = load(open(self.scenario, "rb"))
 
@@ -303,11 +314,6 @@ class GameWindow(Thread):
         # Get the available Scenarios (those under ./scenarios/)
         scenario_list = glob.glob("./scenarios/*.scibot")
 
-        # Get the Scenario filename from the full path
-        #scenario_file = os.path.basename(scenario_path)
-        # Add the Scenario filename (minus extension) to a list
-        #scenario_list.append(os.path.splitext(scenario_file)[0])
-
         # If only one scenario, use that one!
         if len(scenario_list) is 1:
             self.scenario = scenario_list[0]
@@ -328,13 +334,55 @@ class GameWindow(Thread):
         screen_width = 10 + (width * (120 + 10))
         screen_height = 10 + (height * (120 + 10))
 
+        # Variables used to draw Buttons
+        # Start a 10 because of padding
+        width_counter = 10
+        height_counter = 10
 
+        # Create an empty ButtonGroup
+        self.buttons = ButtonGroup()
+
+        for scenario_path in scenario_list:
+            # Get the Scenario filename from the full path
+            scenario_file = os.path.basename(scenario_path)
+            # Add the Scenario filename (minus extension) to a list
+            temp = Button(os.path.splitext(scenario_file)[0],
+                          GameWindow.BLACK,
+                          GameWindow.WHITE,
+                          (width_counter, height_counter),
+                          (120,120))
+
+            # Add temp Button to ButtonGroup
+            self.buttons.add(temp)
+
+            # If the next Button would be printed off screen,
+            # start a new row.
+            if width_counter > ( ( width - 1 ) * 120 ):
+                width_counter = 10
+                height_counter = height_counter + 120 + 10
+            else:
+                width_counter = width_counter + 120 + 10
 
         self.screen = pygame.display.set_mode((screen_width, screen_height))
-        self.choose_scenario()
+
+        # Choose Scenario
         self.rendering_mode = RenderingMode.CHOOSE_SCENARIO
         while self.scenario is None:
-            pass  # sit in a loop
+            event = pygame.event.poll()
+            # If the event is a left mouse button up
+            # assume it is a button press
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                button = self.buttons.get_appropriate_button(event.pos)
+                if button is not None and button.swapped:
+                    button.swap_colours()
+                    self.scenario = "./scenarios/" + button.text + ".scibot"
+                else:
+                    self.buttons.unswap_all()
+
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                button = self.buttons.get_appropriate_button(event.pos)
+                if button is not None:
+                    button.swap_colours()
 
         # Load the chosen scenario
         self.load_scenario()
