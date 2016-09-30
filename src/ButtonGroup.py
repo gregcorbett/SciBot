@@ -1,5 +1,4 @@
 """This file defines the ButtonGroup class."""
-import pygame
 
 
 class ButtonGroup:
