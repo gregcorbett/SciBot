@@ -7,7 +7,7 @@ class ButtonGroup:
 
     def __init__(self):
         """Create an empty ButtonGroup."""
-        self.buttons = {}  # The underlying Goal objects
+        self.buttons = {}  # The underlying Button objects
 
     def add(self, button):
         """Add a Button to the ButtonGroup."""
