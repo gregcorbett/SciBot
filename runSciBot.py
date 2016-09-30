@@ -8,9 +8,7 @@ def main():
     """Run the GameWindow."""
     gameWindow = GameWindow()
     gameWindow.start_rendering()
-    gameWindow.choose_scenario()
-    gameWindow.load_scenario()
-    gameWindow.start_scenario()
+    gameWindow.start_logic()
 
 if __name__ == "__main__":
     main()
