@@ -29,3 +29,7 @@ class ButtonGroup:
         for _, button in self.buttons.items():
             if button.swapped:
                 button.swap_colours()
+
+    def removal_all(self):
+        """Remove all Buttons from this ButtonGroup."""
+        self.buttons = {}

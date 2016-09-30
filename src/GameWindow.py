@@ -63,6 +63,8 @@ class GameWindow(Thread):
 
         self.font = None
 
+        self.buttons = ButtonGroup()
+
         # Call the superclass constructor
         Thread.__init__(self)
 
@@ -174,8 +176,8 @@ class GameWindow(Thread):
         width_counter = 10
         height_counter = 10
 
-        # Create an empty ButtonGroup
-        self.buttons = ButtonGroup()
+        # Empty ButtonGroup
+        self.buttons.removal_all()
 
         for scenario_path in scenario_list:
             # Get the Scenario filename from the full path
@@ -257,7 +259,8 @@ class GameWindow(Thread):
 
     def create_buttons(self, buttons_on_the_left):
         """Helper method to populate ButtonGroup."""
-        self.buttons = ButtonGroup()
+        # Empty ButtonGroup
+        self.buttons.removal_all()
 
         if buttons_on_the_left:
             forward_button = Button('Forward',
