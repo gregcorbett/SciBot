@@ -1,5 +1,4 @@
 """This file defines the ButtonGroup class."""
-import pygame
 
 
 class ButtonGroup:
@@ -7,7 +6,7 @@ class ButtonGroup:
 
     def __init__(self):
         """Create an empty ButtonGroup."""
-        self.buttons = {}  # The underlying Goal objects
+        self.buttons = {}  # The underlying Button objects
 
     def add(self, button):
         """Add a Button to the ButtonGroup."""
@@ -30,3 +29,7 @@ class ButtonGroup:
         for _, button in self.buttons.items():
             if button.swapped:
                 button.swap_colours()
+
+    def removal_all(self):
+        """Remove all Buttons from this ButtonGroup."""
+        self.buttons = {}
