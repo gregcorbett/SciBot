@@ -136,86 +136,95 @@ class GameWindow(Thread):
                 break  # Let the renderer die
 
     def choose_scenario(self):
-        """Choose a Scenario (possibly using a PyGame UI.)"""
+        """Choose a Scenario (possibly using a PyGame UI)."""
         # Get the available Scenarios (those under ./scenarios/)
         scenario_list = glob.glob("./scenarios/*.scibot")
 
         # If only one scenario, use that one!
         if len(scenario_list) is 1:
             self.scenario = scenario_list[0]
-        else:
-            # Determine the size of the window needed to display all the buttons.
-            # Set maximum scenarios to display on a single row.
-            max_width = 3
-            # If scenarios less than max_width, they can be displayed on one row.
-            if len(scenario_list) <= max_width:
-                height = 1
-                width = len(scenario_list)
-            else:  # Work out how many rows are needed.
-                height = math.ceil(len(scenario_list) / 3.0)
-                width = max_width
+            return
 
-            # Work out screen size to display 120x120
-            # buttons with 10 space between.
-            screen_width = 10 + (width * (120 + 10))
-            screen_height = 10 + (height * (120 + 10))
+        # else, Remove Default.scenario from returned list if there
+        scenario_list = [scenario for scenario in scenario_list if "Default.scibot" not in scenario]
 
-            # Variables used to draw Buttons
-            # Start a 10 because of padding
-            width_counter = 10
-            height_counter = 10
+        # If now only one scenario, use that one!
+        if len(scenario_list) is 1:
+            self.scenario = scenario_list[0]
+            return
 
-            # Create an empty ButtonGroup
-            self.buttons = ButtonGroup()
+        # Determine the size of the window needed to display all the buttons.
+        # Set maximum scenarios to display on a single row.
+        max_width = 3
+        # If scenarios less than max_width, they can be displayed on one row.
+        if len(scenario_list) <= max_width:
+            height = 1
+            width = len(scenario_list)
+        else:  # Work out how many rows are needed.
+            height = math.ceil(len(scenario_list) / 3.0)
+            width = max_width
 
-            for scenario_path in scenario_list:
-                # Get the Scenario filename from the full path
-                scenario_file = os.path.basename(scenario_path)
-                # Add the Scenario filename (minus extension) to a list
-                temp = Button(os.path.splitext(scenario_file)[0],
-                              GameWindow.BLACK,
-                              GameWindow.WHITE,
-                              (width_counter, height_counter),
-                              (120,120))
+        # Work out screen size to display 120x120
+        # buttons with 10 space between.
+        screen_width = 10 + (width * (120 + 10))
+        screen_height = 10 + (height * (120 + 10))
 
-                # Add temp Button to ButtonGroup
-                self.buttons.add(temp)
+        # Variables used to draw Buttons
+        # Start a 10 because of padding
+        width_counter = 10
+        height_counter = 10
 
-                # If the next Button would be printed off screen,
-                # start a new row.
-                if width_counter > ( ( width - 1 ) * 120 ):
-                    width_counter = 10
-                    height_counter = height_counter + 120 + 10
+        # Create an empty ButtonGroup
+        self.buttons = ButtonGroup()
+
+        for scenario_path in scenario_list:
+            # Get the Scenario filename from the full path
+            scenario_file = os.path.basename(scenario_path)
+            # Add the Scenario filename (minus extension) to a list
+            temp = Button(os.path.splitext(scenario_file)[0],
+                          GameWindow.BLACK,
+                          GameWindow.WHITE,
+                          (width_counter, height_counter),
+                          (120,120))
+
+            # Add temp Button to ButtonGroup
+            self.buttons.add(temp)
+
+            # If the next Button would be printed off screen,
+            # start a new row.
+            if width_counter > ( ( width - 1 ) * 120 ):
+                width_counter = 10
+                height_counter = height_counter + 120 + 10
+            else:
+                width_counter = width_counter + 120 + 10
+
+        # Display the PyGame UI
+        self.screen = pygame.display.set_mode((screen_width, screen_height))
+        self.rendering_mode = RenderingMode.CHOOSE_SCENARIO
+
+        # User choose's a Scenario
+        while self.scenario is None:
+            event = pygame.event.poll()
+            # If the event is a left mouse button up
+            # assume it is a button press
+            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                button = self.buttons.get_appropriate_button(event.pos)
+                if button is not None and button.swapped:
+                    button.swap_colours()
+                    self.scenario = "./scenarios/" + button.text + ".scibot"
                 else:
-                    width_counter = width_counter + 120 + 10
+                    self.buttons.unswap_all()
 
-            # Display the PyGame UI
-            self.screen = pygame.display.set_mode((screen_width, screen_height))
-            self.rendering_mode = RenderingMode.CHOOSE_SCENARIO
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                button = self.buttons.get_appropriate_button(event.pos)
+                if button is not None:
+                    button.swap_colours()
 
-            # User choose's a Scenario
-            while self.scenario is None:
-                event = pygame.event.poll()
-                # If the event is a left mouse button up
-                # assume it is a button press
-                if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-                    button = self.buttons.get_appropriate_button(event.pos)
-                    if button is not None and button.swapped:
-                        button.swap_colours()
-                        self.scenario = "./scenarios/" + button.text + ".scibot"
-                    else:
-                        self.buttons.unswap_all()
-
-                if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                    button = self.buttons.get_appropriate_button(event.pos)
-                    if button is not None:
-                        button.swap_colours()
-
-                if event.type == pygame.QUIT:
-                    self.rendering_mode = RenderingMode.END_RENDERING
-                    sleep(1)
-                    pygame.quit()
-                    sys.exit()
+            if event.type == pygame.QUIT:
+                self.rendering_mode = RenderingMode.END_RENDERING
+                sleep(1)
+                pygame.quit()
+                sys.exit()
 
     def load_scenario(self):
         """Load the chosen Scenario."""
