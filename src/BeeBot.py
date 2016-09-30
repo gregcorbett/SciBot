@@ -24,10 +24,10 @@ class BeeBot(pygame.sprite.Sprite):
         """Create a BeeBot."""
         # Initial position of the BeeBot in terms of square on the Board.
         self.start_logical_position = Point(
-            scenario.get_element('BeeBotStartPosition'))
+            scenario.get_beebot_start_position())
 
         # The amount the BeeBot moves.
-        self.step = scenario.get_element('BoardStep')
+        self.step = scenario.get_board_step()
 
         # The BeeBot's position of the BeeBot in terms of pixels.
         self.screen_location = self.start_logical_position.scale(self.step)
@@ -36,11 +36,11 @@ class BeeBot(pygame.sprite.Sprite):
         self.logical_position = self.start_logical_position.copy()
 
         # Read the sprite and assume it is the "NORTH" sprite.
-        self.original_sprite = scenario.get_element('BeeBotSprite')
+        self.original_sprite = scenario.get_beebot_sprite()
         self.sprite = self.original_sprite
 
         # Which way is the BeeBot facing.
-        self.start_heading = scenario.get_element('BeeBotHeading')
+        self.start_heading = scenario.get_beebot_heading()
         self.heading = self.start_heading
 
         # Rotate sprite based on start heading
@@ -52,7 +52,7 @@ class BeeBot(pygame.sprite.Sprite):
             self.sprite = self.rotate(self.sprite, 180)
 
         # set fail sprite from scenario
-        self.fail_sprite = scenario.get_element('BeeBotFailSprite')
+        self.fail_sprite = scenario.get_beebot_fail_sprite()
 
         # Store MOVE_BEEBOT_* events here.
         self.memory = []

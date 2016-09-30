@@ -144,9 +144,9 @@ class GameWindow(Thread):
 
     def load_scenario(self):
         """Load the chosen Scenario."""
-        self.step = self.scenario.get_element('BoardStep')
-        self.height = self.scenario.get_element('LogicalHeight')*self.step
-        self.width = self.scenario.get_element('LogicalWidth')*self.step
+        self.step = self.scenario.get_board_step()
+        self.height = self.scenario.get_logical_height() * self.step
+        self.width = self.scenario.get_logical_width() * self.step
 
         self.board = Board(self.scenario)
 
