@@ -8,6 +8,7 @@ from src.Goal import Goal
 from src.ObstacleGroup import ObstacleGroup
 from src.Obstacle import Obstacle
 from src.Point import Point
+from src import __version__
 
 
 class Scenario():
@@ -18,6 +19,7 @@ class Scenario():
         # Will be popultaed with pickleable data
         self._elements = {}
         self._elements['Name'] = name
+        self._elements['Version'] = __version__
 
     def _get_element(self, key):
         """Safely access Scenario elements that may not exist."""
@@ -204,6 +206,10 @@ class Scenario():
     def get_name(self):
         """Return the Name of this Scenario."""
         return self._get_element('Name')
+
+    def get_version(self):
+        """Return the Version of this Scenario."""
+        return self._get_element('Version')
 
     def write_to_file(self):
         """Dump the contents of this Scenario to a scibot file."""
