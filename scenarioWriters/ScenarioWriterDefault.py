@@ -47,7 +47,7 @@ def main():
     # This method means the goals must be met in the order added (Default)
     # scenario.set_ordered_goals(True)
     # This method means the goals can be met in any order
-    # scenario.set_ordered_goals(False)
+    scenario.set_ordered_goals(False)
 
     # Sets the sprite to be displayed when the robot crashes
     scenario.set_beebot_fail_sprite("./img/Default/robotx.jpg")

@@ -7,24 +7,24 @@ class Board:
 
     def __init__(self, scenario):
         """Create the board."""
-        self.step = scenario.get_element('BoardStep')
+        self.step = scenario.get_board_step()
 
-        # Work out (and check) screen size, also store for 
+        # Work out (and check) screen size, also store for
         # checking the BeeBot has not fallen of the edge
-        self.logical_board_height = scenario.get_element('LogicalHeight')
-        self.logical_board_width = scenario.get_element('LogicalWidth')
+        self.logical_board_height = scenario.get_logical_height()
+        self.logical_board_width = scenario.get_logical_width()
 
         # Board dimensions in terms of pixels
         self.board_height = self.logical_board_height * self.step
         self.board_width = self.logical_board_width * self.step
 
-        self.background_image = scenario.get_element('Background')
+        self.background_image = scenario.get_background()
 
-        self.border_colour = scenario.get_element('BorderColour')
+        self.border_colour = scenario.get_border_colour()
 
-        self.obstacle_group = scenario.get_element('ObstacleGroup')
+        self.obstacle_group = scenario.get_obstacle_group()
 
-        self.goal_group = scenario.get_element('GoalGroup')
+        self.goal_group = scenario.get_goal_group()
 
         # Need to check the Board pixel height matches the image pixel height
         if self.board_height != self.background_image.get_height():

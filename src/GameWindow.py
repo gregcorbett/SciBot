@@ -16,6 +16,7 @@ from src.Button import Button
 from src.ButtonGroup import ButtonGroup
 from src.CustomEvent import CustomEvent
 from src.Scenario import Scenario
+from src import __version__
 
 
 class RenderingMode(Enum):
@@ -234,10 +235,15 @@ class GameWindow(Thread):
         # Unpickle the Scenario file
         self.scenario = load(open(self.scenario, "rb"))
 
+        # Log Version of the scenario and code
+        print("Loading Scenario Version %s with code base Version %s" %
+              (self.scenario.get_version(),
+               __version__))
+               
         # Load variables into memory
-        self.step = self.scenario.get_element('BoardStep')
-        self.height = self.scenario.get_element('LogicalHeight')*self.step
-        self.width = self.scenario.get_element('LogicalWidth')*self.step
+        self.step = self.scenario.get_board_step()
+        self.height = self.scenario.get_logical_height() * self.step
+        self.width = self.scenario.get_logical_width() * self.step
 
         self.board = Board(self.scenario)
 
