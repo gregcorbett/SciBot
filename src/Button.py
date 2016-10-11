@@ -19,7 +19,7 @@ class Button:
         self.screen_location = screen_location
         self.size = size
         self.rect = pygame.Rect(screen_location, size)
-        self.font = pygame.font.SysFont("comicsansms", 30)
+        self.font = pygame.font.SysFont("comicsansms", 22)
         self.swapped = False  # Keeps track of wether a Button is swapped
 
     def display(self, screen):
