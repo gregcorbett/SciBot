@@ -20,6 +20,12 @@ class Scenario():
         self._elements = {}
         self._elements['Name'] = name
         self._elements['Version'] = __version__
+        try:
+            logo = pygame.image.load("./logo.png")
+            logo_pickle = self.format_surface_for_pickle(logo)
+            self._elements['Logo'] = logo_pickle
+        except:
+            self._elements['Logo'] = None
 
     def _get_element(self, key):
         """Safely access Scenario elements that may not exist."""
@@ -29,6 +35,12 @@ class Scenario():
             return None
         # Otherwise, return the stored element
         return self._elements[key]
+
+    def get_logo(self):
+        """Return the stored logo"""
+        logo_pickle = self._get_element('Logo')
+        logo = self.format_pickle_to_surface(logo_pickle)
+        return logo
 
     def set_beebot_fail_sprite(self, sprite):
         """Store the fail sprite in pickle-able form."""
