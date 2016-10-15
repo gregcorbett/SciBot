@@ -15,6 +15,7 @@ from src.Board import Board
 from src.Button import Button
 from src.ButtonGroup import ButtonGroup
 from src.CustomEvent import CustomEvent
+from src.Scenario import Scenario
 from src import __version__
 
 
