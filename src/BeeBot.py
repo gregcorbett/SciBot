@@ -220,6 +220,7 @@ class BeeBot(pygame.sprite.Sprite):
         self.heading = self.start_heading
 
     def crash(self):
+        """Set the sprite to be displayed to the fail sprite."""
         self.sprite = self.fail_sprite
 
     @classmethod

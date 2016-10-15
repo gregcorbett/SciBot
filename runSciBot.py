@@ -1,5 +1,4 @@
 """This file runs the GameWindow."""
-import sys
 
 from src.GameWindow import GameWindow
 

@@ -1,3 +1,5 @@
+"""This file creates the exe file."""
+
 from distutils.core import setup
 import py2exe
 
