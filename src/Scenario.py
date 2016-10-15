@@ -36,6 +36,12 @@ class Scenario():
         # Otherwise, return the stored element
         return self._elements[key]
 
+    def set_license(self, license):
+        self._elements['License'] = license
+
+    def get_license(self):
+        return self._get_element('License')
+
     def get_logo(self):
         """Return the stored logo"""
         logo_pickle = self._get_element('Logo')

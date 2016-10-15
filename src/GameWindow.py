@@ -246,6 +246,14 @@ class GameWindow(Thread):
               (self.scenario.get_version(),
                __version__))
 
+        license = self.scenario.get_license()
+        if license is not None:
+            print("Scenario licensed as follows:")
+            print("")
+            print(license)
+        else:
+            print("No license provided in scenario file.")
+
         # Get the logo to display (if any)
         self.logo = self.scenario.get_logo()
 
