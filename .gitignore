@@ -11,6 +11,8 @@ scenarios/SKA.scibot
 scenarioWriters/ScenarioWriterUV.py
 scenarioWriters/ScenarioWriterSKA.py
 
+scenarios.zip
+
 *.pyc
 *Thumbs.db
 
