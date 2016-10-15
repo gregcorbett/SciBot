@@ -160,6 +160,15 @@ class GameWindow(Thread):
         # Get the available Scenarios (those under ./scenarios/)
         scenario_list = glob.glob("./scenarios/*.scibot")
 
+        # If no scenarios, exit!
+        if len(scenario_list) is 0:
+            print("No scibot files found.")
+            print("Please place them in ./scenarios/")
+            self.rendering_mode = RenderingMode.END_RENDERING
+            sleep(1)
+            pygame.quit()
+            sys.exit()
+
         # If only one scenario, use that one!
         if len(scenario_list) is 1:
             self.scenario = scenario_list[0]
