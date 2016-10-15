@@ -66,6 +66,8 @@ class GameWindow(Thread):
 
         self.buttons = ButtonGroup()
 
+        self.logo = None
+
         # Call the superclass constructor
         Thread.__init__(self)
 
@@ -101,6 +103,10 @@ class GameWindow(Thread):
                 # Display the Board and BeeBot
                 self.board.display(self.screen)
                 self.robot.display(self.screen)
+
+                # Display the logo (if any)
+                if self.logo is not None:
+                    self.screen.blit(self.logo, (self.width + 69 , self.height - 85))
 
                 # Display any Buttons
                 self.buttons.display(self.screen)
@@ -239,7 +245,10 @@ class GameWindow(Thread):
         print("Loading Scenario Version %s with code base Version %s" %
               (self.scenario.get_version(),
                __version__))
-               
+
+        # Get the logo to display (if any)
+        self.logo = self.scenario.get_logo()
+
         # Load variables into memory
         self.step = self.scenario.get_board_step()
         self.height = self.scenario.get_logical_height() * self.step
