@@ -2,10 +2,16 @@ img/UV/
 img/UV/*
 img/SKA/
 img/SKA/*
+
+logo.png
+
 scenarios/UV.scibot
 scenarios/SKA.scibot
+
 scenarioWriters/ScenarioWriterUV.py
 scenarioWriters/ScenarioWriterSKA.py
+
 *.pyc
 *Thumbs.db
+
 runSciBot.log
