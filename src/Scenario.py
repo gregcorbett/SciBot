@@ -24,7 +24,7 @@ class Scenario():
             logo = pygame.image.load("./logo.png")
             logo_pickle = self.format_surface_for_pickle(logo)
             self._elements['Logo'] = logo_pickle
-        except:
+        except pygame.error:
             self._elements['Logo'] = None
 
     def _get_element(self, key):
@@ -36,14 +36,16 @@ class Scenario():
         # Otherwise, return the stored element
         return self._elements[key]
 
-    def set_license(self, license):
-        self._elements['License'] = license
+    def set_license(self, text):
+        """Set the LICENSE of this Scenario."""
+        self._elements['License'] = text
 
     def get_license(self):
+        """Get the LICENSE of this Scenario."""
         return self._get_element('License')
 
     def get_logo(self):
-        """Return the stored logo"""
+        """Return the stored logo."""
         logo_pickle = self._get_element('Logo')
         logo = self.format_pickle_to_surface(logo_pickle)
         return logo

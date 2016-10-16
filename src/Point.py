@@ -22,4 +22,5 @@ class Point():
         return Point(self.x * multipler, self.y * multipler)
 
     def copy(self):
-         return Point(self.x , self.y )
+        """Return a copy of this Point object."""
+        return Point(self.x, self.y)

@@ -11,10 +11,13 @@ class Obstacle(pygame.sprite.Sprite):
                  step):  # Should be the same as the BeeBot step
 
         """Create a Obstacle."""
+        # The position of the Goal in terms of squares on the screen
         self.logical_position = start_logical_position
 
+        # The position of the Goal in terms pixels
         self.screen_location = start_logical_position.scale(step)
 
+        # The sprite to display on screen for this Goal
         self.sprite = sprite
 
         # calling superclass constructor

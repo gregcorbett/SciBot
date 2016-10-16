@@ -8,9 +8,9 @@ from enum import Enum
 import glob
 import math
 import os
-import pygame
 import sys
-from src.BeeBot import BeeBot, Heading
+import pygame
+from src.BeeBot import BeeBot
 from src.Board import Board
 from src.Button import Button
 from src.ButtonGroup import ButtonGroup
@@ -45,27 +45,38 @@ class GameWindow(Thread):
         pygame.init()
 
         # Define vars here
+        # Controls what to render
         self.rendering_mode = None
 
+        # The unpickled Scenario
         self.scenario = None
 
+        # Board Dimensions
         self.step = None
         self.height = None
         self.width = None
 
+        # Variable that holds the Board
         self.board = None
+        # Board Dimensions
         self.size = None
 
+        # Variable that holds the BeeBot
         self.robot = None
 
+        # Variable that holds the screen that is draw on
         self.screen = None
 
+        # Used to monitor the frame rate
         self.clock = None
 
+        # The font of the text displayed (excluding buttons)
         self.font = None
 
+        # All Buttons to display
         self.buttons = ButtonGroup()
 
+        # The logo to display on screen
         self.logo = None
 
         # Call the superclass constructor
@@ -95,7 +106,7 @@ class GameWindow(Thread):
                 pygame.display.update()
 
             elif self.rendering_mode is RenderingMode.LOAD_SCENARIO:
-                pass # Maybe one day we'll have a fancy loading bar
+                pass  # Maybe one day we'll have a fancy loading bar
 
             elif self.rendering_mode is RenderingMode.NORMAL:
                 self.screen.fill(GameWindow.GREY)
@@ -106,7 +117,8 @@ class GameWindow(Thread):
 
                 # Display the logo (if any)
                 if self.logo is not None:
-                    self.screen.blit(self.logo, (self.width + 69 , self.height - 85))
+                    self.screen.blit(self.logo,
+                                     (self.width + 69, self.height - 85))
 
                 # Display any Buttons
                 self.buttons.display(self.screen)
@@ -148,6 +160,15 @@ class GameWindow(Thread):
         """Choose a Scenario (possibly using a PyGame UI)."""
         # Get the available Scenarios (those under ./scenarios/)
         scenario_list = glob.glob("./scenarios/*.scibot")
+
+        # If no scenarios, exit!
+        if len(scenario_list) is 0:
+            print("No scibot files found.")
+            print("Please place them in ./scenarios/")
+            self.rendering_mode = RenderingMode.END_RENDERING
+            sleep(1)
+            pygame.quit()
+            sys.exit()
 
         # If only one scenario, use that one!
         if len(scenario_list) is 1:
@@ -194,14 +215,14 @@ class GameWindow(Thread):
                           GameWindow.BLACK,
                           GameWindow.WHITE,
                           (width_counter, height_counter),
-                          (120,120))
+                          (120, 120))
 
             # Add temp Button to ButtonGroup
             self.buttons.add(temp)
 
             # If the next Button would be printed off screen,
             # start a new row.
-            if width_counter > ( ( width - 1 ) * 120 ):
+            if width_counter > ((width - 1) * 120):
                 width_counter = 10
                 height_counter = height_counter + 120 + 10
             else:
@@ -217,16 +238,23 @@ class GameWindow(Thread):
             # If the event is a left mouse button up
             # assume it is a button press
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+                # If it was indeed a Button release
                 button = self.buttons.get_appropriate_button(event.pos)
                 if button is not None and button.swapped:
+                    # Get the file corresponding to the Button pressed
                     button.swap_colours()
                     self.scenario = "./scenarios/" + button.text + ".scibot"
                 else:
+                    # Reset all Buttons without doing anything else
                     self.buttons.unswap_all()
 
+            # If the event is a left mouse button up
+            # assume it is a button press
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+                # If it was indeed a Button press
                 button = self.buttons.get_appropriate_button(event.pos)
                 if button is not None:
+                    # Mark that Button as being pressed
                     button.swap_colours()
 
             if event.type == pygame.QUIT:
@@ -279,7 +307,6 @@ class GameWindow(Thread):
 
         self.screen = pygame.display.set_mode(self.size)
 
-
     def create_buttons(self, buttons_on_the_left):
         """Helper method to populate ButtonGroup."""
         # Empty ButtonGroup
@@ -289,32 +316,36 @@ class GameWindow(Thread):
             forward_button = Button('Forward',
                                     GameWindow.BLACK,
                                     GameWindow.WHITE,
-                                    (self.width + 140, float(self.height)/2 - 190),
-                                    (120,120))
+                                    (self.width + 140,
+                                     float(self.height)/2 - 190),
+                                    (120, 120))
 
             self.buttons.add(forward_button)
 
             backward_button = Button('Backward',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     (self.width + 140, float(self.height)/2 + 70),
-                                     (120,120))
+                                     (self.width + 140,
+                                      float(self.height)/2 + 70),
+                                     (120, 120))
 
             self.buttons.add(backward_button)
 
             turn_left_button = Button('Turn Left',
-                                     GameWindow.BLACK,
-                                     GameWindow.WHITE,
-                                     (self.width + 10, float(self.height)/2 - 60),
-                                     (120,120))
+                                      GameWindow.BLACK,
+                                      GameWindow.WHITE,
+                                      (self.width + 10,
+                                       float(self.height)/2 - 60),
+                                      (120, 120))
 
             self.buttons.add(turn_left_button)
 
             turn_right_button = Button('Turn Right',
-                                     GameWindow.BLACK,
-                                     GameWindow.WHITE,
-                                     (self.width + 270, float(self.height)/2 - 60),
-                                     (120,120))
+                                       GameWindow.BLACK,
+                                       GameWindow.WHITE,
+                                       (self.width + 270,
+                                        float(self.height)/2 - 60),
+                                       (120, 120))
 
             self.buttons.add(turn_right_button)
 
@@ -322,23 +353,24 @@ class GameWindow(Thread):
                                GameWindow.BLACK,
                                GameWindow.WHITE,
                                (self.width + 140, float(self.height)/2 - 60),
-                               (120,120))
+                               (120, 120))
 
             self.buttons.add(go_button)
 
             reset_button = Button('Reset',
-                                     GameWindow.BLACK,
-                                     GameWindow.WHITE,
-                                     (self.width + 10, float(self.height)/2 + 70),
-                                     (120,120))
+                                  GameWindow.BLACK,
+                                  GameWindow.WHITE,
+                                  (self.width + 10, float(self.height)/2 + 70),
+                                  (120, 120))
 
             self.buttons.add(reset_button)
 
             clear_button = Button('Clear',
-                               GameWindow.BLACK,
-                               GameWindow.WHITE,
-                               (self.width + 270, float(self.height)/2 + 70),
-                               (120,120))
+                                  GameWindow.BLACK,
+                                  GameWindow.WHITE,
+                                  (self.width + 270,
+                                   float(self.height)/2 + 70),
+                                  (120, 120))
 
             self.buttons.add(clear_button)
 
@@ -346,32 +378,36 @@ class GameWindow(Thread):
             forward_button = Button('Forward',
                                     GameWindow.BLACK,
                                     GameWindow.WHITE,
-                                    (float(self.width)/2 - 60, self.height + 10),
-                                    (120,120))
+                                    (float(self.width)/2 - 60,
+                                     self.height + 10),
+                                    (120, 120))
 
             self.buttons.add(forward_button)
 
             backward_button = Button('Backward',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     (float(self.width)/2 - 60, self.height + 270),
-                                     (120,120))
+                                     (float(self.width)/2 - 60,
+                                      self.height + 270),
+                                     (120, 120))
 
             self.buttons.add(backward_button)
 
             turn_left_button = Button('Turn Left',
-                                     GameWindow.BLACK,
-                                     GameWindow.WHITE,
-                                     (float(self.width)/2 - 190, self.height + 140),
-                                     (120,120))
+                                      GameWindow.BLACK,
+                                      GameWindow.WHITE,
+                                      (float(self.width)/2 - 190,
+                                       self.height + 140),
+                                      (120, 120))
 
             self.buttons.add(turn_left_button)
 
             turn_right_button = Button('Turn Right',
-                                     GameWindow.BLACK,
-                                     GameWindow.WHITE,
-                                     (float(self.width)/2 + 70, self.height + 140),
-                                     (120,120))
+                                       GameWindow.BLACK,
+                                       GameWindow.WHITE,
+                                       (float(self.width)/2 + 70,
+                                        self.height + 140),
+                                       (120, 120))
 
             self.buttons.add(turn_right_button)
 
@@ -379,23 +415,25 @@ class GameWindow(Thread):
                                GameWindow.BLACK,
                                GameWindow.WHITE,
                                (float(self.width)/2 - 60, self.height + 140),
-                               (120,120))
+                               (120, 120))
 
             self.buttons.add(go_button)
 
             reset_button = Button('Reset',
-                                     GameWindow.BLACK,
-                                     GameWindow.WHITE,
-                                     (float(self.width)/2 - 190, self.height + 270),
-                                     (120,120))
+                                  GameWindow.BLACK,
+                                  GameWindow.WHITE,
+                                  (float(self.width)/2 - 190,
+                                   self.height + 270),
+                                  (120, 120))
 
             self.buttons.add(reset_button)
 
             clear_button = Button('Clear',
-                               GameWindow.BLACK,
-                               GameWindow.WHITE,
-                               (float(self.width)/2 + 70, self.height + 270),
-                               (120,120))
+                                  GameWindow.BLACK,
+                                  GameWindow.WHITE,
+                                  (float(self.width)/2 + 70,
+                                   self.height + 270),
+                                  (120, 120))
 
             self.buttons.add(clear_button)
 
@@ -442,10 +480,8 @@ class GameWindow(Thread):
 
             # If the event is a movement event
             # Move the BeeBot.
-            if (
-               event.type >= CustomEvent.MOVE_BEEBOT_UP and
-               event.type <= CustomEvent.MOVE_BEEBOT_RIGHT
-               ):
+            if (event.type >= CustomEvent.MOVE_BEEBOT_UP and
+               event.type <= CustomEvent.MOVE_BEEBOT_RIGHT):
                 self.robot.move(event)
                 self.check_for_obstacle_collisions()
                 self.check_for_goal_collisions()
@@ -488,6 +524,7 @@ class GameWindow(Thread):
             pygame.event.post(pygame.event.Event(CustomEvent.RUN_WIN))
 
     def fail_run(self):
+        """Clear the event queue and push a RUN_FAIL event."""
         # clear any remaining events
         pygame.event.clear()
         # push a fail event
@@ -501,7 +538,7 @@ class GameWindow(Thread):
                 self.fail_run()
 
     def check_for_off_map(self):
-        """Check if the BeeBot is off the map"""
+        """Check if the BeeBot is off the map."""
         if self.robot.logical_position.x not in range(0, self.board.logical_board_width):
             self.fail_run()
         elif self.robot.logical_position.y not in range(0, self.board.logical_board_height):
@@ -523,18 +560,22 @@ class GameWindow(Thread):
     def store_movement(self, movement):
         """Store a movement in the BeeBot."""
         if movement == 'Forward':
+            # Push a MOVE_BEEBOT_UP event
             new_event = CustomEvent.MOVE_BEEBOT_UP
             self.robot.add_to_memory(pygame.event.Event(new_event))
 
         if movement == 'Left':
+            # Push a MOVE_BEEBOT_LEFT event
             new_event = CustomEvent.MOVE_BEEBOT_LEFT
             self.robot.add_to_memory(pygame.event.Event(new_event))
 
         if movement == 'Right':
+            # Push a MOVE_BEEBOT_RIGHT event
             new_event = CustomEvent.MOVE_BEEBOT_RIGHT
             self.robot.add_to_memory(pygame.event.Event(new_event))
 
         if movement == 'Backward':
+            # Push a MOVE_BEEBOT_DOWN event
             new_event = CustomEvent.MOVE_BEEBOT_DOWN
             self.robot.add_to_memory(pygame.event.Event(new_event))
 
@@ -553,13 +594,16 @@ class GameWindow(Thread):
             self.store_movement('Backward')
 
         if button.text == 'Reset':
+            # Reset the BeeBots position and the met status of the goals
             self.robot.reset_position()
             self.board.goal_group.reset_all_goals()
 
         if button.text == 'Clear':
+            # Remove any stored instructions
             self.robot.memory = []
 
         if button.text == 'Go':
+            # Execute the instructions stored in the BeeBot
             self.robot.push_out_memory()
 
     def handle_key_press(self, event):

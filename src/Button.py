@@ -11,7 +11,6 @@ class Button:
                  background_colour,  # The colour of the text (can be None)
                  screen_location,  # The position on the screen
                  size):  # The size of the Button
-
         """Create a Button."""
         self.text = text
         self.text_colour = text_colour
@@ -49,10 +48,7 @@ class Button:
 
     def is_mouse_over_button(self, mouse_position):
         """Given a mouse position, return True if mouse over Button."""
-        if (mouse_position[0] > self.rect.topleft[0] and
-            mouse_position[1] > self.rect.topleft[1] and
-            mouse_position[0] < self.rect.bottomright[0] and
-            mouse_position[1] < self.rect.bottomright[1]):
-            return True
-        else:
-            return False
+        return (mouse_position[0] > self.rect.topleft[0] and
+                mouse_position[1] > self.rect.topleft[1] and
+                mouse_position[0] < self.rect.bottomright[0] and
+                mouse_position[1] < self.rect.bottomright[1])

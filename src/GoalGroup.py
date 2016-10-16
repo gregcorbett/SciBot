@@ -34,7 +34,9 @@ class GoalGroup:
         if self.is_ordered:
             self._goal_ptr = self._goal_ptr + 1
         else:
-            raise NotImplementedError
+            # Raised if called on an unordered GoalGroup
+            # This method has no meaning under such circumstances
+            raise ValueError("GoalGroup not ordered.")
 
     def have_all_goals_been_met(self):
         """True iff all the Goal objects in the GoalGroup have been met."""
