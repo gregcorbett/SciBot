@@ -1,69 +1,77 @@
+"""This file defines the Board class."""
 import pygame
-import sys
-#import time
-
-from src.Obstacle import *
-from src.ObstacleGroup import *
-from src.Goal import *
-from src.GoalGroup import *
 
 
 class Board:
-	def __init__(self,width,height,step,scenario):
-		self.step = step
-		
-		self.logicalHeight = height
-		self.logicalWidth = width
-		
-		self.height = height*step
-		self.width = width*step
-		
-		self.background=scenario.getBackground()
-		
-		self.borderColour = scenario.getBorderColour()
-		
-		self.obstacleGroup = scenario.getObstacleGroup()
+    """This class defines the board (a.k.a. map)."""
 
-		self.goalGroup = scenario.getGoalGroup()
-		
-		if (self.height != self.background.get_height()):
-			print("Error 1: board height does not match image height")
-			print("Board Height = ",self.height)
-			print("Image Height = ",self.background.get_height())
-			sys.exit()
-		if (self.height != self.background.get_height()):
-			print("Error 2: board width does not match image width")
-			print("Board Width = ",self.width)
-			print("Image Width = ",self.background.get_width())
-			sys.exit()
-		if ((self.height % self.step) != 0):
-			print("Error 3: height % step != 0")
-			print("Height = ",self.height)
-			print("Step   = ",self.step)
-			sys.exit()
-		if ((self.width % self.step) != 0):
-			print("Error 4: width % step != 0")
-			print("Width = ",self.width)
-			print("Step  = ",self.step)
-			sys.exit()
-		
-	def display(self,screen):
-		screen.blit(self.background,(0,0))
-		obsPtr = 0
-		while obsPtr < self.obstacleGroup.obstacleCount:
-			obs = self.obstacleGroup.obstacles[obsPtr]
-			obs.display(screen)
-			obsPtr = obsPtr + 1
-		self.goalGroup.display(screen)
-		
-		if self.borderColour != None:
-			iterWidth = 0
-			while (iterWidth <= self.width):
-				pygame.draw.line(screen,self.borderColour,(iterWidth,0),(iterWidth,self.height),5)
-				iterWidth = iterWidth + self.step
-			
-			iterHeight = 0
-			while (iterHeight <= self.height):
-				pygame.draw.line(screen,self.borderColour,(0,iterHeight),(self.width,iterHeight),5)
-				iterHeight = iterHeight + self.step
-		
+    def __init__(self, scenario):
+        """Create the board."""
+        self.step = scenario.get_board_step()
+
+        # Work out (and check) screen size, also store for
+        # checking the BeeBot has not fallen of the edge
+        self.logical_board_height = scenario.get_logical_height()
+        self.logical_board_width = scenario.get_logical_width()
+
+        # Board dimensions in terms of pixels
+        self.board_height = self.logical_board_height * self.step
+        self.board_width = self.logical_board_width * self.step
+
+        self.background_image = scenario.get_background()
+
+        self.border_colour = scenario.get_border_colour()
+
+        self.obstacle_group = scenario.get_obstacle_group()
+
+        self.goal_group = scenario.get_goal_group()
+
+        # Need to check the Board pixel height matches the image pixel height
+        if self.board_height != self.background_image.get_height():
+            print("Error 1: board height does not match image height")
+            print("Board Height = ", self.board_height)
+            print("Image Height = ", self.background_image.get_height())
+            exit()
+
+        # Need to check the Board pixel width matches the image pixel width
+        if self.board_width != self.background_image.get_width():
+            print("Error 2: board width does not match image width")
+            print("Board Width = ", self.board_width)
+            print("Image Width = ", self.background_image.get_width())
+            exit()
+
+        # Need to check the pixel height is a multiple of step
+        if self.board_height % self.step != 0:
+            print("Error 3: height % step != 0")
+            print("Height = ", self.board_height)
+            print("Step   = ", self.step)
+            exit()
+
+        # Need to check the pixel height is a multiple of step
+        if self.board_width % self.step != 0:
+            print("Error 4: width % step != 0")
+            print("Width = ", self.board_width)
+            print("Step  = ", self.step)
+            exit()
+
+    def display(self, screen):
+        """Display the board on screen."""
+        screen.blit(self.background_image, (0, 0))
+        self.obstacle_group.display(screen)
+        self.goal_group.display(screen)
+
+        # Draw lines over Board background image
+        if self.border_colour is not None:
+            for iter_width in range(0, self.board_width + 1, self.step):
+                pygame.draw.line(screen,
+                                 self.border_colour,
+                                 (iter_width, 0),
+                                 (iter_width, self.board_height),
+                                 5)
+
+            for iter_height in range(0, self.board_height + 1, self.step):
+                pygame.draw.line(screen,
+                                 self.border_colour,
+                                 (0, iter_height),
+                                 (self.board_width, iter_height),
+                                 5)

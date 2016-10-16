@@ -1,13 +1,18 @@
+"""This file contains the CustomEvent class."""
 from enum import IntEnum
-import pygame
+from pygame import USEREVENT
+
 
 class CustomEvent(IntEnum):
-	MOVE_BEEBOT_UP = pygame.USEREVENT+1
-	MOVE_BEEBOT_LEFT = pygame.USEREVENT+2
-	MOVE_BEEBOT_DOWN = pygame.USEREVENT+3
-	MOVE_BEEBOT_RIGHT = pygame.USEREVENT+4
-	
-	RUN_FAIL = pygame.USEREVENT+5
-	RUN_WIN = pygame.USEREVENT+6
-	
-	
+    """A class of IntEnums for locally defined events, such as RUN_FAIL."""
+
+    # events MUST sequentially build up from USEREVENT
+    # BeeBot movement events
+    MOVE_BEEBOT_UP = USEREVENT + 1
+    MOVE_BEEBOT_LEFT = USEREVENT + 2
+    MOVE_BEEBOT_DOWN = USEREVENT + 3
+    MOVE_BEEBOT_RIGHT = USEREVENT + 4
+
+    # Win / Fail events
+    RUN_FAIL = USEREVENT + 5
+    RUN_WIN = USEREVENT + 6
