@@ -69,7 +69,7 @@ LICENSE = """
  of this license document, but changing it is not allowed.
 
  The full version of this license can be found here.
- https://github.com/gregcorbett/SciBot/blob/master/LICENSE
+ https://github.com/stfc/SciBot/blob/master/LICENSE
 
  BeeBot image source.
  https://www.tes.co.uk/teaching-resource/bee-bot-sequence-powerpoint-6415227
