@@ -28,31 +28,35 @@ class Board:
 
         # Need to check the Board pixel height matches the image pixel height
         if self.board_height != self.background_image.get_height():
-            print("Error 1: board height does not match image height")
-            print("Board Height = ", self.board_height)
-            print("Image Height = ", self.background_image.get_height())
-            exit()
+            raise ValueError(("Error 1: board height does "
+                              "not match image height.\n"
+                              "Board Height = %s\n"
+                              "Image Height = %s"
+                              % (self.board_height,
+                                 self.background_image.get_height())))
 
         # Need to check the Board pixel width matches the image pixel width
         if self.board_width != self.background_image.get_width():
-            print("Error 2: board width does not match image width")
-            print("Board Width = ", self.board_width)
-            print("Image Width = ", self.background_image.get_width())
-            exit()
+            raise ValueError(("Error 2: board width does "
+                              "not match image width.\n"
+                              "Board Width = %s\n"
+                              "Image Width = %s"
+                              % (self.board_width,
+                                 self.background_image.get_width())))
 
         # Need to check the pixel height is a multiple of step
         if self.board_height % self.step != 0:
-            print("Error 3: height % step != 0")
-            print("Height = ", self.board_height)
-            print("Step   = ", self.step)
-            exit()
+            raise ValueError(("Error 3: height mod step != 0.\n"
+                              "Height = %s\n"
+                              "Step   = %s" % (self.board_height,
+                                               self.step)))
 
         # Need to check the pixel height is a multiple of step
         if self.board_width % self.step != 0:
-            print("Error 4: width % step != 0")
-            print("Width = ", self.board_width)
-            print("Step  = ", self.step)
-            exit()
+            raise ValueError(("Error 4: width mod step != 0.\n"
+                              "Width = %s\n"
+                              "Step  = %s" % (self.board_width,
+                                              self.step)))
 
     def display(self, screen):
         """Display the board on screen."""
