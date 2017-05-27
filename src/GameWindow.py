@@ -443,7 +443,13 @@ class GameWindow(Thread):
         self.choose_scenario()
 
         # Load the chosen scenario
-        self.load_scenario()
+        try:
+            self.load_scenario()
+        except ValueError as error:
+            print(error)
+            self.rendering_mode = RenderingMode.END_RENDERING
+            pygame.quit()
+            sys.exit()
 
         # Go to NORMAL rendering
         self.rendering_mode = RenderingMode.NORMAL
