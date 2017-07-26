@@ -2,14 +2,18 @@ img/UV/
 img/UV/*
 img/SKA/
 img/SKA/*
+img/GAIA/
+img/GAIA/*
 
 logo.png
 
 scenarios/UV.scibot
 scenarios/SKA.scibot
+scenarios/GAIA.scibot
 
 scenarioWriters/ScenarioWriterUV.py
 scenarioWriters/ScenarioWriterSKA.py
+scenarioWriters/ScenarioWriterGAIA.py
 
 scenarios.zip
 
