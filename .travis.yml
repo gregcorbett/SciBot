@@ -1,0 +1,32 @@
+language: python
+python:
+  - "3.4"
+  - "nightly"
+matrix:
+  allow_failures:
+    - python: "nightly"
+  fast_finish: true
+
+# Route build to container-based infrastructure
+sudo: false
+
+# Cache the dependencies installed by pip
+cache: pip
+# Avoid pip log from affecting cache
+before_cache: rm -fv ~/.cache/pip/log/debug.log
+
+# Install defaults to "pip install -r requirements.txt"
+
+# Commands that prepare things for the test
+before_script:
+  - export PYTHONPATH=$PYTHONPATH:`pwd -P`
+
+# The coveralls module on PyPI (1.1) doesn't report branch coverage to
+# Coveralls, but should in the next release (1.2)
+script: coverage run --branch --source=src -m unittest2 discover --buffer
+
+after_success: coveralls
+
+# Prevent 'Video not initialized' errors
+env:
+    SDL_VIDEODRIVER: "dummy"
