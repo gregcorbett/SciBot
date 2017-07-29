@@ -81,19 +81,22 @@ class GameWindow(Thread):
 
         # If true, the main game loop will be running
         self._logic_running = None
+        # If true, the renderer will be running
+        self._rendering_running = None
 
         # Call the superclass constructor
         Thread.__init__(self)
 
     def start_rendering(self):
         """Change rendering_mode to TITLE_SCREEN and begin rendering."""
+        self._rendering_running = True
         self.font = pygame.font.SysFont("comicsansms", 30)
         self.rendering_mode = RenderingMode.TITLE_SCREEN
         self.start()  # Runs the run method.
 
     def run(self):
         """Run the rendering engine."""
-        while True:
+        while self._rendering_running:
             if self.rendering_mode is RenderingMode.TITLE_SCREEN:
                 # For now, we will let runSciBot drive the rendering
                 pass
@@ -157,7 +160,8 @@ class GameWindow(Thread):
                 self.clock.tick(GameWindow.FRAMES_PER_SECOND)
 
             elif self.rendering_mode is RenderingMode.END_RENDERING:
-                break  # Let the renderer die
+                # Let the renderer die
+                self._rendering_running = False
 
     def choose_scenario(self):
         """Choose a Scenario (possibly using a PyGame UI)."""
@@ -308,7 +312,11 @@ class GameWindow(Thread):
         else:
             self.size = (self.width, self.height + 400)
 
-        self.screen = pygame.display.set_mode(self.size)
+        # Only want to do this once, so sadly can't do it in the rendering
+        # loop without a potential race condition as
+        # size gets set by loading the Scenario
+        if self._rendering_running:
+            self.screen = pygame.display.set_mode(self.size)
 
     def create_buttons(self, buttons_on_the_left):
         """Helper method to populate ButtonGroup."""
