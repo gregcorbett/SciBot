@@ -439,10 +439,19 @@ class GameWindow(Thread):
 
             self.buttons.add(clear_button)
 
-    def start_logic(self):
-        """Start the game logic."""
-        # Choose Scenario
-        self.choose_scenario()
+    def start_logic(self, scenario=None):
+        """
+        Start the game logic.
+
+        Possibly using some settings passed as arguments.
+        """
+        # If we don't pass a scenario as an argument
+        if scenario is None:
+            # Choose Scenario
+            self.choose_scenario()
+        else:
+            # Otherwise, use the one passed as an argument
+            self.scenario = 'scenarios/%s.scibot' % scenario
 
         # Load the chosen scenario
         try:
