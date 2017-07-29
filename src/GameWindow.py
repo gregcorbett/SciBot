@@ -79,6 +79,9 @@ class GameWindow(Thread):
         # The logo to display on screen
         self.logo = None
 
+        # If true, the main game loop will be running
+        self._logic_running = None
+
         # Call the superclass constructor
         Thread.__init__(self)
 
@@ -445,6 +448,7 @@ class GameWindow(Thread):
 
         Possibly using some settings passed as arguments.
         """
+        self._logic_running = True
         # If we don't pass a scenario as an argument
         if scenario is None:
             # Choose Scenario
@@ -464,7 +468,7 @@ class GameWindow(Thread):
 
         # Go to NORMAL rendering
         self.rendering_mode = RenderingMode.NORMAL
-        while True:
+        while self._logic_running:
             event = pygame.event.poll()
 
             if event.type == pygame.QUIT:
@@ -490,7 +494,8 @@ class GameWindow(Thread):
                 self.rendering_mode = RenderingMode.END_RENDERING
                 sleep(1)
                 pygame.quit()
-                sys.exit()
+                # End the loop
+                self._logic_running = False
 
             if event.type == pygame.KEYDOWN:
                 self.handle_key_press(event)
@@ -518,6 +523,13 @@ class GameWindow(Thread):
                 button = self.buttons.get_appropriate_button(event.pos)
                 if button is not None:
                     button.swap_colours()
+
+        # If we get here, the main game loop has exited sommehow
+        # Let's exit safely
+        self.rendering_mode = RenderingMode.END_RENDERING
+        sleep(1)
+        pygame.quit()
+        # No need to sys.exit() here as this is the end of the loop
 
     def check_for_goal_collisions(self):
         """Check if the BeeBot is currently on a Goal."""
