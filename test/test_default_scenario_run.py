@@ -22,7 +22,7 @@ class TestRunSciBot(unittest.TestCase):
         if self.RENDER:
             self.test_game_window.start_rendering()
 
-    def test_default_win(self):
+    def test_default_win_clockwise(self):
         """Test the BeeBot can navigate the Default scenario."""
         # These instrctions will navigate the BeeBot to the Goals
         instructions = [pygame.event.Event(CustomEvent.MOVE_BEEBOT_DOWN),
@@ -39,7 +39,24 @@ class TestRunSciBot(unittest.TestCase):
         for instruction in instructions:
             pygame.event.post(instruction)
 
-        self._start_timed_logic()
+        self._start_timed_logic(timeout_value=45)
+
+    def test_default_win_anti_clockwise(self):
+        """Test the BeeBot can navigate the Default scenario."""
+        # These instrctions will navigate the BeeBot to the Goals
+        instructions = [pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
+                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT),
+                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
+                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
+                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT),
+                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
+                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP)]
+
+        # Post instructions to the pygame event queue
+        for instruction in instructions:
+            pygame.event.post(instruction)
+
+        self._start_timed_logic(timeout_value=45)
 
     # Patch so we can tell if fail_run is called
     @mock.patch('src.GameWindow.GameWindow.fail_run')
