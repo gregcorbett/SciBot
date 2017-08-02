@@ -1,5 +1,23 @@
 """This file defines the Button class."""
+from enum import Enum
 import pygame
+
+
+class Arrow(Enum):
+    """This class defines Enums for the arrow polygon of a button."""
+
+    # Array of vectors for each arrow
+    FORWARD = [(20, -20), (0, -40), (-20, -20), (-10, -20), (-10, 40),
+               (10, 40), (10, -20)]
+
+    LEFT = [(-20, -40), (-40, -20), (-20, 0), (-20, -10), (0, -10),
+            (0, 40), (20, 40), (20, -30), (-20, -30)]
+
+    RIGHT = [(20, -40), (40, -20), (20, 0), (20, -10), (0, -10),
+             (0, 40), (-20, 40), (-20, -30), (20, -30)]
+
+    BACKWARD = [(20, 20), (0, 40), (-20, 20), (-10, 20), (-10, -40),
+                (10, -40), (10, 20)]
 
 
 class Button:
@@ -9,7 +27,7 @@ class Button:
                  text,  # The text to display (can be None)
                  text_colour,  # The colour of the text/polygons (can be None)
                  background_colour,  # The colour of the text (can be None)
-                 shape,  # list of vectors for polygon (can be None)
+                 shape,  # string referring to name of Arrow Enum (can be None)
                  screen_location,  # The position on the screen
                  size):  # The size of the Button
         """Create a Button."""
@@ -23,13 +41,23 @@ class Button:
         self.font = pygame.font.SysFont("comicsansms", 22)
         self.swapped = False  # Keeps track of wether a Button is swapped
 
+        self.vertices = []
+        enums = ['UP', 'LEFT', 'RIGHT', 'DOWN']
+        for i in range(0, 4):
+            if self.shape == enums[i]:
+                self.vertices = self._get_vertex_list(
+                    Arrow[enums[i]].value,
+                    self.rect.centerx,
+                    self.rect.centery,
+                )
+
     def _get_vertex_list(self, array, centerx, centery):
         """Return usable list of vertices for pygame.draw.polygon."""
         to_return = []
-        # for each vector
+        # For each vector
         for i in range(0, len(array)):
             current = array[i]
-            # append a vertex tuple to to_return
+            # Append a vertex tuple to to_return
             to_return.append(
                 (
                     current[0] + centerx,
@@ -44,7 +72,7 @@ class Button:
         screen.fill(self.background_colour, rect=self.rect)
 
         # If list of vectors is empty
-        if self.shape == []:
+        if self.vertices == []:
             # Draw the Button text
             text = self.font.render(self.text,
                                     True,
@@ -59,13 +87,7 @@ class Button:
             screen.blit(text, text_rect)
 
         else:
-            # Draw the polygon
-            vertices = self._get_vertex_list(
-                self.shape,
-                self.rect.centerx,
-                self.rect.centery
-            )
-            pygame.draw.polygon(screen, self.text_colour, vertices)
+            pygame.draw.polygon(screen, self.text_colour, self.vertices)
 
     def swap_colours(self):
         """Swap the background and text / polygon colour of the Button."""
