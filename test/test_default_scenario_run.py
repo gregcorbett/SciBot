@@ -13,14 +13,10 @@ from src.CustomEvent import CustomEvent
 class TestRunSciBot(unittest.TestCase):
     """This test class contains high level integration tests."""
 
-    # Set this to True to render the test cases as they are run
-    RENDER = False
-
     def setUp(self):
         """Create a test GameWindow."""
         self.test_game_window = GameWindow()
-        if self.RENDER:
-            self.test_game_window.start_rendering()
+        self.test_game_window.start_rendering()
 
     def test_default_win_clockwise(self):
         """Test the BeeBot can navigate the Default scenario."""
@@ -114,9 +110,8 @@ class TestRunSciBot(unittest.TestCase):
             self.fail('Timeout Reached.')
 
     def tearDown(self):
-        """Stop rendering, if applicable."""
-        if self.RENDER:
-            self.test_game_window.rendering_mode = RenderingMode.END_RENDERING
+        """Stop rendering the GameWindow."""
+        self.test_game_window.rendering_mode = RenderingMode.END_RENDERING
 
 if __name__ == '__main__':
     unittest.main()
