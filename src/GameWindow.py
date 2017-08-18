@@ -79,18 +79,24 @@ class GameWindow(Thread):
         # The logo to display on screen
         self.logo = None
 
+        # If true, the main game loop will be running
+        self._logic_running = None
+        # If true, the renderer will be running
+        self._rendering_running = None
+
         # Call the superclass constructor
         Thread.__init__(self)
 
     def start_rendering(self):
         """Change rendering_mode to TITLE_SCREEN and begin rendering."""
+        self._rendering_running = True
         self.font = pygame.font.SysFont("comicsansms", 30)
         self.rendering_mode = RenderingMode.TITLE_SCREEN
         self.start()  # Runs the run method.
 
     def run(self):
         """Run the rendering engine."""
-        while True:
+        while self._rendering_running:
             if self.rendering_mode is RenderingMode.TITLE_SCREEN:
                 # For now, we will let runSciBot drive the rendering
                 pass
@@ -154,7 +160,8 @@ class GameWindow(Thread):
                 self.clock.tick(GameWindow.FRAMES_PER_SECOND)
 
             elif self.rendering_mode is RenderingMode.END_RENDERING:
-                break  # Let the renderer die
+                # Let the renderer die
+                self._rendering_running = False
 
     def choose_scenario(self):
         """Choose a Scenario (possibly using a PyGame UI)."""
@@ -305,7 +312,11 @@ class GameWindow(Thread):
         else:
             self.size = (self.width, self.height + 400)
 
-        self.screen = pygame.display.set_mode(self.size)
+        # Only want to do this once, so sadly can't do it in the rendering
+        # loop without a potential race condition as
+        # size gets set by loading the Scenario
+        if self._rendering_running:
+            self.screen = pygame.display.set_mode(self.size)
 
     def create_buttons(self, buttons_on_the_left):
         """Helper method to populate ButtonGroup."""
@@ -439,10 +450,20 @@ class GameWindow(Thread):
 
             self.buttons.add(clear_button)
 
-    def start_logic(self):
-        """Start the game logic."""
-        # Choose Scenario
-        self.choose_scenario()
+    def start_logic(self, scenario=None):
+        """
+        Start the game logic.
+
+        Possibly using some settings passed as arguments.
+        """
+        self._logic_running = True
+        # If we don't pass a scenario as an argument
+        if scenario is None:
+            # Choose Scenario
+            self.choose_scenario()
+        else:
+            # Otherwise, use the one passed as an argument
+            self.scenario = 'scenarios/%s.scibot' % scenario
 
         # Load the chosen scenario
         try:
@@ -455,7 +476,7 @@ class GameWindow(Thread):
 
         # Go to NORMAL rendering
         self.rendering_mode = RenderingMode.NORMAL
-        while True:
+        while self._logic_running:
             event = pygame.event.poll()
 
             if event.type == pygame.QUIT:
@@ -481,7 +502,8 @@ class GameWindow(Thread):
                 self.rendering_mode = RenderingMode.END_RENDERING
                 sleep(1)
                 pygame.quit()
-                sys.exit()
+                # End the loop
+                self._logic_running = False
 
             if event.type == pygame.KEYDOWN:
                 self.handle_key_press(event)
@@ -509,6 +531,13 @@ class GameWindow(Thread):
                 button = self.buttons.get_appropriate_button(event.pos)
                 if button is not None:
                     button.swap_colours()
+
+        # If we get here, the main game loop has exited sommehow
+        # Let's exit safely
+        self.rendering_mode = RenderingMode.END_RENDERING
+        sleep(1)
+        pygame.quit()
+        # No need to sys.exit() here as this is the end of the loop
 
     def check_for_goal_collisions(self):
         """Check if the BeeBot is currently on a Goal."""

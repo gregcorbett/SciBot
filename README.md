@@ -1,4 +1,7 @@
 # SciBot
+[![Build Status](https://travis-ci.org/stfc/SciBot.svg?branch=develop)](https://travis-ci.org/stfc/SciBot)
+[![Coverage Status](https://coveralls.io/repos/github/stfc/SciBot/badge.svg?branch=develop)](https://coveralls.io/github/stfc/develop?branch=develop)
+
 contact: scibot-dev@googlegroups.com
 
 ##Users
