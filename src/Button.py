@@ -27,14 +27,12 @@ class Button:
                  text,  # The text to display (can be None)
                  text_colour,  # The colour of the text/polygons (can be None)
                  background_colour,  # The colour of the text (can be None)
-                 shape,  # string referring to name of Arrow Enum (can be None)
                  screen_location,  # The position on the screen
                  size):  # The size of the Button
         """Create a Button."""
         self.text = text
         self.text_colour = text_colour
         self.background_colour = background_colour
-        self.shape = shape
         self.screen_location = screen_location
         self.size = size
         self.rect = pygame.Rect(screen_location, size)
@@ -42,14 +40,19 @@ class Button:
         self.swapped = False  # Keeps track of wether a Button is swapped
 
         self.vertices = []
-        enums = ['UP', 'LEFT', 'RIGHT', 'DOWN']
-        for i in range(0, 4):
-            if self.shape == enums[i]:
-                self.vertices = self._get_vertex_list(
-                    Arrow[enums[i]].value,
-                    self.rect.centerx,
-                    self.rect.centery,
-                )
+        if text == 'Forward':
+            self.vertices = Arrow.FORWARD.value
+        elif text == 'Turn Left':
+            self.vertices = Arrow.LEFT.value
+        elif text == 'Turn Right':
+            self.vertices = Arrow.RIGHT.value
+        elif text == 'Backward':
+            self.vertices = Arrow.BACKWARD.value
+
+        if self.vertices:
+            self.vertices = self._get_vertex_list(self.vertices,
+                                                  self.rect.centerx,
+                                                  self.rect.centery)
 
     def _get_vertex_list(self, array, centerx, centery):
         """Return usable list of vertices for pygame.draw.polygon."""

@@ -327,7 +327,6 @@ class GameWindow(Thread):
             forward_button = Button('Forward',
                                     GameWindow.BLACK,
                                     GameWindow.WHITE,
-                                    'FORWARD',
                                     (self.width + 140,
                                      float(self.height)/2 - 240),
                                     (120, 120))
@@ -337,7 +336,6 @@ class GameWindow(Thread):
             backward_button = Button('Backward',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     'BACKWARD',
                                      (self.width + 140,
                                       float(self.height)/2 + 20),
                                      (120, 120))
@@ -347,7 +345,6 @@ class GameWindow(Thread):
             turn_left_button = Button('Turn Left',
                                       GameWindow.BLACK,
                                       GameWindow.WHITE,
-                                      'LEFT',
                                       (self.width + 10,
                                        float(self.height)/2 - 110),
                                       (120, 120))
@@ -357,7 +354,6 @@ class GameWindow(Thread):
             turn_right_button = Button('Turn Right',
                                        GameWindow.BLACK,
                                        GameWindow.WHITE,
-                                       'RIGHT',
                                        (self.width + 270,
                                         float(self.height)/2 - 110),
                                        (120, 120))
@@ -367,7 +363,6 @@ class GameWindow(Thread):
             go_button = Button('Go',
                                GameWindow.BLACK,
                                GameWindow.WHITE,
-                               '',
                                (self.width + 140,
                                 float(self.height)/2 - 110),
                                (120, 120))
@@ -377,7 +372,6 @@ class GameWindow(Thread):
             reset_button = Button('Reset',
                                   GameWindow.BLACK,
                                   GameWindow.WHITE,
-                                  '',
                                   (self.width + 10,
                                    float(self.height)/2 + 20),
                                   (120, 120))
@@ -387,7 +381,6 @@ class GameWindow(Thread):
             clear_button = Button('Clear',
                                   GameWindow.BLACK,
                                   GameWindow.WHITE,
-                                  '',
                                   (self.width + 270,
                                    float(self.height)/2 + 20),
                                   (120, 120))
@@ -398,7 +391,6 @@ class GameWindow(Thread):
             forward_button = Button('Forward',
                                     GameWindow.BLACK,
                                     GameWindow.WHITE,
-                                    'FORWARD',
                                     (float(self.width)/2 - 60,
                                      self.height + 10),
                                     (120, 120))
@@ -408,7 +400,6 @@ class GameWindow(Thread):
             backward_button = Button('Backward',
                                      GameWindow.BLACK,
                                      GameWindow.WHITE,
-                                     'BACKWARD',
                                      (float(self.width)/2 - 60,
                                       self.height + 270),
                                      (120, 120))
@@ -418,7 +409,6 @@ class GameWindow(Thread):
             turn_left_button = Button('Turn Left',
                                       GameWindow.BLACK,
                                       GameWindow.WHITE,
-                                      'LEFT',
                                       (float(self.width)/2 - 190,
                                        self.height + 140),
                                       (120, 120))
@@ -428,7 +418,6 @@ class GameWindow(Thread):
             turn_right_button = Button('Turn Right',
                                        GameWindow.BLACK,
                                        GameWindow.WHITE,
-                                       'RIGHT',
                                        (float(self.width)/2 + 70,
                                         self.height + 140),
                                        (120, 120))
@@ -438,7 +427,6 @@ class GameWindow(Thread):
             go_button = Button('Go',
                                GameWindow.BLACK,
                                GameWindow.WHITE,
-                               '',
                                (float(self.width)/2 - 60, self.height + 140),
                                (120, 120))
 
@@ -447,7 +435,6 @@ class GameWindow(Thread):
             reset_button = Button('Reset',
                                   GameWindow.BLACK,
                                   GameWindow.WHITE,
-                                  '',
                                   (float(self.width)/2 - 190,
                                    self.height + 270),
                                   (120, 120))
@@ -457,7 +444,6 @@ class GameWindow(Thread):
             clear_button = Button('Clear',
                                   GameWindow.BLACK,
                                   GameWindow.WHITE,
-                                  '',
                                   (float(self.width)/2 + 70,
                                    self.height + 270),
                                   (120, 120))
