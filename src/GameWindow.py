@@ -246,7 +246,7 @@ class GameWindow(Thread):
             # assume it is a button press
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 # If it was indeed a Button release
-                button = self.buttons.get_appropriate_button(event.pos)
+                button = self.buttons.get_pressed_button(event.pos)
                 if button is not None and button.swapped:
                     # Get the file corresponding to the Button pressed
                     button.swap_colours()
@@ -259,7 +259,7 @@ class GameWindow(Thread):
             # assume it is a button press
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 # If it was indeed a Button press
-                button = self.buttons.get_appropriate_button(event.pos)
+                button = self.buttons.get_pressed_button(event.pos)
                 if button is not None:
                     # Mark that Button as being pressed
                     button.swap_colours()
@@ -537,7 +537,7 @@ class GameWindow(Thread):
             # If the event is a left mouse button up
             # assume it is a button press
             if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
-                button = self.buttons.get_appropriate_button(event.pos)
+                button = self.buttons.get_pressed_button(event.pos)
                 if button is not None and button.swapped:
                     button.swap_colours()
                     self.handle_button_press(button)
@@ -545,7 +545,7 @@ class GameWindow(Thread):
                     self.buttons.unswap_all()
 
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-                button = self.buttons.get_appropriate_button(event.pos)
+                button = self.buttons.get_pressed_button(event.pos)
                 if button is not None:
                     button.swap_colours()
 
