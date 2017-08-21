@@ -17,6 +17,10 @@ class ButtonGroup:
         for _, button in self.buttons.items():
             button.display(screen)
 
+    def get_named_button(self, button_name):
+        """Return the named Button."""
+        return self.buttons[button_name]
+
     def get_pressed_button(self, mouse_position):
         """Return the pressed Button."""
         for _, button in self.buttons.items():
