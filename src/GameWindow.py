@@ -508,7 +508,7 @@ class GameWindow(Thread):
                 pygame.quit()
                 sys.exit()
 
-            if event.type == CustomEvent.RUN_FAIL:
+            elif event.type == CustomEvent.RUN_FAIL:
                 self.robot.crash()
                 sleep(1)
                 self.rendering_mode = RenderingMode.FAIL_SCREEN
@@ -520,8 +520,7 @@ class GameWindow(Thread):
 
                 self.robot.index = 0
                 self.flip(False)
-
-            if event.type == CustomEvent.RUN_WIN:
+            elif event.type == CustomEvent.RUN_WIN:
                 sleep(1)
                 self.rendering_mode = RenderingMode.WIN_SCREEN
                 sleep(2)
@@ -531,12 +530,12 @@ class GameWindow(Thread):
                 # End the loop
                 self._logic_running = False
 
-            if event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN:
                 self.handle_key_press(event)
 
             # If the event is a left mouse button up
             # assume it is a button press
-            if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+            elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
                 button = self.buttons.get_pressed_button(event.pos)
                 if button is not None and button.swapped:
                     button.swap_colours()
@@ -544,14 +543,14 @@ class GameWindow(Thread):
                 else:
                     self.buttons.unswap_all()
 
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
                 button = self.buttons.get_pressed_button(event.pos)
                 if button is not None:
                     button.swap_colours()
 
             # If no event and self.robot.memory has not been cleared
             # move the robot
-            if self.robot.running:
+            elif self.robot.running:
                 self.robot.push_out_memory()
                 event = pygame.event.poll()
 
