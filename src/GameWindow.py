@@ -592,23 +592,25 @@ class GameWindow(Thread):
 
     def start_beebot_movement(self):
         """Start the BeeBot moving and turn the Go Buton to the Stop Button."""
-        self.robot.running = True
+        if not self.robot.running:
+            self.robot.running = True
 
-        self.buttons.get_named_button('Go').displayed = False
-        self.buttons.get_named_button('Stop').displayed = True
+            self.buttons.get_named_button('Go').displayed = False
+            self.buttons.get_named_button('Stop').displayed = True
 
     def stop_beebot_movement(self):
         """Stop the BeeBot moving and turn the Stop Buton to the Go Button."""
-        self.robot.running = False
-        # Reset the BeeBot memory pointer to the start of the instructions
-        self.robot.index = 0
+        if self.robot.running:
+            self.robot.running = False
+            # Reset the BeeBot memory pointer to the start of the instructions
+            self.robot.index = 0
 
-        # Clear the queue incase movement events have already
-        # been pushed to the queue.
-        pygame.event.clear()
+            # Clear the queue incase movement events have already
+            # been pushed to the queue.
+            pygame.event.clear()
 
-        self.buttons.get_named_button('Go').displayed = True
-        self.buttons.get_named_button('Stop').displayed = False
+            self.buttons.get_named_button('Go').displayed = True
+            self.buttons.get_named_button('Stop').displayed = False
 
     def fail_run(self):
         """Clear the event queue and push a RUN_FAIL event."""
