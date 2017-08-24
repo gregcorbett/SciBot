@@ -720,3 +720,7 @@ class GameWindow(Thread):
         # if the event is the G key, start the BeeBot.
         if event.key == ord('g') or event.key == ord('G'):
             self.start_beebot_movement()
+
+        # if the event is the S key, stop the BeeBot.
+        if event.key == ord('s') or event.key == ord('S'):
+            self.stop_beebot_movement()
