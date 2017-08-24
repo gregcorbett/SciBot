@@ -603,6 +603,10 @@ class GameWindow(Thread):
         # Reset the BeeBot memory pointer to the start of the instructions
         self.robot.index = 0
 
+        # Clear the queue incase movement events have already
+        # been pushed to the queue.
+        pygame.event.clear()
+
         self.buttons.get_named_button('Go').displayed = True
         self.buttons.get_named_button('Stop').displayed = False
 
