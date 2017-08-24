@@ -526,19 +526,6 @@ class GameWindow(Thread):
                 # End the loop
                 self._logic_running = False
 
-            elif event.type == pygame.KEYDOWN:
-                self.handle_key_press(event)
-
-            # If the event is a movement event
-            # Move the BeeBot.
-            elif (event.type >= CustomEvent.MOVE_BEEBOT_UP and
-                  event.type <= CustomEvent.MOVE_BEEBOT_RIGHT):
-
-                self.robot.move(event)
-                self.check_for_obstacle_collisions()
-                self.check_for_goal_collisions()
-                self.check_for_off_map()
-
             # If the event is a left mouse button up
             # assume it is a button press
             elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
@@ -553,6 +540,19 @@ class GameWindow(Thread):
                 button = self.buttons.get_pressed_button(event.pos)
                 if button is not None:
                     button.swap_colours()
+
+            elif event.type == pygame.KEYDOWN:
+                self.handle_key_press(event)
+
+            # If the event is a movement event
+            # Move the BeeBot.
+            elif (event.type >= CustomEvent.MOVE_BEEBOT_UP and
+                  event.type <= CustomEvent.MOVE_BEEBOT_RIGHT):
+
+                self.robot.move(event)
+                self.check_for_obstacle_collisions()
+                self.check_for_goal_collisions()
+                self.check_for_off_map()
 
             elif self.robot.running:
                 self.robot.push_out_memory()
