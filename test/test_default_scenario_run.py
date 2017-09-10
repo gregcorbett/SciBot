@@ -92,11 +92,7 @@ class TestRunSciBot(unittest.TestCase):
                         'Turn Right', 'Forward', 'Forward', 'Turn Right',
                         'Forward', 'Go']
 
-        # Simulate Button presses
-        for instruction in instructions:
-            self._press_button(instruction)
-
-        self._start_timed_logic(timeout_value=45)
+        self._start_timed_logic(timeout_value=60, instructions=instructions)
 
     def test_default_win_anti_clockwise(self):
         """Test the BeeBot can navigate the Default scenario."""
@@ -104,11 +100,7 @@ class TestRunSciBot(unittest.TestCase):
         instructions = ['Forward', 'Turn Left', 'Forward', 'Forward',
                         'Turn Left', 'Forward', 'Forward', 'Go']
 
-        # Simulate Button presses
-        for instruction in instructions:
-            self._press_button(instruction)
-
-        self._start_timed_logic(timeout_value=45)
+        self._start_timed_logic(timeout_value=60, instructions=instructions)
 
     # Patch so we can tell if fail_run is called
     @mock.patch('src.GameWindow.GameWindow.fail_run')
@@ -117,12 +109,9 @@ class TestRunSciBot(unittest.TestCase):
         # These Button presses will navigate the BeeBot into an Obstacle
         instructions = ['Turn Left', 'Forward', 'Go']
 
-        # Simulate Button presses
-        for instruction in instructions:
-            self._press_button(instruction)
-
         # This method should call fail_run given the above instructions
-        self._start_timed_logic(timeout_value=15, expected_to_timeout=True)
+        self._start_timed_logic(timeout_value=15, expected_to_timeout=True,
+                                instructions=instructions)
 
         # Assert fail_run was called exactly once
         self.assertEqual(mock_fail_run.call_count, 1)
