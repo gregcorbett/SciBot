@@ -59,6 +59,12 @@ class TestRunSciBot(unittest.TestCase):
         # Delay to simulate real user input
         time.sleep(1)
 
+    def _simulate_instructions(self, instructions):
+        time.sleep(1)
+        # Simulate Button presses
+        for instruction in instructions:
+            self._press_button(instruction)
+
     def test_default_win_clockwise(self):
         """Test the BeeBot can navigate the Default scenario."""
         # These Button presses will navigate the BeeBot to the Goals
@@ -110,17 +116,30 @@ class TestRunSciBot(unittest.TestCase):
         # After the timeout_value has been reached, stop the game logic
         self.test_game_window._logic_running = False
 
-    def _start_timed_logic(self, timeout_value=60, expected_to_timeout=False):
+    def _start_timed_logic(self, timeout_value=60, expected_to_timeout=False,
+                           instructions=None):
         """
         Start a GameWindow that will timeout after timeout_value.
 
         This method will trigger a test fail if timeout_value was reached
         and expected_to_timeout is False.
+
+        If provided, this method will simulate user input based on the
+        provided instructions.
         """
         # Start a timeout thread to catch case where
         # test fails but game loop does not exit
         timeout = threading.Thread(target=self._timeout, args=[timeout_value])
         timeout.start()
+
+        # If this method was passed instructions.
+        if instructions:
+            # Start a new thread to execute them.
+            # _simulate_instructions will wait a second to ensure the
+            # GameWindow is visible before simulating instructions
+            simulate = threading.Thread(target=self._simulate_instructions,
+                                        args=[instructions])
+            simulate.start()
 
         # Start the game logic
         self.test_game_window.start_logic(scenario='Default')
