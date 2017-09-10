@@ -7,6 +7,7 @@ import mock
 import pygame
 
 from src.GameWindow import GameWindow, RenderingMode
+from src.Point import Point
 
 
 class TestRunSciBot(unittest.TestCase):
@@ -20,7 +21,8 @@ class TestRunSciBot(unittest.TestCase):
         # This list is used to generate 'Fake' Button press/release events
         buttons = [("Forward", 950, 420), ("Backward", 950, 680),
                    ("Turn Left", 820, 550), ("Turn Right", 1080, 550),
-                   ("Go", 950, 550), ("Reset", 820, 680), ("Clear", 1080, 680)]
+                   ("Go", 950, 550), ("Reset", 820, 680), ("Clear", 1080, 680),
+                   ("Stop", 950, 550)]
 
         # These dictionaries will store the events
         self.button_down_events = {}
@@ -64,6 +66,24 @@ class TestRunSciBot(unittest.TestCase):
         # Simulate Button presses
         for instruction in instructions:
             self._press_button(instruction)
+
+    def test_stop_button(self):
+        """Test that the Stop Button stops BeeBot movement."""
+        # These Button presses will move the BeeBot back exactly one space.
+        # As the Stop command will take effect once the BeeBot has processed
+        # the first Backward command, so it won't process the second.
+        instructions = ['Backward', 'Backward', 'Go', 'Stop']
+
+        self._start_timed_logic(timeout_value=15, expected_to_timeout=True,
+                                instructions=instructions)
+
+        position = Point(self.test_game_window.robot.logical_position.x,
+                         self.test_game_window.robot.logical_position.y)
+
+        # This is one space below the BeeBot's starting position
+        expected_position = Point(3, 2)
+
+        self.assertTrue(position.is_equal_to(expected_position))
 
     def test_default_win_clockwise(self):
         """Test the BeeBot can navigate the Default scenario."""
