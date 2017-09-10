@@ -555,12 +555,13 @@ class GameWindow(Thread):
                 self.check_for_off_map()
 
             elif self.robot.running:
-                self.robot.push_out_memory()
-
-                # If there are no more instructions in the BeeBot's memory
+                # If there are no further instructions in the BeeBot's memory
                 if len(self.robot.memory) == self.robot.index:
                     # Stop the BeeBot
                     self.stop_beebot_movement()
+                else:
+                    # Push out the next instruction
+                    self.robot.push_out_memory()
 
         # If we get here, the main game loop has exited sommehow
         # Let's exit safely
