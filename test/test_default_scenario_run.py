@@ -14,9 +14,51 @@ class TestRunSciBot(unittest.TestCase):
     """This test class contains high level integration tests."""
 
     def setUp(self):
-        """Create a test GameWindow."""
+        """Create a test GameWindow and fake Button events."""
         self.test_game_window = GameWindow()
         self.test_game_window.start_rendering()
+
+        # This list is used to generate 'Fake' Button press/release events
+        buttons = [("Forward", 950, 420), ("Backward", 950, 680),
+                   ("Turn Left", 820, 550), ("Turn Right", 1080, 550),
+                   ("Go", 950, 550), ("Reset", 820, 680), ("Clear", 1080, 680)]
+
+        # These dictionaries will store the events
+        self.button_down_events = {}
+        self.button_up_events = {}
+
+        # Use the above buttons list to generate events
+        for button in buttons:
+            # 'Fake' Button press
+            down_event = pygame.event.Event(pygame.MOUSEBUTTONDOWN)
+            # Simulate a left click
+            down_event.button = 1
+            # Simulate the position of the click
+            down_event.pos = (button[1], button[2])
+            # Add this event to the event dictionary,
+            # using the corresponding Button text as the key
+            self.button_down_events[button[0]] = down_event
+
+            # 'Fake' Button release
+            up_event = pygame.event.Event(pygame.MOUSEBUTTONUP)
+            # Simulate a left click
+            up_event.button = 1
+            # Simulate the position of the click
+            up_event.pos = (button[1], button[2])
+            # Add this event to the event dictionary,
+            # using the corresponding Button text as the key
+            self.button_up_events[button[0]] = up_event
+
+    def _press_button(self, button_text):
+        """Fake a Button press corresponding to button_text."""
+        # Post the Button press event corresponding to button_text
+        pygame.event.post(self.button_down_events[button_text])
+        # Delay to simulate real user input
+        time.sleep(1)
+        # Post the Button release event corresponding to button_text
+        pygame.event.post(self.button_up_events[button_text])
+        # Delay to simulate real user input
+        time.sleep(1)
 
     def test_default_win_clockwise(self):
         """Test the BeeBot can navigate the Default scenario."""
