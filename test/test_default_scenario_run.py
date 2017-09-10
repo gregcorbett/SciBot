@@ -7,7 +7,6 @@ import mock
 import pygame
 
 from src.GameWindow import GameWindow, RenderingMode
-from src.CustomEvent import CustomEvent
 
 
 class TestRunSciBot(unittest.TestCase):
@@ -62,37 +61,26 @@ class TestRunSciBot(unittest.TestCase):
 
     def test_default_win_clockwise(self):
         """Test the BeeBot can navigate the Default scenario."""
-        # These instrctions will navigate the BeeBot to the Goals
-        instructions = [pygame.event.Event(CustomEvent.MOVE_BEEBOT_DOWN),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_RIGHT),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_RIGHT),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP)]
+        # These Button presses will navigate the BeeBot to the Goals
+        instructions = ['Backward', 'Turn Left', 'Forward', 'Forward',
+                        'Turn Right', 'Forward', 'Forward', 'Turn Right',
+                        'Forward', 'Go']
 
-        # Post instructions to the pygame event queue
+        # Simulate Button presses
         for instruction in instructions:
-            pygame.event.post(instruction)
+            self._press_button(instruction)
 
         self._start_timed_logic(timeout_value=45)
 
     def test_default_win_anti_clockwise(self):
         """Test the BeeBot can navigate the Default scenario."""
-        # These instrctions will navigate the BeeBot to the Goals
-        instructions = [pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP)]
+        # These Button presses will navigate the BeeBot to the Goals
+        instructions = ['Forward', 'Turn Left', 'Forward', 'Forward',
+                        'Turn Left', 'Forward', 'Forward', 'Go']
 
-        # Post instructions to the pygame event queue
+        # Simulate Button presses
         for instruction in instructions:
-            pygame.event.post(instruction)
+            self._press_button(instruction)
 
         self._start_timed_logic(timeout_value=45)
 
@@ -100,13 +88,12 @@ class TestRunSciBot(unittest.TestCase):
     @mock.patch('src.GameWindow.GameWindow.fail_run')
     def test_default_collison(self, mock_fail_run):
         """Test a failed run due to collisions with Obstacles."""
-        # These instructions will navigate the BeeBot into an Obstacle
-        instructions = [pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT),
-                        pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP)]
+        # These Button presses will navigate the BeeBot into an Obstacle
+        instructions = ['Turn Left', 'Forward', 'Go']
 
-        # Post instructions to the pygame event queue
+        # Simulate Button presses
         for instruction in instructions:
-            pygame.event.post(instruction)
+            self._press_button(instruction)
 
         # This method should call fail_run given the above instructions
         self._start_timed_logic(timeout_value=15, expected_to_timeout=True)
