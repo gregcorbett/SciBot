@@ -599,6 +599,19 @@ class GameWindow(Thread):
             self.buttons.get_named_button('Go').displayed = False
             self.buttons.get_named_button('Stop').displayed = True
 
+            # Hide 'Reset' and 'Clear' Buttons to prevent them
+            # being pressed mid run as this can cause odd
+            # behaviour where a reset BeeBot continues to movement
+            # or a running BeeBot has no instructions to run.
+            self.buttons.get_named_button('Reset').displayed = False
+            self.buttons.get_named_button('Clear').displayed = False
+
+            # Prevent the BeeBot being 'programmed' while running
+            self.buttons.get_named_button('Forward').displayed = False
+            self.buttons.get_named_button('Turn Left').displayed = False
+            self.buttons.get_named_button('Backward').displayed = False
+            self.buttons.get_named_button('Turn Right').displayed = False
+
     def stop_beebot_movement(self):
         """Stop the BeeBot moving and turn the Stop Buton to the Go Button."""
         if self.robot.running:
@@ -612,6 +625,17 @@ class GameWindow(Thread):
 
             self.buttons.get_named_button('Go').displayed = True
             self.buttons.get_named_button('Stop').displayed = False
+
+            # Now that movement has stopped, these Buttons cannot cause
+            # odd side effects any more, so display them once again.
+            self.buttons.get_named_button('Reset').displayed = True
+            self.buttons.get_named_button('Clear').displayed = True
+
+            # Allow the BeeBot to be programmed again.
+            self.buttons.get_named_button('Forward').displayed = True
+            self.buttons.get_named_button('Turn Left').displayed = True
+            self.buttons.get_named_button('Backward').displayed = True
+            self.buttons.get_named_button('Turn Right').displayed = True
 
     def fail_run(self):
         """Clear the event queue and push a RUN_FAIL event."""
