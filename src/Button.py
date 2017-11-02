@@ -30,7 +30,8 @@ class Button:
                  text_colour,  # The colour of the text/polygons (can be None)
                  background_colour,  # The colour of the text (can be None)
                  screen_location,  # The position on the screen
-                 size):  # The size of the Button
+                 size,  # The size of the Button
+                 displayed=True):  # Display Button if True
         """Create a Button."""
         self.text = text
         self.text_colour = text_colour
@@ -40,6 +41,7 @@ class Button:
         self.rect = pygame.Rect(screen_location, size)
         self.font = pygame.font.SysFont("comicsansms", 22)
         self.swapped = False  # Keeps track of wether a Button is swapped
+        self.displayed = displayed
 
         self.vertices = []
         if text == 'Forward':
@@ -72,27 +74,28 @@ class Button:
         return to_return
 
     def display(self, screen):
-        """Draw the Buttton object on screen, if it has a sprite."""
-        # Draw the Button background
-        screen.fill(self.background_colour, rect=self.rect)
+        """Draw the Buttton object on screen, if self.displayed is True."""
+        if self.displayed:
+            # Draw the Button background
+            screen.fill(self.background_colour, rect=self.rect)
 
-        # If list of vectors is empty
-        if self.vertices == []:
-            # Draw the Button text
-            text = self.font.render(self.text,
-                                    True,
-                                    self.text_colour)
+            # If list of vectors is empty
+            if self.vertices == []:
+                # Draw the Button text
+                text = self.font.render(self.text,
+                                        True,
+                                        self.text_colour)
 
-            # Center the background and text
-            text_rect = text.get_rect()
-            text_rect.centerx = self.rect.centerx
-            text_rect.centery = self.rect.centery
+                # Center the background and text
+                text_rect = text.get_rect()
+                text_rect.centerx = self.rect.centerx
+                text_rect.centery = self.rect.centery
 
-            # Render Button on screen
-            screen.blit(text, text_rect)
+                # Render Button on screen
+                screen.blit(text, text_rect)
 
-        else:
-            pygame.draw.polygon(screen, self.text_colour, self.vertices)
+            else:
+                pygame.draw.polygon(screen, self.text_colour, self.vertices)
 
     def swap_colours(self):
         """Swap the background and text / polygon colour of the Button."""
@@ -106,4 +109,6 @@ class Button:
         return (mouse_position[0] > self.rect.topleft[0] and
                 mouse_position[1] > self.rect.topleft[1] and
                 mouse_position[0] < self.rect.bottomright[0] and
-                mouse_position[1] < self.rect.bottomright[1])
+                mouse_position[1] < self.rect.bottomright[1] and
+                # Can't click on a Button that isn't displayed
+                self.displayed)

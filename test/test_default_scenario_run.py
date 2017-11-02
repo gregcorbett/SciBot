@@ -7,6 +7,7 @@ import mock
 import pygame
 
 from src.GameWindow import GameWindow, RenderingMode
+from src.Point import Point
 
 
 class TestRunSciBot(unittest.TestCase):
@@ -20,7 +21,8 @@ class TestRunSciBot(unittest.TestCase):
         # This list is used to generate 'Fake' Button press/release events
         buttons = [("Forward", 950, 420), ("Backward", 950, 680),
                    ("Turn Left", 820, 550), ("Turn Right", 1080, 550),
-                   ("Go", 950, 550), ("Reset", 820, 680), ("Clear", 1080, 680)]
+                   ("Go", 950, 550), ("Reset", 820, 680), ("Clear", 1080, 680),
+                   ("Stop", 950, 550)]
 
         # These dictionaries will store the events
         self.button_down_events = {}
@@ -59,6 +61,30 @@ class TestRunSciBot(unittest.TestCase):
         # Delay to simulate real user input
         time.sleep(1)
 
+    def _simulate_instructions(self, instructions):
+        time.sleep(1)
+        # Simulate Button presses
+        for instruction in instructions:
+            self._press_button(instruction)
+
+    def test_stop_button(self):
+        """Test that the Stop Button stops BeeBot movement."""
+        # These Button presses will move the BeeBot back exactly one space.
+        # As the Stop command will take effect once the BeeBot has processed
+        # the first Backward command, so it won't process the second.
+        instructions = ['Backward', 'Backward', 'Go', 'Stop']
+
+        self._start_timed_logic(timeout_value=15, expected_to_timeout=True,
+                                instructions=instructions)
+
+        position = Point(self.test_game_window.robot.logical_position.x,
+                         self.test_game_window.robot.logical_position.y)
+
+        # This is one space below the BeeBot's starting position
+        expected_position = Point(3, 2)
+
+        self.assertTrue(position.is_equal_to(expected_position))
+
     def test_default_win_clockwise(self):
         """Test the BeeBot can navigate the Default scenario."""
         # These Button presses will navigate the BeeBot to the Goals
@@ -66,11 +92,7 @@ class TestRunSciBot(unittest.TestCase):
                         'Turn Right', 'Forward', 'Forward', 'Turn Right',
                         'Forward', 'Go']
 
-        # Simulate Button presses
-        for instruction in instructions:
-            self._press_button(instruction)
-
-        self._start_timed_logic(timeout_value=45)
+        self._start_timed_logic(timeout_value=60, instructions=instructions)
 
     def test_default_win_anti_clockwise(self):
         """Test the BeeBot can navigate the Default scenario."""
@@ -78,11 +100,7 @@ class TestRunSciBot(unittest.TestCase):
         instructions = ['Forward', 'Turn Left', 'Forward', 'Forward',
                         'Turn Left', 'Forward', 'Forward', 'Go']
 
-        # Simulate Button presses
-        for instruction in instructions:
-            self._press_button(instruction)
-
-        self._start_timed_logic(timeout_value=45)
+        self._start_timed_logic(timeout_value=60, instructions=instructions)
 
     # Patch so we can tell if fail_run is called
     @mock.patch('src.GameWindow.GameWindow.fail_run')
@@ -91,12 +109,9 @@ class TestRunSciBot(unittest.TestCase):
         # These Button presses will navigate the BeeBot into an Obstacle
         instructions = ['Turn Left', 'Forward', 'Go']
 
-        # Simulate Button presses
-        for instruction in instructions:
-            self._press_button(instruction)
-
         # This method should call fail_run given the above instructions
-        self._start_timed_logic(timeout_value=15, expected_to_timeout=True)
+        self._start_timed_logic(timeout_value=15, expected_to_timeout=True,
+                                instructions=instructions)
 
         # Assert fail_run was called exactly once
         self.assertEqual(mock_fail_run.call_count, 1)
@@ -110,17 +125,30 @@ class TestRunSciBot(unittest.TestCase):
         # After the timeout_value has been reached, stop the game logic
         self.test_game_window._logic_running = False
 
-    def _start_timed_logic(self, timeout_value=60, expected_to_timeout=False):
+    def _start_timed_logic(self, timeout_value=60, expected_to_timeout=False,
+                           instructions=None):
         """
         Start a GameWindow that will timeout after timeout_value.
 
         This method will trigger a test fail if timeout_value was reached
         and expected_to_timeout is False.
+
+        If provided, this method will simulate user input based on the
+        provided instructions.
         """
         # Start a timeout thread to catch case where
         # test fails but game loop does not exit
         timeout = threading.Thread(target=self._timeout, args=[timeout_value])
         timeout.start()
+
+        # If this method was passed instructions.
+        if instructions:
+            # Start a new thread to execute them.
+            # _simulate_instructions will wait a second to ensure the
+            # GameWindow is visible before simulating instructions
+            simulate = threading.Thread(target=self._simulate_instructions,
+                                        args=[instructions])
+            simulate.start()
 
         # Start the game logic
         self.test_game_window.start_logic(scenario='Default')

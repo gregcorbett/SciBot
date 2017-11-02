@@ -67,8 +67,10 @@ class TestBeeBot(unittest.TestCase):
             # Add all events to the BeeBot's memory
             for event in events:
                 self.test_robot.add_to_memory(event)
-            # Push the BeeBot's memory to the event loop
-            self.test_robot.push_out_memory()
+
+            # Push out all instructions
+            for event in events:
+                self.test_robot.push_out_memory()
 
             # Check the polled events match the events pushed
             for event in events:
