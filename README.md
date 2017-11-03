@@ -12,7 +12,7 @@ contact: scibot-dev@googlegroups.com
 
 ## Developers
 
-Download the soucre.zip, unzip it and navigate to the source code directory
+If you wish to develop for SciBot, clone the repository and create a feature branch off of develop. Once your feature is ready, make a Pull Request back into develop.
 
 ### Requirements for building and developing SciBot
 
