@@ -1,0 +1,14 @@
+========== Version 1.1.0 ==========
+
+New Features and Minor Changes:
+
+- Add a Stop Button that behaves like the BeeBot Stop Button
+
+Patches, Bug Fixes and Documentation Changes:
+
+- Change the Board class to throw exceptions rather than exiting on a size mismatch
+- Add Travis CI testing and coverage monitoring
+- Replace the text on Buttons with arrows
+- Change the default scenario license to reflect the new main repository
+- Add an example ScenarioWriter and a README explaining how to use it
+- Tweak logo position for narrower scenarios
