@@ -4,17 +4,17 @@
 
 contact: scibot-dev@googlegroups.com
 
-##Users
+## Users
 1. Go to https://github.com/gregcorbett/SciBot/releases/latest
 2. Download runSciBot.exe and scenarios.zip into the same place
 3. Unzip scenarios.zip
 3. Run the .exe file (by double clicking it.)
 
-##Developers
+## Developers
 
 Download the soucre.zip, unzip it and navigate to the source code directory
 
-###Requirements for building and developing SciBot
+### Requirements for building and developing SciBot
 
 Microsoft installers have been linked for each requirement for easy of installation.
 
@@ -25,11 +25,11 @@ Microsoft installers have been linked for each requirement for easy of installat
 3. py2exe 0.9.2.2 (https://pypi.python.org/pypi/py2exe/)
   * exact version used in testing (https://pypi.python.org/packages/any/p/py2exe/py2exe-0.9.2.2.win32.exe)
 
-###Building the exe file
+### Building the exe file
 
 After the requirements above are met, open a command line and navigate to the unzipped directory.
 
 Run `python setup.py py2exe`.
 
-##Image Sources
+## Image Sources
 SciBot image sourced from: https://www.tes.co.uk/teaching-resource/bee-bot-sequence-powerpoint-6415227
