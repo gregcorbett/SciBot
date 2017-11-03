@@ -16,3 +16,10 @@ class ObstacleGroup:
         """Draw all Obstacle objects in the ObstacleGroup."""
         for obstacle in self.obstacles:
             obstacle.display(screen)
+
+    def is_equal_to(self, other_obstacle_group):
+        """Compare this ObstacleGroup for equality with other_obstacle_group."""
+        for i in range(0, len(self.obstacles)):
+            if not self.obstacles[i].is_equal_to(other_obstacle_group.obstacles[i]):
+                return False
+        return True

@@ -30,3 +30,8 @@ class Goal(pygame.sprite.Sprite):
         if self.sprite is not None:
             screen.blit(self.sprite, (self.screen_location.x,
                                       self.screen_location.y))
+
+    def is_equal_to(self, other_goal):
+        """Compare this Goal for equality with other_goal."""
+        return (self.sprite == other_goal.sprite and
+                self.screen_location.is_equal_to(other_goal.screen_location))

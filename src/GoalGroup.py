@@ -52,3 +52,10 @@ class GoalGroup:
         # if Goals are ordered, move ptr back to start of GoalGroup
         if self.is_ordered:
             self._goal_ptr = 0
+
+    def is_equal_to(self, other_goal_group):
+        """Compare this GoalGroup for equality with other_goal_group."""
+        for i in range(0, len(self.goals)):
+            if not self.goals[i].is_equal_to(other_goal_group.goals[i]):
+                return False
+        return self.is_ordered == other_goal_group.is_ordered

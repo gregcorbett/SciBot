@@ -1,0 +1,5 @@
+pygame
+# Dependencies for testing
+unittest2
+coveralls
+mock

@@ -28,3 +28,8 @@ class Obstacle(pygame.sprite.Sprite):
         if self.sprite is not None:
             screen.blit(self.sprite, (self.screen_location.x,
                                       self.screen_location.y))
+
+    def is_equal_to(self, other_obstacle):
+        """Compare this Obstacle for equality with other_obstacle."""
+        return (self.sprite == other_obstacle.sprite and
+                self.screen_location.is_equal_to(other_obstacle.screen_location))
