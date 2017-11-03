@@ -16,7 +16,7 @@ If you wish to develop for SciBot, clone the repository and create a feature bra
 
 ### Requirements for building and developing SciBot
 
-Microsoft installers have been linked for each requirement for easy of installation.
+Microsoft installers have been linked for each requirement for ease of installation.
 
 1. Python, 3.4 or higher (https://www.python.org/downloads/)
   * exact version used in testing ( https://www.python.org/ftp/python/3.4.3/python-3.4.3.msi)
