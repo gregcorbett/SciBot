@@ -34,4 +34,5 @@ class Goal(pygame.sprite.Sprite):
     def is_equal_to(self, other_goal):
         """Compare this Goal for equality with other_goal."""
         return (self.sprite == other_goal.sprite and
+                self.has_been_met == other_goal.has_been_met and
                 self.screen_location.is_equal_to(other_goal.screen_location))
