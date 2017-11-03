@@ -2,6 +2,8 @@ img/UV/
 img/UV/*
 img/SKA/
 img/SKA/*
+img/DataHunt/
+img/DataHunt/*
 img/GAIA/
 img/GAIA/*
 
@@ -9,10 +11,13 @@ logo.png
 
 scenarios/UV.scibot
 scenarios/SKA.scibot
+scenarios/Default.scibot
+scenarios/DataHunt.scibot
 scenarios/GAIA.scibot
 
 scenarioWriters/ScenarioWriterUV.py
 scenarioWriters/ScenarioWriterSKA.py
+scenarioWriters/ScenarioWriterDataHunt.py
 scenarioWriters/ScenarioWriterGAIA.py
 
 scenarios.zip
