@@ -5,7 +5,7 @@
 contact: scibot-dev@googlegroups.com
 
 ## Users
-1. Go to https://github.com/gregcorbett/SciBot/releases/latest
+1. Go to https://github.com/stfc/SciBot/releases/latest
 2. Download runSciBot.exe and scenarios.zip into the same place
 3. Unzip scenarios.zip
 3. Run the .exe file (by double clicking it.)
