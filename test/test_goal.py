@@ -3,6 +3,7 @@ import unittest
 import pygame
 
 from src.Goal import Goal
+from src.Obstacle import Obstacle
 from src.Point import Point
 
 
@@ -54,6 +55,8 @@ class TestGoal(unittest.TestCase):
         # Create a Goal with a different sprite
         obstacle_sprite = pygame.image.load('img/Default/obstacle1.jpg')
         goal_diff_sprite = Goal(obstacle_sprite, Point(1, 1), 150)
+        # Create an Obstacle, with the same sprite to try and break the test
+        obstacle = Obstacle(goal_sprite, Point(1, 1), 150)
 
         # Check that equal goals are infact eqaul
         self.assertTrue(goal.is_equal_to(goal_copy))
@@ -63,6 +66,8 @@ class TestGoal(unittest.TestCase):
         self.assertFalse(goal.is_equal_to(met_goal))
         # Check Goals with different sprites are not equal
         self.assertFalse(goal.is_equal_to(goal_diff_sprite))
+        # Check a Goal is not equal to an Obstacle
+        self.assertFalse(goal.is_equal_to(obstacle))
 
 
 if __name__ == '__main__':
