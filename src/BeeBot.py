@@ -4,6 +4,7 @@
 from enum import Enum
 from time import sleep
 import pygame
+from src.Component import Component
 from src.CustomEvent import CustomEvent
 from src.Point import Point
 
@@ -17,23 +18,25 @@ class Heading(Enum):
     WEST = 4
 
 
-class BeeBot(pygame.sprite.Sprite):
+class BeeBot(Component):
     """This class defines the BeeBot."""
 
     def __init__(self, scenario):
         """Create a BeeBot."""
-        # Initial position of the BeeBot in terms of square on the Board.
-        self.start_logical_position = Point(
-            scenario.get_beebot_start_position())
+        # Read the sprite and assume it is the "NORTH" sprite.
+        self.original_sprite = scenario.get_beebot_sprite()
 
         # The amount the BeeBot moves.
         self.step = scenario.get_board_step()
 
-        # The BeeBot's position of the BeeBot in terms of pixels.
-        self.screen_location = self.start_logical_position.scale(self.step)
+        # Initial position of the BeeBot in terms of square on the Board.
+        self.start_logical_position = Point(
+            scenario.get_beebot_start_position())
 
-        # The BeeBot's position of the BeeBot in terms of the Board.
-        self.logical_position = self.start_logical_position.copy()
+        # Call the superclass constructor
+        super().__init__(self.original_sprite,
+                         self.start_logical_position.copy(),
+                         self.step)
 
         # Read the sprite and assume it is the "NORTH" sprite.
         self.original_sprite = scenario.get_beebot_sprite()
@@ -89,11 +92,6 @@ class BeeBot(pygame.sprite.Sprite):
     def clear_memory(self):
         """Clear the BeeBot's "memory"."""
         self.memory = []
-
-    def display(self, screen):
-        """Display the BeeBot on screen."""
-        screen.blit(self.sprite, (self.screen_location.x,
-                                  self.screen_location.y))
 
     def move_backward(self):
         """Move the BeeBot backward."""
@@ -225,6 +223,14 @@ class BeeBot(pygame.sprite.Sprite):
     def crash(self):
         """Set the sprite to be displayed to the fail sprite."""
         self.sprite = self.fail_sprite
+
+    def is_equal_to(self, other_component):
+        """Compare this BeeBot for equality with other_component."""
+        if not isinstance(other_component, BeeBot):
+            # An BeeBot can obviously never be equal to a non BeeBot
+            return False
+        # Comparing a BeeBot to another BeeBot has not yet been implemented
+        raise NotImplementedError()
 
     @classmethod
     def rotate(cls, image, angle):
