@@ -55,7 +55,48 @@ class GoalGroup:
 
     def is_equal_to(self, other_goal_group):
         """Compare this GoalGroup for equality with other_goal_group."""
-        for i in range(0, len(self.goals)):
-            if not self.goals[i].is_equal_to(other_goal_group.goals[i]):
-                return False
-        return self.is_ordered == other_goal_group.is_ordered
+        if self.is_ordered and not other_goal_group.is_ordered:
+            # Then we can return False quickly as a ordered GoalGroup is
+            # different to an unordered GoalGroup.
+            return False
+
+        if len(self.goals) is not len(other_goal_group.goals):
+            # Then we can return quickly as they are clearly not equal
+            return False
+
+        if self.is_ordered:
+            # Then we can simply check that the elements are equal in order.
+            for i in range(0, len(self.goals)):
+                if not self.goals[i].is_equal_to(other_goal_group.goals[i]):
+                    return False
+
+        else:
+            # Then to be as general as possible, for each element in self.goals
+            # we check how many times it appears in both self.goals and
+            # other_goal_group.goals. If the counts are unequal,
+            # the GoalGroups are different.
+            for i in range(0, len(self.goals)):
+                elem = self.goals[i]
+
+                # (Re)set variables to store the element counts
+                self_count = 0
+                other_count = 0
+
+                # Look for elem in self.goals
+                for j in range(0, len(self.goals)):
+                    if elem.is_equal_to(self.goals[j]):
+                        # Each time elem is present, increment counter
+                        self_count += 1
+
+                # Look for elem in other_goal_group.goals
+                for k in range(0, len(other_goal_group.goals)):
+                    if elem.is_equal_to(other_goal_group.goals[k]):
+                        # Each time elem is present, increment counter
+                        other_count += 1
+
+                # If the counters aren't equal, the GoalGroups can't be equal.
+                if self_count != other_count:
+                    return False
+
+        # If we get here, then the GoalGroups are assumed to be equal.
+        return True
