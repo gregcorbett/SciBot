@@ -13,12 +13,12 @@ class TestGoalGroup(unittest.TestCase):
     def setUp(self):
         """Create GoalGroups and Goals used in testing."""
         # Create a test sprite
-        sprite = pygame.image.load('img/Default/goal1.jpg')
+        self.sprite = pygame.image.load('img/Default/goal1.jpg')
 
         # Create Goals
-        self.goal1 = Goal(sprite, Point(1, 1), 150)
-        self.goal2 = Goal(sprite, Point(2, 2), 150)
-        self.goal3 = Goal(sprite, Point(3, 2), 150)
+        self.goal1 = Goal(self.sprite, Point(1, 1), 150)
+        self.goal2 = Goal(self.sprite, Point(2, 2), 150)
+        self.goal3 = Goal(self.sprite, Point(3, 2), 150)
 
         # Create a GoalGroup 'ordered' one way
         self.goal_group1 = GoalGroup()
