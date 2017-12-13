@@ -1,3 +1,9 @@
+========== Next Version ==========
+
+Patches, Bug Fixes and Documentation Changes:
+
+- Fix bugs in Goal and GoalGroup is_equal_to methods
+
 ========== Version 1.1.0 ==========
 
 New Features and Minor Changes:
