@@ -65,38 +65,69 @@ class GoalGroup:
             return False
 
         if self.is_ordered:
-            # Then we can simply check that the elements are equal in order.
-            for i in range(0, len(self.goals)):
-                if not self.goals[i].is_equal_to(other_goal_group.goals[i]):
-                    return False
+            # Then return the ordered check
+            return self._is_equal_to_ordered(other_goal_group)
 
-        else:
-            # Then to be as general as possible, for each element in self.goals
-            # we check how many times it appears in both self.goals and
-            # other_goal_group.goals. If the counts are unequal,
-            # the GoalGroups are different.
-            for i in range(0, len(self.goals)):
-                elem = self.goals[i]
+        # If we get here, return the unordered check
+        return self._is_equal_to_unordered(other_goal_group)
 
-                # (Re)set variables to store the element counts
-                self_count = 0
-                other_count = 0
+    def _is_equal_to_ordered(self, ordered_goal_group):
+        """
+        Compare the two GoalGroups for ordered equality.
 
-                # Look for elem in self.goals
-                for j in range(0, len(self.goals)):
-                    if elem.is_equal_to(self.goals[j]):
-                        # Each time elem is present, increment counter
-                        self_count += 1
-
-                # Look for elem in other_goal_group.goals
-                for k in range(0, len(other_goal_group.goals)):
-                    if elem.is_equal_to(other_goal_group.goals[k]):
-                        # Each time elem is present, increment counter
-                        other_count += 1
-
-                # If the counters aren't equal, the GoalGroups can't be equal.
-                if self_count != other_count:
-                    return False
+        It does not check that either GoalGroup is ordered.
+        """
+        # We can simply check that the elements are equal in order.
+        for i in range(0, len(self.goals)):
+            if not self.goals[i].is_equal_to(ordered_goal_group.goals[i]):
+                return False
 
         # If we get here, then the GoalGroups are assumed to be equal.
         return True
+
+    def _is_equal_to_unordered(self, unordered_goal_group):
+        """
+        Compare the two GoalGroups for unordered equality.
+
+        It does not check that either GoalGroup is unordered.
+        """
+        # To be as general as possible, for each element in self.goals
+        # we check how many times it appears in both self.goals and
+        # other_goal_group.goals. If the counts are unequal,
+        # the GoalGroups are different.
+        for i in range(0, len(self.goals)):
+            elem = self.goals[i]
+
+            # (Re)set variables to store the element counts
+            self_count = 0
+            other_count = 0
+
+            # Look for elem in self.goals
+            self_count = self._count_occurrences(elem)
+
+            # Look for elem in other_goal_group.goals
+            other_count = self._count_occurrences(elem, unordered_goal_group)
+
+            # If the counters aren't equal, the GoalGroups can't be equal.
+            if self_count != other_count:
+                return False
+
+        # If we get here, then the GoalGroups are assumed to be equal.
+        return True
+
+    def _count_occurrences(self, element, goal_group=None):
+        """
+        Count the number of times the element appears in a GoalGroup.
+
+        If no GoalGroup is provided, the method will check self.
+        """
+        if goal_group is None:
+            goal_group = self
+
+        count = 0
+        for j in range(0, len(goal_group.goals)):
+            if element.is_equal_to(goal_group.goals[j]):
+                # Each time elem is present, increment counter
+                count += 1
+
+        return count
