@@ -100,6 +100,30 @@ class TestGoalGroup(unittest.TestCase):
         self.assertFalse(self.goal_group1.is_equal_to(larger_goal_group),
                          "Different sized GoalGroups are equal.")
 
+    def test_is_equal_to_same_goal(self):
+        """
+        Test logically equal GoalGroups for equality.
+
+        This particular test case catches when the underlying objects
+        are different but the GoalGroups are the same.
+        """
+        # goalA is a different python object to self.goal1,
+        # but logically are the same.
+        same_goal = Goal(self.sprite, Point(1, 1), 150)
+
+        # goal_groupA is a different python object to self.goal_group1,
+        # but logically are the same.
+        same_goal_group = GoalGroup()
+        same_goal_group.add(same_goal)
+
+        # Set both GoalGroups to be un ordered
+        self.goal_group1.is_ordered = False
+        same_goal_group.is_ordered = False
+
+        # GoalGroups that are logically the same should return True
+        # when compared via is_equal_to
+        self.assertTrue(self.goal_group1, same_goal_group)
+
 
 if __name__ == '__main__':
     unittest.main()
