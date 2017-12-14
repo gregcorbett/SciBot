@@ -177,19 +177,5 @@ class TestBeeBot(unittest.TestCase):
             # in the loop is independant
             self.test_robot.reset_position()
 
-    def test_display(self):
-        """
-        Test the display method of a BeeBot.
-
-        All this really does is make sure the method executes correctly.
-        If the method call errors, the test will fail.
-        """
-        # Create a test screen to dsiplay things on
-        test_screen = pygame.display.set_mode((1500, 1500))
-
-        # Attempt to display the test BeeBot
-        self.test_robot.display(test_screen)
-
-
 if __name__ == '__main__':
     unittest.main()

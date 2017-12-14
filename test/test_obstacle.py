@@ -10,35 +10,6 @@ from src.Point import Point
 class TestObstacle(unittest.TestCase):
     """This test class unit tests the Obstacle class."""
 
-    @classmethod
-    def test_init(cls):
-        """Test the init method of the Obstacle class."""
-        _unused_obstacle = Obstacle(None, Point(0, 0), 0)
-
-    @classmethod
-    def test_display(cls):
-        """
-        Test the display method of a Obstacle.
-
-        All this really does is make sure the method executes correctly.
-        If the method call errors, the test will fail.
-        """
-        # Create a test sprite
-        sprite = pygame.image.load('img/Default/obstacle1.jpg')
-
-        # Create two test Obstacles, one with a sprite and one without
-        obstacle_with_sprite = Obstacle(sprite, Point(1, 1), 150)
-        obstacle_without_sprite = Obstacle(None, Point(1, 1), 150)
-
-        # Create a test screen to dsiplay things on
-        test_screen = pygame.display.set_mode((1500, 1500))
-
-        # Attempt to display the Obstacles with a sprite
-        obstacle_with_sprite.display(test_screen)
-
-        # Attempt to display the Obstacles without a sprite
-        obstacle_without_sprite.display(test_screen)
-
     def test_is_equal_to(self):
         """Test the is_equal_to_method."""
         # Create a test sprite
