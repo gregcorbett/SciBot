@@ -107,14 +107,16 @@ class TestGoalGroup(unittest.TestCase):
         This particular test case catches when the underlying objects
         are different but the GoalGroups are the same.
         """
-        # goalA is a different python object to self.goal1,
-        # but logically are the same.
-        same_goal = Goal(self.sprite, Point(1, 1), 150)
+        # same_goal1 is a different python object to self.goal1,
+        # but logically are the same. The same is true for same_goal2.
+        same_goal1 = Goal(self.sprite, Point(1, 1), 150)
+        same_goal2 = Goal(self.sprite, Point(2, 2), 150)
 
         # goal_groupA is a different python object to self.goal_group1,
         # but logically are the same.
         same_goal_group = GoalGroup()
-        same_goal_group.add(same_goal)
+        same_goal_group.add(same_goal1)
+        same_goal_group.add(same_goal2)
 
         # Set both GoalGroups to be un ordered
         self.goal_group1.is_ordered = False
@@ -122,7 +124,7 @@ class TestGoalGroup(unittest.TestCase):
 
         # GoalGroups that are logically the same should return True
         # when compared via is_equal_to
-        self.assertTrue(self.goal_group1, same_goal_group)
+        self.assertTrue(self.goal_group1.is_equal_to(same_goal_group))
 
 
 if __name__ == '__main__':
