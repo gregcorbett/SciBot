@@ -1,6 +1,6 @@
 """This file defines the Button class."""
 from enum import Enum
-import pygame
+from src.Icon import Icon
 
 
 class Arrow(Enum):
@@ -22,7 +22,7 @@ class Arrow(Enum):
                 (10, -40), (10, 20)]
 
 
-class Button:
+class Button(Icon):
     """This class defines an individual Button."""
 
     def __init__(self,
@@ -33,17 +33,13 @@ class Button:
                  size,  # The size of the Button
                  displayed=True):  # Display Button if True
         """Create a Button."""
-        self.text = text
-        self.text_colour = text_colour
-        self.background_colour = background_colour
-        self.screen_location = screen_location
-        self.size = size
-        self.rect = pygame.Rect(screen_location, size)
-        self.font = pygame.font.SysFont("comicsansms", 22)
-        self.swapped = False  # Keeps track of wether a Button is swapped
-        self.displayed = displayed
+        super().__init__(text,
+                         text_colour, background_colour,
+                         screen_location, size,
+                         displayed)
 
-        self.vertices = []
+        self.swapped = False  # Keeps track of wether a Button is swapped
+
         if text == 'Forward':
             self.vertices = Arrow.FORWARD.value
         elif text == 'Turn Left':
@@ -57,45 +53,6 @@ class Button:
             self.vertices = self._get_vertex_list(self.vertices,
                                                   self.rect.centerx,
                                                   self.rect.centery)
-
-    def _get_vertex_list(self, array, centerx, centery):
-        """Return usable list of vertices for pygame.draw.polygon."""
-        to_return = []
-        # For each vector
-        for i in range(0, len(array)):
-            current = array[i]
-            # Append a vertex tuple to to_return
-            to_return.append(
-                (
-                    current[0] + centerx,
-                    current[1] + centery
-                )
-            )
-        return to_return
-
-    def display(self, screen):
-        """Draw the Buttton object on screen, if self.displayed is True."""
-        if self.displayed:
-            # Draw the Button background
-            screen.fill(self.background_colour, rect=self.rect)
-
-            # If list of vectors is empty
-            if self.vertices == []:
-                # Draw the Button text
-                text = self.font.render(self.text,
-                                        True,
-                                        self.text_colour)
-
-                # Center the background and text
-                text_rect = text.get_rect()
-                text_rect.centerx = self.rect.centerx
-                text_rect.centery = self.rect.centery
-
-                # Render Button on screen
-                screen.blit(text, text_rect)
-
-            else:
-                pygame.draw.polygon(screen, self.text_colour, self.vertices)
 
     def swap_colours(self):
         """Swap the background and text / polygon colour of the Button."""
