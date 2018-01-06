@@ -33,47 +33,6 @@ class TestButton(unittest.TestCase):
                                     GameWindow.BLACK, GameWindow.WHITE,
                                     (0, 0), (10, 10))
 
-    def test_get_vertex_list(self):
-        """Test the _get_vertex_list method."""
-        input_list = [(0, 0), (5, 0), (0, -5)]
-        center_x = 10
-        center_y = 10
-
-        # _get_vertex_list(input_list, center_x, center_y) should map
-        # (0,0) of the input_list to center_x and center_y (and all other
-        # points accordingly)
-        expected_output = [(10, 10), (15, 10), (10, 5)]
-
-        # We need to use an instance of the Button class
-        # to call the _get_vertex_list method
-        output = self.test_text_button._get_vertex_list(input_list,
-                                                        center_x,
-                                                        center_y)
-
-        self.assertEqual(expected_output, output)
-
-    def test_display(self):
-        """
-        Test the display method of a Button.
-
-        All this really does is make sure the method executes correctly.
-        If the method call errors, the test will fail.
-        """
-        # Create a test screen to dsiplay things on
-        test_screen = pygame.display.set_mode((1500, 1500))
-
-        # Attempt to display the test Buttons
-        self.test_text_button.display(test_screen)
-        self.test_icon_button.display(test_screen)
-
-        # Make this Button not displayed
-        self.test_icon_button.displayed = False
-        # This will test the branch of code for when you attempt to
-        # display a non displayed Button
-        self.test_icon_button.display(test_screen)
-        # We don't have to worry about re-displaying the Button
-        # as each test case recreates the test buttons
-
     def test_swap_colours(self):
         """Test the swap_colours method."""
         # Store the original colours of the Buttons text and background
