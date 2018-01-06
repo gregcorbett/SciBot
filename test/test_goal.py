@@ -3,6 +3,7 @@ import unittest
 import pygame
 
 from src.Goal import Goal
+from src.Obstacle import Obstacle
 from src.Point import Point
 
 
@@ -13,30 +14,6 @@ class TestGoal(unittest.TestCase):
     def test_init(cls):
         """Test the init method of the Goal class."""
         _unused_goal = Goal(None, Point(0, 0), 0)
-
-    @classmethod
-    def test_display(cls):
-        """
-        Test the display method of a Goal.
-
-        All this really does is make sure the method executes correctly.
-        If the method call errors, the test will fail.
-        """
-        # Create a test sprite
-        sprite = pygame.image.load('img/Default/goal1.jpg')
-
-        # Create two test goals, one with a sprite and one without
-        goal_with_sprite = Goal(sprite, Point(1, 1), 150)
-        goal_without_sprite = Goal(None, Point(1, 1), 150)
-
-        # Create a test screen to dsiplay things on
-        test_screen = pygame.display.set_mode((1500, 1500))
-
-        # Attempt to display the goal with a sprite
-        goal_with_sprite.display(test_screen)
-
-        # Attempt to display the goal without a sprite
-        goal_without_sprite.display(test_screen)
 
     def test_is_equal_to(self):
         """Test the is_equal_to_method."""
@@ -54,6 +31,8 @@ class TestGoal(unittest.TestCase):
         # Create a Goal with a different sprite
         obstacle_sprite = pygame.image.load('img/Default/obstacle1.jpg')
         goal_diff_sprite = Goal(obstacle_sprite, Point(1, 1), 150)
+        # Create an Obstacle, with the same sprite to try and break the test
+        obstacle = Obstacle(goal_sprite, Point(1, 1), 150)
 
         # Check that equal goals are infact eqaul
         self.assertTrue(goal.is_equal_to(goal_copy))
@@ -63,6 +42,8 @@ class TestGoal(unittest.TestCase):
         self.assertFalse(goal.is_equal_to(met_goal))
         # Check Goals with different sprites are not equal
         self.assertFalse(goal.is_equal_to(goal_diff_sprite))
+        # Check a Goal is not equal to an Obstacle
+        self.assertFalse(goal.is_equal_to(obstacle))
 
 
 if __name__ == '__main__':
