@@ -33,3 +33,11 @@ Run `python setup.py py2exe`.
 
 ## Image Sources
 SciBot image sourced from: https://www.tes.co.uk/teaching-resource/bee-bot-sequence-powerpoint-6415227
+
+## A note about version numbers
+SciBot tries to use [semantic versioning](https://semver.org) with respect to the API exposed to the user by the scenario class/files.
+This means that for any given major version of the SciBot executable, all previous scenario files (that share the same major version) should continue to work as they did when the scenario file was created.
+
+As a result of this, we consider a breaking API change to be a change that prevents an older scenario file (that shares the current major version) from working as expected with the next release of SciBot. If such a change is merged, the next release would be the next major version.
+
+Changes that are not exposed to the user by the scenario class/files will not be considered breaking API changes.
