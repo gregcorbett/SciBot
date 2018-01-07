@@ -81,7 +81,7 @@ class TestButtonGroup(unittest.TestCase):
         """Test the removal_all method."""
         self.test_button_group.removal_all()
 
-        self.assertEqual(self.test_button_group.buttons, {})
+        self.assertEqual(self.test_button_group.icons, {})
 
 
 if __name__ == '__main__':
