@@ -2,7 +2,10 @@
 This file defines the Icon class.
 
 Extend this class to create Game Window Icons like the Buttons.
+
+The file also contains classes to help create symbols on those Icons.
 """
+from enum import Enum
 import pygame
 
 
@@ -27,6 +30,20 @@ class Icon():
         self.displayed = displayed
 
         self.vertices = []
+
+        if text == 'Forward':
+            self.vertices = Arrow.FORWARD.value
+        elif text == 'Turn Left':
+            self.vertices = Arrow.LEFT.value
+        elif text == 'Turn Right':
+            self.vertices = Arrow.RIGHT.value
+        elif text == 'Backward':
+            self.vertices = Arrow.BACKWARD.value
+
+        if self.vertices:
+            self.vertices = self._get_vertex_list(self.vertices,
+                                                  self.rect.centerx,
+                                                  self.rect.centery)
 
     def _get_vertex_list(self, array, center_x, center_y):
         """Return usable list of vertices for pygame.draw.polygon."""
@@ -66,3 +83,22 @@ class Icon():
 
             else:
                 pygame.draw.polygon(screen, self.text_colour, self.vertices)
+
+
+class Arrow(Enum):
+    """This class defines Enums for the arrow polygon of a Icon."""
+
+    # Array of vectors for each arrow
+    FORWARD = [(20, -20), (0, -40), (-20, -20), (-10, -20), (-10, 40),
+               (10, 40), (10, -20)]
+
+    LEFT = [(-20, -40), (-40, -20), (-20, 0), (-20, -10), (10, -10),
+            (10, 20), (-30, 20), (-30, 40), (30, 40), (30, -30),
+            (-20, -30)]
+
+    RIGHT = [(20, -40), (40, -20), (20, 0), (20, -10), (-10, -10),
+             (-10, 20), (30, 20), (30, 40), (-30, 40), (-30, -30),
+             (20, -30)]
+
+    BACKWARD = [(20, 20), (0, 40), (-20, 20), (-10, 20), (-10, -40),
+                (10, -40), (10, 20)]
