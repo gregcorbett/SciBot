@@ -43,10 +43,11 @@ class Icon():
         if self.vertices:
             self.vertices = self._get_vertex_list(self.vertices,
                                                   self.rect.centerx,
-                                                  self.rect.centery)
+                                                  self.rect.centery,
+                                                  self.size)
 
-    def _get_vertex_list(self, array, center_x, center_y):
-        """Return usable list of vertices for pygame.draw.polygon."""
+    def _get_vertex_list(self, array, center_x, center_y, size=(120, 120)):
+        """Return a translated list of vertices within the given size."""
         to_return = []
         # For each vector
         for i in range(0, len(array)):
@@ -54,8 +55,9 @@ class Icon():
             # Append a vertex tuple to to_return
             to_return.append(
                 (
-                    current[0] + center_x,
-                    current[1] + center_y
+                    # We assume all Icon shapes are originally 120x120
+                    (current[0] * size[0] / 120) + center_x,
+                    (current[1] * size[1] / 120) + center_y
                 )
             )
         return to_return
