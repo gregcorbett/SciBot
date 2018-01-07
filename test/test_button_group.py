@@ -27,19 +27,6 @@ class TestButtonGroup(unittest.TestCase):
         self.test_button_group.add(self.other_button)
         self.test_button_group.add(self.test_button)
 
-    def test_display(self):
-        """
-        Test the display method of a ButtonGroup.
-
-        All this really does is make sure the method executes correctly.
-        If the method call errors, the test will fail.
-        """
-        # Create a test screen to dsiplay things on
-        test_screen = pygame.display.set_mode((1500, 1500))
-
-        # Attempt to display the test ButtonGroup
-        self.test_button_group.display(test_screen)
-
     def test_get_named_button(self):
         """Test the get_named_button method."""
         returned_button = self.test_button_group.get_named_button("Test")
@@ -76,12 +63,6 @@ class TestButtonGroup(unittest.TestCase):
         self.test_button_group.unswap_all()
 
         self.assertFalse(button.swapped)
-
-    def test_removal_all(self):
-        """Test the removal_all method."""
-        self.test_button_group.removal_all()
-
-        self.assertEqual(self.test_button_group.icons, {})
 
 
 if __name__ == '__main__':
