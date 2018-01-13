@@ -8,9 +8,14 @@ class IconGroup:
         """Create an empty IconGroup."""
         self.icons = {}  # The underlying Icon objects
 
-    def add(self, icon):
-        """Add a Icon to the IconGroup."""
-        self.icons[icon.text] = icon
+    def add(self, icon, key=None):
+        """Add a Icon to the IconGroup, possibly using the provided key."""
+        if key is None:
+            # Use the Icon text as the dictionary key.
+            self.icons[icon.text] = icon
+        else:
+            # Use the provided key as the dictionary key.
+            self.icons[key] = icon
 
     def display(self, screen):
         """Draw all Icon objects in the IconGroup."""
