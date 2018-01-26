@@ -29,21 +29,30 @@ class Icon():
         self.font = pygame.font.SysFont("comicsansms", 22)
         self.displayed = displayed
 
-        self.vertices = []
-
-        if text == 'Forward':
-            self.vertices = Arrow.FORWARD.value
-        elif text == 'Turn Left':
-            self.vertices = Arrow.LEFT.value
-        elif text == 'Turn Right':
-            self.vertices = Arrow.RIGHT.value
-        elif text == 'Backward':
-            self.vertices = Arrow.BACKWARD.value
+        self.vertices = self._text_to_shape(self.text)
 
         if self.vertices:
             self.vertices = self._get_vertex_list(self.vertices,
                                                   self.rect.center,
                                                   self.size)
+
+    @classmethod
+    def _text_to_shape(cls, text):
+        """Return an Icon shape based on the provided text."""
+        # A dictionary mapping text to Icon shapes
+        shape_dict = {
+            "Forward": Arrow.FORWARD.value,
+            "Turn Left": Arrow.LEFT.value,
+            "Turn Right": Arrow.RIGHT.value,
+            "Backward": Arrow.BACKWARD.value,
+        }
+
+        try:
+            return shape_dict[text]
+        except KeyError:
+            # If the text is not in the shape_dict, return an empty list as
+            # the text doesn't correspond to any Icon shape.
+            return []
 
     def _get_vertex_list(self, array, center, size=(120, 120)):
         """Return a translated list of vertices within the given size."""
