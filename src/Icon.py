@@ -42,11 +42,10 @@ class Icon():
 
         if self.vertices:
             self.vertices = self._get_vertex_list(self.vertices,
-                                                  self.rect.centerx,
-                                                  self.rect.centery,
+                                                  self.rect.center,
                                                   self.size)
 
-    def _get_vertex_list(self, array, center_x, center_y, size=(120, 120)):
+    def _get_vertex_list(self, array, center, size=(120, 120)):
         """Return a translated list of vertices within the given size."""
         to_return = []
         # For each vector
@@ -56,8 +55,8 @@ class Icon():
             to_return.append(
                 (
                     # We assume all Icon shapes are originally 120x120
-                    (current[0] * size[0] / 120) + center_x,
-                    (current[1] * size[1] / 120) + center_y
+                    (current[0] * size[0] / 120) + center[0],
+                    (current[1] * size[1] / 120) + center[1]
                 )
             )
         return to_return
