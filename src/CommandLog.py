@@ -13,6 +13,12 @@ class CommandLog(IconGroup):
         self.screen_location = screen_location
         # This is the size of the CommandLog.
         self.size = size
+        # The Icon's size will be equal to the minimum dimension of
+        # this CommandLog. This will allow Icon's to stack regardless
+        # of wether the CommandLog is "veritcal" or "horizontal".
+        self.horizontal = self.size[0] > self.size[1]
+        minimum_dimension = min(self.size[0], self.size[1])
+        self.icon_size = (minimum_dimension, minimum_dimension)
         super().__init__()
 
     def update(self, beebot_memory):
@@ -24,51 +30,44 @@ class CommandLog(IconGroup):
         if len(self.icons) != len(beebot_memory):
             # We need to rebuild the CommandLog, so we must clear it first.
             self.removal_all()
+            # Rebild the CommandLog
+            self._convert_memory_to_icons(beebot_memory)
 
-            # The location to draw the first Icon in the CommandLog.
-            location = self.screen_location
+    def _convert_memory_to_icons(self, beebot_memory):
+        """Convert the BeeBot memory into Icons."""
+        # The location to draw the first Icon in the CommandLog.
+        location = self.screen_location
 
-            # The Icon's size will be equal to the minimum dimension of
-            # this CommandLog. This will allow Icon's to stack regardless
-            # of wether the CommandLog is "veritcal" or "horizontal".
-            horizontal = self.size[0] > self.size[1]
-            if horizontal:
-                # Then the minimum dimension is the height
-                minimum_dimension = self.size[1]
+        for index, entry in enumerate(beebot_memory):
+            # Convert Events into Icon Arrows.
+            text = self._event_type_to_text(entry.type)
+            # Create a new Icon
+            tmp_log = Icon(text, (0, 0, 0), (255, 255, 255),
+                           location, self.icon_size)
+
+            # Add the Icon to the CommandLog.
+            # We need to provide a key here because instances of CommandLog
+            # will have multiple Icons with the same text (i.e.
+            # "Forward", "Backward", "Turn Left", "Turn Right")
+            # that would otherwise override each other.
+            self.add(tmp_log, key=index)
+
+            if self.horizontal:
+                # Make the next Icon appear right of the current one.
+                location = (location[0] + self.icon_size[0], location[1])
             else:
-                # Then the minimum dimension is the width
-                minimum_dimension = self.size[0]
+                # Make the next Icon appear below the current one.
+                location = (location[0], location[1] + self.icon_size[1])
 
-            icon_size = (minimum_dimension, minimum_dimension)
+    @classmethod
+    def _event_type_to_text(cls, event_type):
+        """Return text based on the provided event type."""
+        # A dictionary mapping event_types to text
+        event_type_dict = {
+            CustomEvent.MOVE_BEEBOT_UP: "Forward",
+            CustomEvent.MOVE_BEEBOT_LEFT: "Turn Left",
+            CustomEvent.MOVE_BEEBOT_RIGHT: "Turn Right",
+            CustomEvent.MOVE_BEEBOT_DOWN: "Backward",
+        }
 
-            for index, entry in enumerate(beebot_memory):
-                # Convert Events into Icon Arrows.
-                if entry.type == CustomEvent.MOVE_BEEBOT_UP:
-                    text = "Forward"
-
-                if entry.type == CustomEvent.MOVE_BEEBOT_DOWN:
-                    text = "Backward"
-
-                if entry.type == CustomEvent.MOVE_BEEBOT_LEFT:
-                    text = "Turn Left"
-
-                if entry.type == CustomEvent.MOVE_BEEBOT_RIGHT:
-                    text = "Turn Right"
-
-                # Create a new Icon
-                tmp_log = Icon(text, (0, 0, 0), (255, 255, 255),
-                               location, icon_size)
-
-                # Add the Icon to the CommandLog.
-                # We need to provide a key here because instances of CommandLog
-                # will have multiple Icons with the same text (i.e.
-                # "Forward", "Backward", "Turn Left", "Turn Right")
-                # that would otherwise override each other.
-                self.add(tmp_log, key=index)
-
-                if horizontal:
-                    # Make the next Icon appear right of the current one.
-                    location = (location[0] + icon_size[0], location[1])
-                else:
-                    # Make the next Icon appear below the current one.
-                    location = (location[0], location[1] + icon_size[1])
+        return event_type_dict[event_type]
