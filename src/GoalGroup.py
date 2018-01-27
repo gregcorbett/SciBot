@@ -25,8 +25,10 @@ class GoalGroup:
         # GoalGroup must be ordered for there to be a current goal
         if self.is_ordered:
             return self.goals[self._goal_ptr]
-        else:
-            raise NotImplementedError
+
+        # Raised if called on an unordered GoalGroup
+        # This method has no meaning under such circumstances
+        raise ValueError("Cannot call method on unordered GoalGroup.")
 
     def increment_pointer(self):
         """If Goal's are ordered, increment the current goal."""
@@ -36,7 +38,7 @@ class GoalGroup:
         else:
             # Raised if called on an unordered GoalGroup
             # This method has no meaning under such circumstances
-            raise ValueError("GoalGroup not ordered.")
+            raise ValueError("Cannot call method on unordered GoalGroup.")
 
     def have_all_goals_been_met(self):
         """True iff all the Goal objects in the GoalGroup have been met."""
