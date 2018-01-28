@@ -30,6 +30,114 @@ class TestGoalGroup(unittest.TestCase):
         self.goal_group2.add(self.goal2)
         self.goal_group2.add(self.goal1)
 
+    def test_add(self):
+        """Test the add method in isolation."""
+        # Create an empty GoalGroup for this test.
+        new_goal_group = GoalGroup()
+
+        # Add some Goals to it.
+        new_goal_group.add(self.goal1)
+        new_goal_group.add(self.goal2)
+
+        # Assert we have added 2 goals.
+        self.assertEqual(len(new_goal_group.goals), 2)
+        # Assert they are the right goals.
+        self.assertTrue(new_goal_group.goals[0].is_equal_to(self.goal1))
+        self.assertTrue(new_goal_group.goals[1].is_equal_to(self.goal2))
+
+    def test_display(self):
+        """
+        Test the display method of a GaolGroup.
+
+        All this really does is make sure the method executes correctly.
+        If the method call errors, the test will fail.
+        """
+        # Create a test screen to dsiplay things on.
+        test_screen = pygame.display.set_mode((1500, 1500))
+
+        # Attempt to display the test GoalGroup.
+        self.goal_group1.display(test_screen)
+
+    def test_get_current_goal(self):
+        """Test get_current_goal() for ordered and unordered GoalGroups."""
+        # Set the test GoalGroup to be ordered.
+        self.goal_group1.is_ordered = True
+        current_goal = self.goal_group1.get_current_goal()
+
+        self.assertTrue(current_goal.is_equal_to(self.goal1))
+
+        # Now attempt the test with an unordered GoalGroups.
+        self.goal_group1.is_ordered = False
+
+        # Calling get_current_goal has no meaning for unordered GoalGroups.
+        self.assertRaises(ValueError, self.goal_group1.get_current_goal)
+
+    def test_increment_pointer(self):
+        """Test increment_pointer() for ordered and unordered GoalGroups."""
+        # Set the test GoalGroup to be ordered.
+        self.goal_group1.is_ordered = True
+
+        # Increment the pointer to point at the second Goal.
+        self.goal_group1.increment_pointer()
+
+        # Assert the new current goal is the second Goal.
+        current_goal = self.goal_group1.get_current_goal()
+        self.assertTrue(current_goal.is_equal_to(self.goal2))
+
+        # Now attempt the test with an unordered GoalGroups.
+        self.goal_group1.is_ordered = False
+
+        # Calling increment_pointer has no meaning for unordered GoalGroups.
+        self.assertRaises(ValueError, self.goal_group1.increment_pointer)
+
+    def test_have_all_goals_been_met(self):
+        """Test have_all_goals_been_met returns correctly."""
+        # Set the two Goals to be not met.
+        self.goal_group1.goals[0].has_been_met = False
+        self.goal_group1.goals[1].has_been_met = False
+        # Assert not all the Goals have been met.
+        self.assertFalse(self.goal_group1.have_all_goals_been_met())
+
+        # Set one Goal to be met.
+        self.goal_group1.goals[0].has_been_met = True
+        self.goal_group1.goals[1].has_been_met = False
+        # Assert not all the Goals have been met.
+        self.assertFalse(self.goal_group1.have_all_goals_been_met())
+
+        # Set both Goals to be met.
+        self.goal_group1.goals[0].has_been_met = True
+        self.goal_group1.goals[1].has_been_met = True
+        # Assert all the Goals have been met.
+        self.assertTrue(self.goal_group1.have_all_goals_been_met())
+
+    def test_reset_all_goals(self):
+        """Test reset_all_goals() for ordered and unordered GoalGroups."""
+        # First test the method on ordered GoalGroups.
+        self.goal_group1.is_ordered = True
+
+        # Set a Goal to be met
+        self.goal_group1.goals[0].has_been_met = False
+        self.goal_group1.goals[1].has_been_met = True
+
+        # Call reset_all_goals() to reset the Goals.
+        self.goal_group1.reset_all_goals()
+
+        # Assert the previously met Goals are now un met.
+        self.assertFalse(self.goal_group1.goals[1].has_been_met)
+
+        # Now test the method on unordered GoalGroups.
+        self.goal_group1.is_ordered = False
+
+        # Set a Goal to be met
+        self.goal_group1.goals[0].has_been_met = False
+        self.goal_group1.goals[1].has_been_met = True
+
+        # Call reset_all_goals() to reset the Goals.
+        self.goal_group1.reset_all_goals()
+
+        # Assert the previously met Goals are now un met.
+        self.assertFalse(self.goal_group1.goals[1].has_been_met)
+
     def test_is_equal_to_eq_unord(self):
         """Test two equal unordered GoalGroups for equality."""
         # Set the GoalGroups to unordered
