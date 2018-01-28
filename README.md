@@ -5,10 +5,12 @@
 contact: scibot-dev@googlegroups.com
 
 ## Users
+The primary method to run SciBot is via the `runSciBot.exe`.
+
 1. Go to https://github.com/stfc/SciBot/releases/latest
-2. Download runSciBot.exe and scenarios.zip into the same place
-3. Unzip scenarios.zip
-3. Run the .exe file (by double clicking it.)
+2. Download `runSciBot.exe` and `scenarios.zip` into the same place
+3. Unzip `scenarios.zip`
+4. Run `runSciBot.exe` (by double clicking it.)
 
 ## Developers
 If you wish to develop for SciBot, clone the repository and create a feature branch off of develop. Once your feature is ready, make a Pull Request back into develop. SciBot is written in Python 3, hence you will need to install the Python interpreter first. We recommend using [Python 3.6](https://www.python.org/ftp/python/3.6.4/python-3.6.4.exe).
