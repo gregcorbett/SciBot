@@ -1,25 +1,17 @@
 """This file defines the ObstacleGroup class."""
 
+from src.ComponentGroup import ComponentGroup
 
-class ObstacleGroup:
+
+class ObstacleGroup(ComponentGroup):
     """This class defines a store for all the goals used."""
 
-    def __init__(self):
-        """Create an empty ObstacleGroup."""
-        self.obstacles = []  # The underlying Goal objects
+    def is_equal_to(self, other_component_group):
+        """Compare this ObstacleGroup is equal to other_component_group."""
+        if not isinstance(other_component_group, ObstacleGroup):
+            # An ObstacleGroup can obviously never
+            # be equal to a non ObstacleGroup.
+            return False
 
-    def add(self, obstacle):
-        """Add a Obstacle to the ObstacleGroup."""
-        self.obstacles.append(obstacle)
-
-    def display(self, screen):
-        """Draw all Obstacle objects in the ObstacleGroup."""
-        for obstacle in self.obstacles:
-            obstacle.display(screen)
-
-    def is_equal_to(self, other_obstacle_group):
-        """Compare this ObstacleGroup for equality with other_obstacle_group."""
-        for i in range(0, len(self.obstacles)):
-            if not self.obstacles[i].is_equal_to(other_obstacle_group.obstacles[i]):
-                return False
-        return True
+        # If we get here, use the base ComponentGroup comparison.
+        return super().is_equal_to(other_component_group)

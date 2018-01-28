@@ -647,7 +647,7 @@ class GameWindow(Thread):
     def check_for_obstacle_collisions(self):
         """Check if the BeeBot is currently on a Obstacle."""
         # If so, push a CustomEvent.RUN_FAIL.
-        for obstacle in self.board.obstacle_group.obstacles:
+        for obstacle in self.board.obstacle_group.components:
             if self.robot.logical_position.is_equal_to(obstacle.logical_position):
                 self.fail_run()
 
