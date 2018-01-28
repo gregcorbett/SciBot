@@ -24,6 +24,9 @@ class TestObstacleGroup(unittest.TestCase):
         self.obstacle_group1.add(self.obstacle1)
         self.obstacle_group1.add(self.obstacle2)
 
+    def test_is_equal_non_component(self):
+        """Check an ObstacleGroup is different from a non ObstacleGroup."""
+        self.assertFalse(self.obstacle_group1.is_equal_to(2))
 
 
 if __name__ == '__main__':

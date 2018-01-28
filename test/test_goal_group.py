@@ -157,6 +157,10 @@ class TestGoalGroup(unittest.TestCase):
         self.assertFalse(self.goal_group1.is_equal_to(larger_goal_group),
                          "Different sized GoalGroups are equal.")
 
+    def test_is_equal_non_component(self):
+        """Check an GoalGroup is different from a non GoalGroup."""
+        self.assertFalse(self.goal_group1.is_equal_to(2))
+
 
 if __name__ == '__main__':
     unittest.main()
