@@ -581,7 +581,7 @@ class GameWindow(Thread):
                 self.board.goal_group.increment_pointer()
 
         else:
-            for goal in self.board.goal_group.goals:
+            for goal in self.board.goal_group.components:
                 if self.robot.logical_position.is_equal_to(goal.logical_position):
                     goal.has_been_met = True
 
