@@ -74,12 +74,7 @@ class TestObstacleGroup(unittest.TestCase):
         self.assertTrue(self.obstacle_group1.is_equal_to(equal_obstacle_group))
 
         # Assert the 'differently ordered' ObstacleGroups are equal.
-        # There is a bug in ObstacleGroup.is_equal_to that means the comparison
-        # is infact dependant on order, so currently this assert fails.
-        # This bug will be fixed by using the ComponentGroup class
-        # which will use a similar comparison method to the currently
-        # GoalGroup class.
-        # self.assertTrue(self.obstacle_group1.is_equal_to(self.obstacle_group2))
+        self.assertTrue(self.obstacle_group1.is_equal_to(self.obstacle_group2))
 
 
 if __name__ == '__main__':
