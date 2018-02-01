@@ -581,7 +581,7 @@ class GameWindow(Thread):
                 self.board.goal_group.increment_pointer()
 
         else:
-            for goal in self.board.goal_group.goals:
+            for goal in self.board.goal_group.components:
                 if self.robot.logical_position.is_equal_to(goal.logical_position):
                     goal.has_been_met = True
 
@@ -647,7 +647,7 @@ class GameWindow(Thread):
     def check_for_obstacle_collisions(self):
         """Check if the BeeBot is currently on a Obstacle."""
         # If so, push a CustomEvent.RUN_FAIL.
-        for obstacle in self.board.obstacle_group.obstacles:
+        for obstacle in self.board.obstacle_group.components:
             if self.robot.logical_position.is_equal_to(obstacle.logical_position):
                 self.fail_run()
 

@@ -2,8 +2,9 @@
 
 Patches, Bug Fixes and Documentation Changes:
 
-- Fix bugs in Goal and GoalGroup is_equal_to methods
+- Add subclasses for all game components (such as Obstacles, Goals, etc) and groups of components to extend
 - Add subclasses for all game icons (such as Buttons) and groups of icons to extend
+- Fix bugs in Component and ComponentGroups is_equal_to methods
 - Add documentation explaining what an incompatible/breaking API change is
 
 ========== Version 1.1.0 ==========
