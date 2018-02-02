@@ -25,5 +25,10 @@ scenarios.zip
 *.pyc
 *Thumbs.db
 
+build/
+dist/
+
+runSciBot.spec
+
 runSciBot.log
 runSciBot.exe

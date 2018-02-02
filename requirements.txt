@@ -3,3 +3,5 @@ pygame
 unittest2
 coveralls
 mock
+# Dependencies for building
+pyinstaller

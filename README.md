@@ -5,31 +5,27 @@
 contact: scibot-dev@googlegroups.com
 
 ## Users
+The primary method to run SciBot is via the `runSciBot.exe`.
+
 1. Go to https://github.com/stfc/SciBot/releases/latest
-2. Download runSciBot.exe and scenarios.zip into the same place
-3. Unzip scenarios.zip
-3. Run the .exe file (by double clicking it.)
+2. Download `runSciBot.exe` and `scenarios.zip` into the same place
+3. Unzip `scenarios.zip`
+4. Run `runSciBot.exe` (by double clicking it.)
 
 ## Developers
+If you wish to develop for SciBot, clone the repository and create a feature branch off of develop. Once your feature is ready, make a Pull Request back into develop. SciBot is written in Python 3, hence you will need to install the Python interpreter first. We recommend using [Python 3.6](https://www.python.org/ftp/python/3.6.4/python-3.6.4.exe).
 
-If you wish to develop for SciBot, clone the repository and create a feature branch off of develop. Once your feature is ready, make a Pull Request back into develop.
+### Requirements for developing, testing and building SciBot
+To install SciBot's requirements, run the following command:
+```
+pip install -r requirements.txt
+```
 
-### Requirements for building and developing SciBot
-
-Microsoft installers have been linked for each requirement for ease of installation.
-
-1. Python, 3.4 or higher (https://www.python.org/downloads/)
-  * exact version used in testing ( https://www.python.org/ftp/python/3.4.3/python-3.4.3.msi)
-2. Pygame, 1.9.2 or higher (https://bitbucket.org/pygame/pygame/downloads)
-  * exact version used in testing (https://bitbucket.org/pygame/pygame/downloads/pygame-1.9.2a0-hg_ea3b3bb8714a.win32-py3.4.msi)
-3. py2exe 0.9.2.2 (https://pypi.python.org/pypi/py2exe/)
-  * exact version used in testing (https://pypi.python.org/packages/any/p/py2exe/py2exe-0.9.2.2.win32.exe)
-
-### Building the exe file
-
-After the requirements above are met, open a command line and navigate to the unzipped directory.
-
-Run `python setup.py py2exe`.
+### Building the runSciBot.exe file
+If you wish to build a new `runSciBot.exe` file, run the following command:
+```
+pyinstaller -F runSciBot.py
+```
 
 ## Image Sources
 SciBot image sourced from: https://www.tes.co.uk/teaching-resource/bee-bot-sequence-powerpoint-6415227
