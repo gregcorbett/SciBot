@@ -1,5 +1,5 @@
 """This file defines the Button class."""
-from src.Icon import Icon, Arrow
+from src.Icon import Icon
 
 
 class Button(Icon):
