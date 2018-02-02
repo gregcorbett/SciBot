@@ -3,6 +3,7 @@
 New Features and Minor Changes:
 
 - Add a display for commands programmed into the BeeBot
+- Increase supported Python versions to 3.6+
 
 Patches, Bug Fixes and Documentation Changes:
 
