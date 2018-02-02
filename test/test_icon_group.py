@@ -27,6 +27,25 @@ class TestIconGroup(unittest.TestCase):
         self.test_icon_group.add(self.other_icon)
         self.test_icon_group.add(self.test_icon)
 
+    def test_add(self):
+        """
+        Test the add method when it uses a specific key.
+
+        The default key behaviour is tested indirectly in setUp().
+        """
+        new_icon = Icon("New", (0, 0, 0), (255, 255, 255),
+                        (30, 30), (10, 10))
+
+        # Add new_icon to the test_icon_group, but use a specific key.
+        self.test_icon_group.add(new_icon, key="Old")
+
+        # Assert the new_icon was stored under the correct key.
+        self.assertIs(self.test_icon_group.icons["Old"], new_icon)
+        # Assert that there is nothing stored under the "New" key,
+        # which is what would happen if new_icon
+        # was added with no specific key.
+        self.assertFalse("New" in self.test_icon_group.icons.keys())
+
     def test_display(self):
         """
         Test the display method of a IconGroup.

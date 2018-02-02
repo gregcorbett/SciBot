@@ -31,8 +31,7 @@ class TestIcon(unittest.TestCase):
     def test_get_vertex_list(self):
         """Test the _get_vertex_list method."""
         input_list = [(0, 0), (5, 0), (0, -5)]
-        center_x = 10
-        center_y = 10
+        center = (10, 10)
 
         # _get_vertex_list(input_list, center_x, center_y) should map
         # (0,0) of the input_list to center_x and center_y (and all other
@@ -41,9 +40,7 @@ class TestIcon(unittest.TestCase):
 
         # We need to use an instance of the Icon class
         # to call the _get_vertex_list method
-        output = self.test_text_icon._get_vertex_list(input_list,
-                                                      center_x,
-                                                      center_y)
+        output = self.test_text_icon._get_vertex_list(input_list, center)
 
         self.assertEqual(expected_output, output)
 

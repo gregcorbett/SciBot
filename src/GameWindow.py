@@ -14,6 +14,7 @@ from src.BeeBot import BeeBot
 from src.Board import Board
 from src.Button import Button
 from src.ButtonGroup import ButtonGroup
+from src.CommandLog import CommandLog
 from src.CustomEvent import CustomEvent
 from src.Scenario import Scenario
 from src import __version__
@@ -76,6 +77,9 @@ class GameWindow(Thread):
         # All Buttons to display
         self.buttons = ButtonGroup()
 
+        # Create an empty CommandLog
+        self.command_log = None
+
         # The logo to display on screen
         self.logo = None
 
@@ -128,6 +132,10 @@ class GameWindow(Thread):
 
                 # Display any Buttons
                 self.buttons.display(self.screen)
+
+                # Update and refresh the CommandLog
+                self.command_log.update(self.robot.memory)
+                self.command_log.display(self.screen)
 
                 # Update display
                 pygame.display.update()
@@ -308,9 +316,19 @@ class GameWindow(Thread):
         self.create_buttons(buttons_on_the_left)
 
         if buttons_on_the_left:
-            self.size = (self.width + 400, self.height)
+            # Make space for:
+            # - the Buttons to the right of the map.
+            # - the CommandLog below the map.
+            self.size = (self.width + 400, self.height + 30)
+            # Create the empty CommandLog
+            self.command_log = CommandLog((0, self.height), (self.width, 30))
         else:
-            self.size = (self.width, self.height + 400)
+            # Make space for:
+            # - the Buttons below the map.
+            # - the CommandLog to the right of the map.
+            self.size = (self.width + 30, self.height + 400)
+            # Create the empty CommandLog
+            self.command_log = CommandLog((self.width, 0), (30, self.height))
 
         # Only want to do this once, so sadly can't do it in the rendering
         # loop without a potential race condition as
