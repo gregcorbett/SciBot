@@ -29,3 +29,19 @@ class Point():
     def copy(self):
         """Return a copy of this Point object."""
         return Point(self.x, self.y)
+
+    def __add__(self, other_point):
+        """Add two Point objects coordinate by coordinate."""
+        return (self.x + other_point.x, self.y + other_point.y)
+
+    def __sub__(self, other_point):
+        """Subtract two Point objects coordinate by coordinate."""
+        return Point(self[0] - other_point[0], self[1] - other_point[1])
+
+    def __mul__(self, other_point):
+        """Multiply two Point objects coordinate by coordinate."""
+        return (self.x * other_point.x, self.y * other_point.y)
+
+    def __truediv__(self, other_point):
+        """Divide two Point objects coordinate by coordinate."""
+        return (self.x / other_point.x, self.y / other_point.y)
