@@ -98,54 +98,54 @@ class BeeBot(Component):
         # The origin is in the top left corner
         if self.heading == Heading.SOUTH:
             for _ in range(0, self.step):
-                self.screen_location.y = self.screen_location.y - 1
+                self.screen_location = self.screen_location - (0, 1)
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position.y = self.logical_position.y - 1
+            self.logical_position = self.logical_position - (0, 1)
 
         elif self.heading == Heading.WEST:
             for _ in range(0, self.step):
-                self.screen_location.x = self.screen_location.x + 1
+                self.screen_location = self.screen_location + (1, 0)
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position.x = self.logical_position.x + 1
+            self.logical_position = self.logical_position + (1, 0)
 
         elif self.heading == Heading.NORTH:
             for _ in range(0, self.step):
-                self.screen_location.y = self.screen_location.y + 1
+                self.screen_location = self.screen_location + (0, 1)
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position.y = self.logical_position.y + 1
+            self.logical_position = self.logical_position + (0, 1)
 
         elif self.heading == Heading.EAST:
             for _ in range(0, self.step):
-                self.screen_location.x = self.screen_location.x - 1
+                self.screen_location = self.screen_location - (1, 0)
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position.x = self.logical_position.x - 1
+            self.logical_position = self.logical_position - (1, 0)
 
     def move_forward(self):
         """Move the BeeBot forward."""
         # The origin is in the top left corner
         if self.heading == Heading.NORTH:
             for _ in range(0, self.step):
-                self.screen_location.y = self.screen_location.y - 1
+                self.screen_location = self.screen_location - (0, 1)
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position.y = self.logical_position.y - 1
+            self.logical_position = self.logical_position - (0, 1)
 
         elif self.heading == Heading.EAST:
             for _ in range(0, self.step):
-                self.screen_location.x = self.screen_location.x + 1
+                self.screen_location = self.screen_location + (1, 0)
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position.x = self.logical_position.x + 1
+            self.logical_position = self.logical_position + (1, 0)
 
         elif self.heading == Heading.SOUTH:
             for _ in range(0, self.step):
-                self.screen_location.y = self.screen_location.y + 1
+                self.screen_location = self.screen_location + (0, 1)
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position.y = self.logical_position.y + 1
+            self.logical_position = self.logical_position + (0, 1)
 
         elif self.heading == Heading.WEST:
             for _ in range(0, self.step):
-                self.screen_location.x = self.screen_location.x - 1
+                self.screen_location = self.screen_location - (1, 0)
                 sleep(0.01)  # sleep prevents the BeeBot moving too quickly
-            self.logical_position.x = self.logical_position.x - 1
+            self.logical_position = self.logical_position - (1, 0)
 
     def move_right(self):
         """Turn the BeeBot right."""
