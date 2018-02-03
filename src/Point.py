@@ -1,7 +1,7 @@
 """This file defines a 2D Point class."""
 
 
-class Point():
+class Point(tuple):
     """
     This class defines an individual 2D Point.
 
@@ -9,14 +9,24 @@ class Point():
     for that a tuple should be used.
     """
 
-    def __init__(self, x, y=None):
+    def __new__(cls, x, y=None):
         """Define a 2D point."""
-        if y is None:  # then assume we were passed a tuple
-            self.x = x[0]
-            self.y = x[1]
-        else:
-            self.x = x
-            self.y = y
+        if y is None:
+            # then assume we were passed a tuple
+            return super().__new__(cls, x)
+
+        # Otherwise we assume we were passed two numbers.
+        return super().__new__(cls, (x, y))
+
+    @property
+    def x(self):
+        """Access the x coordinate."""
+        return self[0]
+
+    @property
+    def y(self):
+        """Access the y coordinate."""
+        return self[1]
 
     def is_equal_to(self, other_point):
         """True if both x and y are equal in self and other_point."""
@@ -32,16 +42,28 @@ class Point():
 
     def __add__(self, other_point):
         """Add two Point objects coordinate by coordinate."""
-        return (self.x + other_point.x, self.y + other_point.y)
+        if isinstance(other_point, tuple):
+            return Point(self[0] + other_point[0], self[1] + other_point[1])
+
+        return NotImplemented
 
     def __sub__(self, other_point):
         """Subtract two Point objects coordinate by coordinate."""
-        return Point(self[0] - other_point[0], self[1] - other_point[1])
+        if isinstance(other_point, tuple):
+            return Point(self[0] - other_point[0], self[1] - other_point[1])
+
+        return NotImplemented
 
     def __mul__(self, other_point):
         """Multiply two Point objects coordinate by coordinate."""
-        return (self.x * other_point.x, self.y * other_point.y)
+        if isinstance(other_point, tuple):
+            return Point(self[0] * other_point[0], self[1] * other_point[1])
+
+        return NotImplemented
 
     def __truediv__(self, other_point):
         """Divide two Point objects coordinate by coordinate."""
-        return (self.x / other_point.x, self.y / other_point.y)
+        if isinstance(other_point, tuple):
+            return Point(self[0] / other_point[0], self[1] / other_point[1])
+
+        return NotImplemented
