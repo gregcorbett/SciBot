@@ -73,18 +73,22 @@ class Board(Component):
         # Draw lines over Board background image
         if self.border_colour is not None:
             for iter_width in range(0, self.board_width + 1, self.step):
-                pygame.draw.line(screen,
-                                 self.border_colour,
-                                 (iter_width, 0),
-                                 (iter_width, self.board_height),
-                                 5)
+
+                line_start = Point(iter_width, 0)
+                line_end = Point(iter_width, self.board_height)
+
+                # Draw a line from line_start to line_end.
+                pygame.draw.line(screen, self.border_colour,
+                                 line_start, line_end, 5)
 
             for iter_height in range(0, self.board_height + 1, self.step):
-                pygame.draw.line(screen,
-                                 self.border_colour,
-                                 (0, iter_height),
-                                 (self.board_width, iter_height),
-                                 5)
+
+                line_start = Point(0, iter_height)
+                line_end = Point(self.board_width, iter_height)
+
+                # Draw a line from line_start to line_end.
+                pygame.draw.line(screen, self.border_colour,
+                                 line_start, line_end, 5)
 
     def is_equal_to(self, other_component):
         """Compare this Board for equality with other_component."""
