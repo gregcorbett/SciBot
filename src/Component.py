@@ -20,7 +20,7 @@ class Component(pygame.sprite.Sprite):
         self.sprite = sprite
 
         # The position of the Component in terms of squares on the screen
-        self.logical_position = start_logical_position
+        self.logical_position = start_logical_position.copy()
 
         # The position of the Goal in terms pixels
         self.screen_location = start_logical_position.scale(step)
@@ -31,8 +31,7 @@ class Component(pygame.sprite.Sprite):
     def display(self, screen):
         """Draw the Component object on screen, if it has a sprite."""
         if self.sprite is not None:
-            screen.blit(self.sprite, (self.screen_location.x,
-                                      self.screen_location.y))
+            screen.blit(self.sprite, self.screen_location)
 
     def is_equal_to(self, other_component):
         """Compare this Component for equality with other_component."""
