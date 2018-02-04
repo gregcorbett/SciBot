@@ -2,7 +2,12 @@
 
 
 class Point():
-    """This class defines an individual 2D Point."""
+    """
+    This class defines an individual 2D Point.
+
+    The point class should not be used for 2D dimensions like size,
+    for that a tuple should be used.
+    """
 
     def __init__(self, x, y=None):
         """Define a 2D point."""
