@@ -599,13 +599,17 @@ class GameWindow(Thread):
         if self.board.goal_group.is_ordered:
             goal = self.board.goal_group.get_current_goal()
             if self.robot.logical_position.is_equal_to(goal.logical_position):
-                goal.has_been_met = True
+                goal.complete()
+                if goal.should_increment_beebot_sprite:
+                    self.robot.increment_sprite()
                 self.board.goal_group.increment_pointer()
 
         else:
             for goal in self.board.goal_group.components:
                 if self.robot.logical_position.is_equal_to(goal.logical_position):
-                    goal.has_been_met = True
+                    goal.complete()
+                    if goal.should_increment_beebot_sprite:
+                        self.robot.increment_sprite()
 
         if self.board.goal_group.have_all_goals_been_met():
             # clear any remaining events
@@ -730,7 +734,7 @@ class GameWindow(Thread):
             self.store_movement('Backward')
 
         if button.text == 'Reset':
-            # Reset the BeeBots position and the met status of the goals
+            # Reset the BeeBots position and the completed status of the Goals.
             self.robot.reset_position()
             self.board.goal_group.reset_all_goals()
 
@@ -760,7 +764,7 @@ class GameWindow(Thread):
         if event.key == pygame.K_RIGHT:
             self.store_movement('Right')
         # if the event is the space bar,
-        # reset the BeeBot's position and clears any met goals.
+        # reset the BeeBot's position and clears any completed Goals.
         # it doesn't clear the memory!
         if event.key == pygame.K_SPACE:
             self.robot.reset_position()

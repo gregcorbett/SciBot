@@ -12,12 +12,12 @@ class TestObstacleGroup(unittest.TestCase):
 
     def setUp(self):
         """Create ObstacleGroups and Obstacles used in testing."""
-        # Create a test sprite.
-        self.sprite = pygame.image.load('img/Default/obstacle1.jpg')
+        # Create a test sprite list.
+        self.sprite_list = [pygame.image.load('img/Default/obstacle1.jpg')]
 
         # Create Obstacles.
-        self.obstacle1 = Obstacle(self.sprite, Point(1, 1), 150)
-        self.obstacle2 = Obstacle(self.sprite, Point(2, 2), 150)
+        self.obstacle1 = Obstacle(self.sprite_list, Point(1, 1), 150)
+        self.obstacle2 = Obstacle(self.sprite_list, Point(2, 2), 150)
 
         # Create a ObstacleGroup.
         self.obstacle_group1 = ObstacleGroup()

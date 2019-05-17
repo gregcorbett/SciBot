@@ -12,13 +12,13 @@ class TestGoalGroup(unittest.TestCase):
 
     def setUp(self):
         """Create GoalGroups and Goals used in testing."""
-        # Create a test sprite
-        self.sprite = pygame.image.load('img/Default/goal1.jpg')
+        # Create a test sprite list.
+        self.sprite_list = [pygame.image.load('img/Default/goal1.jpg')]
 
         # Create Goals
-        self.goal1 = Goal(self.sprite, Point(1, 1), 150)
-        self.goal2 = Goal(self.sprite, Point(2, 2), 150)
-        self.goal3 = Goal(self.sprite, Point(3, 2), 150)
+        self.goal1 = Goal(self.sprite_list, Point(1, 1), 150)
+        self.goal2 = Goal(self.sprite_list, Point(2, 2), 150)
+        self.goal3 = Goal(self.sprite_list, Point(3, 2), 150)
 
         # Create a GoalGroup 'ordered' one way
         self.goal_group1 = GoalGroup()
@@ -64,21 +64,17 @@ class TestGoalGroup(unittest.TestCase):
 
     def test_have_all_goals_been_met(self):
         """Test have_all_goals_been_met returns correctly."""
-        # Set the two Goals to be not met.
-        self.goal_group1.components[0].has_been_met = False
-        self.goal_group1.components[1].has_been_met = False
+        # The two Goals start as incomplete.
         # Assert not all the Goals have been met.
         self.assertFalse(self.goal_group1.have_all_goals_been_met())
 
         # Set one Goal to be met.
-        self.goal_group1.components[0].has_been_met = True
-        self.goal_group1.components[1].has_been_met = False
-        # Assert not all the Goals have been met.
+        self.goal_group1.components[0].complete()
+        # Assert not all the Goals have been completed.
         self.assertFalse(self.goal_group1.have_all_goals_been_met())
 
-        # Set both Goals to be met.
-        self.goal_group1.components[0].has_been_met = True
-        self.goal_group1.components[1].has_been_met = True
+        # Set the other Goal to completed.
+        self.goal_group1.components[1].complete()
         # Assert all the Goals have been met.
         self.assertTrue(self.goal_group1.have_all_goals_been_met())
 
@@ -88,27 +84,27 @@ class TestGoalGroup(unittest.TestCase):
         self.goal_group1.is_ordered = True
 
         # Set a Goal to be met
-        self.goal_group1.components[0].has_been_met = False
-        self.goal_group1.components[1].has_been_met = True
+        self.goal_group1.components[0].complete()
+        self.goal_group1.components[1].complete()
 
         # Call reset_all_goals() to reset the Goals.
         self.goal_group1.reset_all_goals()
 
-        # Assert the previously met Goals are now un met.
-        self.assertFalse(self.goal_group1.components[1].has_been_met)
+        # Assert the previously completed Goals are now incomplete.
+        self.assertFalse(self.goal_group1.components[1].is_complete)
 
         # Now test the method on unordered GoalGroups.
         self.goal_group1.is_ordered = False
 
         # Set a Goal to be met
-        self.goal_group1.components[0].has_been_met = False
-        self.goal_group1.components[1].has_been_met = True
+        self.goal_group1.components[0].complete()
+        self.goal_group1.components[1].complete()
 
         # Call reset_all_goals() to reset the Goals.
         self.goal_group1.reset_all_goals()
 
-        # Assert the previously met Goals are now un met.
-        self.assertFalse(self.goal_group1.components[1].has_been_met)
+        # Assert the previously completed Goals are now incomplete.
+        self.assertFalse(self.goal_group1.components[1].is_complete)
 
     def test_is_equal_to_eq_ord(self):
         """Test two equal ordered GoalGroups for equality."""
