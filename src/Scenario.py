@@ -161,7 +161,7 @@ class Scenario():
 
     def set_beebot_start_position(self, x_coord, y_coord):
         """Set the BeeBot's starting position."""
-        self._elements['BeeBotStartPosition'] = (x_coord, y_coord)
+        self._elements['BeeBotStartPosition'] = Point(x_coord, y_coord)
 
     def get_logical_height(self):
         """Get the Board height."""
