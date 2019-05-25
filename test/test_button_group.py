@@ -4,6 +4,7 @@ import unittest
 import pygame
 from src.Button import Button
 from src.ButtonGroup import ButtonGroup
+from src.Point import Point
 
 
 class TestButtonGroup(unittest.TestCase):
@@ -19,9 +20,9 @@ class TestButtonGroup(unittest.TestCase):
 
         # Create some test Buttons
         self.test_button = Button("Test", (0, 0, 0), (255, 255, 255),
-                                  (0, 0), (10, 10))
+                                  Point(0, 0), (10, 10))
         self.other_button = Button("Other", (0, 0, 0), (255, 255, 255),
-                                   (20, 20), (10, 10))
+                                   Point(20, 20), (10, 10))
 
         # Add those test Buttons to the test ButtonGroup
         self.test_button_group.add(self.other_button)
@@ -36,14 +37,14 @@ class TestButtonGroup(unittest.TestCase):
     def test_get_pressed_button(self):
         """Test the get_pressed_button method."""
         # Simulate a mouse cick
-        position = (5, 5)
+        position = Point(5, 5)
 
         returned_button = self.test_button_group.get_pressed_button(position)
 
         self.assertIs(self.test_button, returned_button)
 
         # Simulate a mouse click elswhere, not over a Button
-        position = (15, 15)
+        position = Point(15, 15)
 
         returned_button = self.test_button_group.get_pressed_button(position)
 

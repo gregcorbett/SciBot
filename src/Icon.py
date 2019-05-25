@@ -7,6 +7,7 @@ The file also contains classes to help create symbols on those Icons.
 """
 from enum import Enum
 import pygame
+from src.Point import Point
 
 
 class Icon():
@@ -57,17 +58,21 @@ class Icon():
     def _get_vertex_list(self, array, center, size=(120, 120)):
         """Return a translated list of vertices within the given size."""
         to_return = []
-        # For each vector
+
+        # For each tuple in the tuple array
         for i in range(0, len(array)):
-            current = array[i]
-            # Append a vertex tuple to to_return
-            to_return.append(
-                (
-                    # We assume all Icon shapes are originally 120x120
-                    (current[0] * size[0] / 120) + center[0],
-                    (current[1] * size[1] / 120) + center[1]
-                )
-            )
+            # Convert the tuple to a Point to make the maths easier
+            current = Point(array[i])
+
+            # We assume all Icon shapes are originally 120x120
+            original_size = (120, 120)
+
+            #  Translate and scale the current Point
+            new_point = (current * size / original_size) + center
+
+            # Append the translated and scaled Point to to_return
+            to_return.append(new_point)
+
         return to_return
 
     def display(self, screen):
@@ -98,7 +103,10 @@ class Icon():
 class Arrow(Enum):
     """This class defines Enums for the arrow polygon of a Icon."""
 
-    # Array of vectors for each arrow
+    # Array of tuples for each vertex in the arrow shape.
+    # These are deliberatly not Point objects as the describe the shape with
+    # reference to some origin (in this case (0,0)), rather than in terms of
+    # points on the screen that can be drawn.
     FORWARD = [(20, -20), (0, -40), (-20, -20), (-10, -20), (-10, 40),
                (10, 40), (10, -20)]
 

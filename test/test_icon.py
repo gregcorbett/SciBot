@@ -3,6 +3,7 @@ import unittest
 import pygame
 from src.GameWindow import GameWindow
 from src.Icon import Icon
+from src.Point import Point
 
 
 class TestIcon(unittest.TestCase):
@@ -13,11 +14,11 @@ class TestIcon(unittest.TestCase):
         pygame.init()
         self.test_text_icon = Icon('test icon',
                                    GameWindow.BLACK, GameWindow.WHITE,
-                                   (0, 0), (10, 10))
+                                   Point(0, 0), (10, 10))
 
         self.test_vertex_icon = Icon('vertex icon',
                                      GameWindow.BLACK, GameWindow.WHITE,
-                                     (0, 0), (10, 10))
+                                     Point(0, 0), (10, 10))
 
         self.test_vertex_icon.vertices = [(10, 10), (-10, -10), (0, 0)]
 
@@ -26,17 +27,17 @@ class TestIcon(unittest.TestCase):
         """Test the init method of the Icon class."""
         _unused_icon = Icon('test icon',
                             GameWindow.BLACK, GameWindow.WHITE,
-                            (0, 0), (10, 10))
+                            Point(0, 0), (10, 10))
 
     def test_get_vertex_list(self):
         """Test the _get_vertex_list method."""
-        input_list = [(0, 0), (5, 0), (0, -5)]
+        input_list = [Point(0, 0), Point(5, 0), Point(0, -5)]
         center = (10, 10)
 
         # _get_vertex_list(input_list, center_x, center_y) should map
         # (0,0) of the input_list to center_x and center_y (and all other
         # points accordingly)
-        expected_output = [(10, 10), (15, 10), (10, 5)]
+        expected_output = [Point(10, 10), Point(15, 10), Point(10, 5)]
 
         # We need to use an instance of the Icon class
         # to call the _get_vertex_list method

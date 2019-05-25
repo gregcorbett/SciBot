@@ -38,6 +38,13 @@ class CommandLog(IconGroup):
         # The location to draw the first Icon in the CommandLog.
         location = self.screen_location
 
+        if self.horizontal:
+            # Make the next Icon appear right of the current one.
+            increment = (self.icon_size[0], 0)
+        else:
+            # Make the next Icon appear below the current one.
+            increment = (0, self.icon_size[1])
+
         for index, entry in enumerate(beebot_memory):
             # Convert Events into Icon Arrows.
             text = self._event_type_to_text(entry.type)
@@ -52,12 +59,8 @@ class CommandLog(IconGroup):
             # that would otherwise override each other.
             self.add(tmp_log, key=index)
 
-            if self.horizontal:
-                # Make the next Icon appear right of the current one.
-                location = (location[0] + self.icon_size[0], location[1])
-            else:
-                # Make the next Icon appear below the current one.
-                location = (location[0], location[1] + self.icon_size[1])
+            # Put the next Icon in the right place
+            location = location + increment
 
     @classmethod
     def _event_type_to_text(cls, event_type):

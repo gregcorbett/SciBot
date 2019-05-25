@@ -5,6 +5,7 @@ import mock
 import pygame
 from src.CommandLog import CommandLog
 from src.CustomEvent import CustomEvent
+from src.Point import Point
 
 
 class TestCommandLog(unittest.TestCase):
@@ -15,7 +16,7 @@ class TestCommandLog(unittest.TestCase):
         # Start pygame as Icons require fonts.
         pygame.init()
 
-        self.test_command_log = CommandLog((0, 0), (25, 5))
+        self.test_command_log = CommandLog(Point(0, 0), (25, 5))
 
         self.beebot_mem = [pygame.event.Event(CustomEvent.MOVE_BEEBOT_UP),
                            pygame.event.Event(CustomEvent.MOVE_BEEBOT_LEFT),
@@ -32,7 +33,7 @@ class TestCommandLog(unittest.TestCase):
             self.assertEqual(icon.size, (5, 5))
             # Check each subsequent Icon is 5 pixels
             # to the left of the previous.
-            self.assertEqual(icon.screen_location, (index * 5, 0))
+            self.assertEqual(icon.screen_location, Point(index * 5, 0))
 
     # Patch so we can tell if removal_all is called
     @mock.patch('src.IconGroup.IconGroup.removal_all')
