@@ -103,7 +103,10 @@ class Icon():
 class Arrow(Enum):
     """This class defines Enums for the arrow polygon of a Icon."""
 
-    # Array of vectors for each arrow
+    # Array of tuples for each vertex in the arrow shape.
+    # These are deliberatly not Point objects as the describe the shape with
+    # reference to some origin (in this case (0,0)), rather than in terms of
+    # points on the screen that can be drawn.
     FORWARD = [(20, -20), (0, -40), (-20, -20), (-10, -20), (-10, 40),
                (10, 40), (10, -20)]
 
