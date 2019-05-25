@@ -4,6 +4,7 @@ import unittest
 import pygame
 from src.Button import Button
 from src.GameWindow import GameWindow
+from src.Point import Point
 
 
 class TestButton(unittest.TestCase):
@@ -15,11 +16,11 @@ class TestButton(unittest.TestCase):
 
         # Create a test Button with text
         self.test_text_button = Button('text', GameWindow.BLACK,
-                                       GameWindow.WHITE, (0, 0), (10, 10))
+                                       GameWindow.WHITE, Point(0, 0), (10, 10))
 
         # Create a test Button with an Arrow
         self.test_icon_button = Button('Forward', GameWindow.BLACK,
-                                       GameWindow.WHITE, (0, 0), (10, 10))
+                                       GameWindow.WHITE, Point(0, 0), (10, 10))
 
     @classmethod
     def test_init(cls):
