@@ -10,36 +10,56 @@ from src.Point import Point
 class TestGoal(unittest.TestCase):
     """This test class unit tests the Goal class."""
 
+    def setUp(self):
+        """Create a simple Goal for testing."""
+        self.test_goal = Goal(["A", "B"], Point(0, 0), 0)
+
+    def test_complete(self):
+        """Test that the complete method behaves as expected."""
+        # Confirm the Goal is currently incomplete.
+        self.assertFalse(self.test_goal.is_complete)
+        # Confirm the current value of the Goal's sprite.
+        self.assertEqual(self.test_goal.sprite, "A")
+
+        # Call the Goal's complete method.
+        self.test_goal.complete()
+
+        # Confirm the Goal is now complete.
+        self.assertTrue(self.test_goal.is_complete)
+        # Confirm the new value of the Goal's sprite.
+        self.assertEqual(self.test_goal.sprite, "B")
+
+
     @classmethod
     def test_init(cls):
         """Test the init method of the Goal class."""
-        _unused_goal = Goal(None, Point(0, 0), 0)
+        _unused_goal = Goal([None], Point(0, 0), 0)
 
     def test_is_equal_to(self):
         """Test the is_equal_to_method."""
-        # Create a test sprite
-        goal_sprite = pygame.image.load('img/Default/goal1.jpg')
+        # Create a test sprite list.
+        goal_sprite_list = [pygame.image.load('img/Default/goal1.jpg')]
 
-        goal = Goal(goal_sprite, Point(1, 1), 150)
+        goal = Goal(goal_sprite_list, Point(1, 1), 150)
         # Create a Goal equal to goal
-        goal_copy = Goal(goal_sprite, Point(1, 1), 150)
+        goal_copy = Goal(goal_sprite_list, Point(1, 1), 150)
         # Create a Goal in a different logical place
-        goal_diff_logical_position = Goal(goal_sprite, Point(2, 2), 150)
-        # Create a Goal that is met
-        met_goal = Goal(goal_sprite, Point(1, 1), 150)
-        met_goal.has_been_met = True
-        # Create a Goal with a different sprite
-        obstacle_sprite = pygame.image.load('img/Default/obstacle1.jpg')
-        goal_diff_sprite = Goal(obstacle_sprite, Point(1, 1), 150)
+        goal_diff_logical_position = Goal(goal_sprite_list, Point(2, 2), 150)
+        # Create a Goal that has been completed.
+        completed_goal = Goal(goal_sprite_list, Point(1, 1), 150)
+        completed_goal.complete()
+        # Create a Goal with a different sprite list.
+        obstacle_sprite_list = [pygame.image.load('img/Default/obstacle1.jpg')]
+        goal_diff_sprite = Goal(obstacle_sprite_list, Point(1, 1), 150)
         # Create an Obstacle, with the same sprite to try and break the test
-        obstacle = Obstacle(goal_sprite, Point(1, 1), 150)
+        obstacle = Obstacle(goal_sprite_list, Point(1, 1), 150)
 
         # Check that equal goals are infact eqaul
         self.assertTrue(goal.is_equal_to(goal_copy))
         # Check that a goal in a different logical place is not equal
         self.assertFalse(goal.is_equal_to(goal_diff_logical_position))
-        # Check an unmet Goal is not equal to a met Goal
-        self.assertFalse(goal.is_equal_to(met_goal))
+        # Check an incomplete Goal is not equal to a completed Goal
+        self.assertFalse(goal.is_equal_to(completed_goal))
         # Check Goals with different sprites are not equal
         self.assertFalse(goal.is_equal_to(goal_diff_sprite))
         # Check a Goal is not equal to an Obstacle

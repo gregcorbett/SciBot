@@ -13,9 +13,9 @@ class TestComponentGroup(unittest.TestCase):
     def setUp(self):
         """Create ComponentGroups and Components used in testing."""
         # Create Components.
-        self.component1 = Component(None, Point(1, 1), 150)
-        self.component2 = Component(None, Point(2, 2), 150)
-        self.component3 = Component(None, Point(3, 3), 150)
+        self.component1 = Component([None], Point(1, 1), 150)
+        self.component2 = Component([None], Point(2, 2), 150)
+        self.component3 = Component([None], Point(3, 3), 150)
 
         # Create a ComponentGroup.
         self.component_group1 = ComponentGroup()
@@ -104,8 +104,8 @@ class TestComponentGroup(unittest.TestCase):
         """
         # same_component1 is a different python object to self.component1,
         # but logically are the same. The same is true for same_component2.
-        same_component1 = Component(None, Point(1, 1), 150)
-        same_component2 = Component(None, Point(2, 2), 150)
+        same_component1 = Component([None], Point(1, 1), 150)
+        same_component2 = Component([None], Point(2, 2), 150)
 
         # same_component_group is a different python object
         # to self.component_group1, but logically are the same.

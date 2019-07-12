@@ -37,14 +37,14 @@ class GoalGroup(ComponentGroup):
     def have_all_goals_been_met(self):
         """True iff all the Goal objects in the GoalGroup have been met."""
         for goal in self.components:
-            if not goal.has_been_met:
+            if not goal.is_complete:
                 return False
         return True
 
     def reset_all_goals(self):
         """Set all Goals to not been met."""
         for goal in self.components:
-            goal.has_been_met = False
+            goal.reset()
         # if Goals are ordered, move ptr back to start of GoalGroup
         if self.is_ordered:
             self._goal_ptr = 0

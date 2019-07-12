@@ -24,7 +24,7 @@ class BeeBot(Component):
     def __init__(self, scenario):
         """Create a BeeBot."""
         # Read the sprite and assume it is the "NORTH" sprite.
-        self.original_sprite = scenario.get_beebot_sprite()
+        self.original_sprite_list = scenario.get_beebot_sprite()
 
         # The amount the BeeBot moves.
         self.step = scenario.get_board_step()
@@ -33,14 +33,11 @@ class BeeBot(Component):
         self.start_logical_position = Point(
             scenario.get_beebot_start_position())
 
-        # Call the superclass constructor
-        super().__init__(self.original_sprite,
+        # Call the superclass constructor.
+        # Use copy() here to copy the objects not just the reference.
+        super().__init__(self.original_sprite_list.copy(),
                          self.start_logical_position.copy(),
                          self.step)
-
-        # Read the sprite and assume it is the "NORTH" sprite.
-        self.original_sprite = scenario.get_beebot_sprite()
-        self.sprite = self.original_sprite
 
         # Which way is the BeeBot facing.
         self.start_heading = scenario.get_beebot_heading()
@@ -62,6 +59,24 @@ class BeeBot(Component):
         self.index = 0
 
         self.running = False
+
+    def increment_sprite(self):
+        """
+        Increment the sprite to display for this BeeBot.
+
+        Also ensures the visual Heading of the sprite is consistent before and
+        after this method is called.
+        """
+        super().increment_sprite()
+        # The new sprite will be facing Heading.NORTH regardless of
+        # self.heading, so fix that.
+        if self.heading == Heading.EAST:
+            self.sprite = self.rotate(self.sprite, 270)
+        elif self.heading == Heading.WEST:
+            self.sprite = self.rotate(self.sprite, 90)
+        elif self.heading == Heading.SOUTH:
+            self.sprite = self.rotate(self.sprite, 180)
+
 
     def move(self, event):
         """Move the BeeBot."""
@@ -208,7 +223,8 @@ class BeeBot(Component):
         self.screen_location = self.start_logical_position.scale(self.step)
 
         # Reset BeeBot sprite
-        self.sprite = self.original_sprite
+        self._sprite_list = self.original_sprite_list.copy()
+        self._sprite_list_index = 0
 
         # From the original sprite, rotate to the start_heading
         if self.start_heading == Heading.EAST:
