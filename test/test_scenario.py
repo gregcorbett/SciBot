@@ -54,9 +54,9 @@ class TestScenario(unittest.TestCase):
         # we have to access _elements directly here we cant compare surfaces
         # for equality and the get method would turn the saved
         # picklable image as a surface
-        saved_sprite_surface = loaded_scenario._elements['BeeBotSprite']
+        saved_sprite_surface_list = loaded_scenario._elements['BeeBotSprite']
         self._compare_image_to_pickle('img/Default/robot.jpg',
-                                      saved_sprite_surface)
+                                      saved_sprite_surface_list[0])
 
         self.assertEqual(loaded_scenario.get_beebot_heading(), Heading.NORTH)
 
@@ -68,16 +68,16 @@ class TestScenario(unittest.TestCase):
 
         # To compare ObstacleGroups we must craft one first
         obstacle_group = ObstacleGroup()
-        obstacle_1 = Obstacle(None, Point(2, 1), 150)
-        obstacle_2 = Obstacle(None, Point(2, 3), 150)
+        obstacle_1 = Obstacle([None], Point(2, 1), 150)
+        obstacle_2 = Obstacle([None], Point(2, 3), 150)
         obstacle_group.add(obstacle_1)
         obstacle_group.add(obstacle_2)
         self.assertTrue(loaded_scenario.get_obstacle_group().is_equal_to(obstacle_group))
 
         # To compare GoalGroups we must craft one first
         goal_group = GoalGroup()
-        goal_1 = Goal(None, Point(1, 2), 150)
-        goal_2 = Goal(None, Point(2, 0), 150)
+        goal_1 = Goal([None], Point(1, 2), 150)
+        goal_2 = Goal([None], Point(2, 0), 150)
         goal_group.add(goal_1)
         goal_group.add(goal_2)
         goal_group.is_ordered = False

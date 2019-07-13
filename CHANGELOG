@@ -1,3 +1,23 @@
+========== Version 1.2.0 ==========
+
+New Features and Minor Changes:
+
+- Adds support for multi-sprite Goals and BeeBots: #51
+- Add a display for commands programmed into the BeeBot: #39
+- Introduce Component, ComponentGroup, Icon and IconGroup classes to reduce
+  duplication of code: #32, #33, #36, #44
+- Add support for Python 3.6, drop support for Python 3.4 and 3.5: #37, #46
+
+Patches, Bug Fixes and Documentation Changes:
+
+- Fix bugs in Goal and GoalGroup equality testing: #28
+- Improve test cases: #30, #38
+- Add documentation explaining what an incompatible/breaking API change is: #31
+- Document when the Point class should be used and make changes where that
+  documentation is not followed: #48
+- Rework .gitignore to be generic with exceptions: #47
+
+
 ========== Version 1.1.0 ==========
 
 New Features and Minor Changes:

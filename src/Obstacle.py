@@ -1,35 +1,13 @@
 """This file defines the Object class."""
-import pygame
+from src.Component import Component
 
 
-class Obstacle(pygame.sprite.Sprite):
+class Obstacle(Component):
     """This class defines an individual Obstacle."""
 
-    def __init__(self,
-                 sprite,  # The image to display (can be None)
-                 start_logical_position,  # The starting point of the Obstacle
-                 step):  # Should be the same as the BeeBot step
-
-        """Create a Obstacle."""
-        # The position of the Goal in terms of squares on the screen
-        self.logical_position = start_logical_position
-
-        # The position of the Goal in terms pixels
-        self.screen_location = start_logical_position.scale(step)
-
-        # The sprite to display on screen for this Goal
-        self.sprite = sprite
-
-        # calling superclass constructor
-        pygame.sprite.Sprite.__init__(self)
-
-    def display(self, screen):
-        """Draw the Obstacle object on screen, if it has a sprite."""
-        if self.sprite is not None:
-            screen.blit(self.sprite, (self.screen_location.x,
-                                      self.screen_location.y))
-
-    def is_equal_to(self, other_obstacle):
-        """Compare this Obstacle for equality with other_obstacle."""
-        return (self.sprite == other_obstacle.sprite and
-                self.screen_location.is_equal_to(other_obstacle.screen_location))
+    def is_equal_to(self, other_component):
+        """Compare this Obstacle for equality with other_component."""
+        if not isinstance(other_component, Obstacle):
+            # An Obstacle can obviously never be equal to a non Obstacle
+            return False
+        return super().is_equal_to(other_component)
