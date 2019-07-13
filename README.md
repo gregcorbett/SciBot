@@ -24,7 +24,7 @@ pip install -r requirements.txt
 ### Building the runSciBot.exe file
 If you wish to build a new `runSciBot.exe` file, run the following command:
 ```
-pyinstaller -F runSciBot.py
+pyinstaller --windowed -F runSciBot.py
 ```
 
 ## Image Sources
